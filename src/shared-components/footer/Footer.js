@@ -1,49 +1,68 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import { Facebook } from '@material-ui/icons';
-import { Twitter } from '@material-ui/icons';
-import { LinkedIn } from '@material-ui/icons';
-import { GitHub } from '@material-ui/icons';
+import { GitHub, Instagram, LinkedIn, Twitter, Facebook } from '@material-ui/icons';
 import { footerText, footer } from '../../theme'
-import { Typography } from '@material-ui/core';
-
-
-const useStyles = makeStyles((theme) => ({
-    appBar: {
-        top: 'auto',
-        bottom: 0,
-        backgroundColor: footer,
-        color: footerText,
-    }
-}));
 
 export default function Footer() {
-    const classes = useStyles();
+
+    const footerStyle = {
+        color: footerText,
+        backgroundColor: footer,
+        paddingTop: '1em',
+        paddingBottom: '1em',
+        position: 'relative',
+        bottom: '-500px',
+        width: '100%',
+        top: 'auto'
+    }
 
     return (
-        <React.Fragment>
-            <CssBaseline />
-            <AppBar position="absolute" color="primary" className={classes.appBar}>
-                <Toolbar>
-                    <Typography>All Copyrights Reserved ©® : </Typography>
-                    <IconButton edge="start" color="inherit">
-                        <Facebook></Facebook>
-                    </IconButton>
-                    <IconButton edge="start" color="inherit">
-                        <Twitter></Twitter>
-                    </IconButton>
-                    <IconButton edge="start" color="inherit">
-                        <LinkedIn></LinkedIn>
-                    </IconButton>
-                    <IconButton edge="start" color="inherit">
-                        <GitHub></GitHub>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-        </React.Fragment>
-    );
+        <div className="main-footer" style={footerStyle}>
+            <div className="container">
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+                    {/* Column1 */}
+                    <div style={{
+                        fontSize: '1em'
+                    }}>
+                        <h4 style={{ fontSize: '1.2em', paddingLeft: '1.2em', textAlign: 'center' }}>MovieBooking.co</h4>
+                        <ul style={{ fontSize: '1em', listStyleType: 'none' }}>
+                            <li style={{}}>033 6621 5000</li>
+                            <li>Pune, India</li>
+                            <li>Talwade</li>
+                        </ul>
+                    </div>
+                    {/* Column2 */}
+                    <div style={{
+                        fontSize: '1em',
+                    }}>
+                        <h4 style={{ fontSize: '1.2em', paddingLeft: '0.5em' }}>Follow Us</h4>
+                        <ul style={{
+                            fontSize: '1em', listStyleType: 'none',
+                        }}>
+                            <li><Facebook /></li>
+                            <li><Twitter /></li>
+                            <li><Instagram /></li>
+                        </ul>
+                    </div>
+                    {/* Column3 */}
+                    <div style={{
+                        fontSize: '1em'
+                    }}>
+                        <h4 style={{ fontSize: '1.2em' }}> Support Us</h4>
+                        <ul style={{
+                            fontSize: '1em', listStyleType: 'none',
+                        }}>
+                            <li><GitHub /></li>
+                            <li><LinkedIn /></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr />
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+                    <p className="col-sm">
+                        &copy;{new Date().getFullYear()} MovieBooking.co | All rights reserved |
+          Terms Of Service | Privacy
+        </p>
+                </div>
+            </div>
+        </div>);
 }
