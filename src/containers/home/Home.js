@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import MovieContainer from './movie-container/MovieContainer';
 import Header  from '../../shared-components/header/Header';
+import Footer from '../../shared-components/footer/Footer';
 
 export default class Home extends Component {
     render() {

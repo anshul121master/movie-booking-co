@@ -13,7 +13,7 @@ const store = createStore(reducer, middleware)
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider>
+    <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>,

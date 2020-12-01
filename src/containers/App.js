@@ -8,12 +8,12 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-      getCities()
-      .then(res => {
-        this.setState({
-          listOfCities: res
-        })
-      })
+      // getCities()
+      // .then(res => {
+      //   this.setState({
+      //     listOfCities: res
+      //   })
+      // })
   }
 
   render() {
@@ -22,7 +22,7 @@ export default class App extends Component {
       <div className="App">
         <header className="App-header">
           Movie Booking App
-          {console.log(JSON.stringify(listOfCities))}
+          {/* {console.log(JSON.stringify(listOfCities))} */}
         </header>
         <Home listOfCities= {listOfCities} />
       </div>

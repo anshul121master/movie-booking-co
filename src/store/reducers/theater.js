@@ -1,8 +1,8 @@
-import { SET_SELECTED_THEATER } from '../actions/city'
+import { SET_SELECTED_THEATER } from '../actions/theater'
 
 export default function selectedTheater( state={}, action) {
     switch(action.type) {
-        case SET_SELECTED_THEATRE: return action.theatre
+        case SET_SELECTED_THEATER: return action.theatre
         default: return state
     }
 }

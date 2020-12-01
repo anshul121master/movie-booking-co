@@ -31,9 +31,9 @@ class MovieContainer extends Component {
             <div>
                 MovieContainer
                 {/* iterate over moviesList and render movie cards */}
-                {moviesList.map(movie => 
+                {/* {moviesList.map(movie => 
                 <MovieCard key={movie.movieId} movieDetails ={movie} handleSelectedMovie={this.handleSelectedMovie}/> 
-                )}
+                )} */}
             </div>
         )
     }
