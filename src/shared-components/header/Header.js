@@ -1,11 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { getMovies } from '../../utils/api'
 import { connect } from 'react-redux'
 import { setCityAndMoviesList } from '../../store/actions/shared'
+import { header, headerText } from '../../theme'
 
 class Header extends Component {
     onCityChange = (event) => {
-        const cityId= event.target.value;
+        const cityId = event.target.value;
         const { listOfCities, dispatch } = this.props; // from home component
         const selectedCityObject = listOfCities.filter(city => city.id === cityId);
         dispatch(setCityAndMoviesList(selectedCityObject[0]))
@@ -13,7 +14,7 @@ class Header extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ backgroundColor: header, color: headerText }}>
                 Header
                 {/* populate city dropdown based on listOfCities */}
             </div>
@@ -23,7 +24,7 @@ class Header extends Component {
 
 function mapStateToProps({ authedUser }, ownProps) {
     const { listOfCities } = ownProps;
-    return { 
+    return {
         listOfCities
     }
 }
