@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setTheaterAndShowTimings } from '../../../store/actions/shared';
 
 class TheaterContainer extends Component {
-    handleSelectedTheater = (theater) => {
-        const { dispatch } = this.props;
-        dispatch(setTheaterAndShowTimings(theater));
-        // dispatch theater object and showTimings to store
+    state = {
+        selectedDate: ''
     }
-
     render() {
         const {theatersList} = this.props;
+        const { selectedDate } = this.state;
         return (
             <div>
+                {/* calender Component render and pass the value to theatercard- 1 week */}
                 {/* iterate over theatersList and render theater cards */}
                 {theatersList.map(theater => 
-                <TheaterCard key={theater.theaterId} theaterDetails ={theater} handleSelectedTheater={this.handleSelectedTheater}/> 
+                <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate}/> 
                 )} 
             </div>
         )

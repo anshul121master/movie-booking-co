@@ -3,7 +3,7 @@ import  moviesList from './moviesList'
 import  selectedMovie from './movie'
 import  theatersList from './theatersList'
 import  selectedTheater from './theater' 
-import showTimings from './showTimings'
+import seatPlan from './seatPlan'
 
 
 import { combineReducers } from 'redux'
@@ -15,5 +15,5 @@ export default combineReducers({
     selectedMovie,
     theatersList,
     selectedTheater,
-    showTimings
+    seatPlan
 })
