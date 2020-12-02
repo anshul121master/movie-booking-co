@@ -1,3 +1,5 @@
+import seatPlan from "../store/reducers/seatPlan"
+
 const url = "https://moviebooking.co"
 
 //get all cities
@@ -23,3 +25,9 @@ export const getTheaters = (cityId, movieId) => {
 export const getScreens = (movieId, theaterId) =>
   fetch(`${url}/v1/screens/theater/${theaterId}/${movieId}`)
     .then(res => res.json())
+
+//get seat plan 
+export const getSeatPlan = (seatPlanId) => {
+  fetch(`${url}/v1/seats/${seatPlanId}`)
+  .then(res => res.json())
+}

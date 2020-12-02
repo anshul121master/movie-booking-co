@@ -1,7 +1,8 @@
 import { setSelectedCity } from './city';
 import { getAllMovies, setSelectedMovie } from './movie';
-import { getMovies, getTheaters, getScreens } from '../../utils/api';
-import { getAllTheaters, setSelectedTheater, setShowTimings } from './theater';
+import { getMovies, getTheaters, getScreens, getSeatPlan } from '../../utils/api';
+import { getAllTheaters, setSeatPlan, setSelectedTheater, setShowTimings } from './theater';
+import seatPlan from '../reducers/seatPlan';
 
 
 export function setCityAndMoviesList(city) {
@@ -23,12 +24,11 @@ export function setMovieAndTheaterList(movie) {
     }
 }
 
-export function setTheaterAndShowTimings(theater) {
-    return (dispatch, getState) => {
-        const {selectedMovie} = getState();
+export function setTheaterAndSeatPlan(theater, seatPlanId) {
+    return (dispatch) => {
         dispatch(setSelectedTheater(theater));
-        getScreens(selectedMovie.movieId, theater.theaterId)
-        .then(showTimings => dispatch(setShowTimings(showTimings)))
+        getSeatPlan(seatPlanId)
+        .then(seatPlan => dispatch(setSeatPlan(seatPlan)))
     }
 }
 
