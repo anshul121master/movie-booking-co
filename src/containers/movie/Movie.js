@@ -11,7 +11,7 @@ class Movie extends Component {
             <div>
                 <Header />
                 <MovieDetails selectedMovie={this.props.selectedMovie} />
-                {/* <TheaterContainer /> */}
+                <TheaterContainer />
                 <Footer />
             </div>
         )

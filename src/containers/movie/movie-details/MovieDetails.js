@@ -66,22 +66,22 @@ export default function MovieDetails(props) {
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
                             {/*props.selectedMovie.rating*/}Cast/Crew
-                        <Typography variant="body3" color="textSecondary" component="li">
+                        <Typography variant="body2" color="textSecondary" component="li">
                                 {/*props.selectedMovie.rating*/}Robert Downey Jr.
                         </Typography>
-                            <Typography variant="body3" color="textSecondary" component="li">
+                            <Typography variant="body2" color="textSecondary" component="li">
                                 {/*props.selectedMovie.rating*/}Scarlett Johansson
                         </Typography>
-                            <Typography variant="body3" color="textSecondary" component="li">
+                            <Typography variant="body2" color="textSecondary" component="li">
                                 {/*props.selectedMovie.rating*/}Chris Evans
                         </Typography>
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
                             {/*props.selectedMovie.rating*/}Languages
-                        <Typography variant="body3" color="textSecondary" component="li">
+                        <Typography variant="body2" color="textSecondary" component="li">
                                 {/*props.selectedMovie.rating*/}English
                         </Typography>
-                            <Typography variant="body3" color="textSecondary" component="li">
+                            <Typography variant="body2" color="textSecondary" component="li">
                                 {/*props.selectedMovie.rating*/}Hindi
                         </Typography>
                         </Typography>
