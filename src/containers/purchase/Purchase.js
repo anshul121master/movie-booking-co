@@ -5,6 +5,7 @@ import PaymentForm from './payment-form/PaymentForm'
 import { ArrowBackIosRounded } from '@material-ui/icons'
 import { headerText, } from '../../theme'
 import { IconButton } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 class Purchase extends Component {
 
@@ -34,7 +35,9 @@ class Purchase extends Component {
             <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
                 <div className='screen-header'>
                     <IconButton >
-                        <ArrowBackIosRounded style={{ color: headerText }} />
+                        <Link style={{ textDecoration: 'none' }} to={{
+                            pathname: "/screen",
+                        }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>
                     </IconButton>
                     <span>Jab Tak Hai Jaan</span>
                     <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>

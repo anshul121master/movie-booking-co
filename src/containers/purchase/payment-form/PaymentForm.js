@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { DoneAllRounded } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 
 class PaymentForm extends Component {
 
@@ -33,7 +34,12 @@ class PaymentForm extends Component {
                             (<div className='booking-checkout-container'>
                                 <DoneAllRounded fontSize='large' style={{ color: 'green' }} />
                                 <div style={{ margin: '5', fontSize: '2em' }}>Booking Confirmed</div>
-                            </div>)
+                                <div></div>
+                                <Link style={{ textDecoration: 'none' }} to={{
+                                    pathname: "/",
+                                }}>Click to go to Home Page</Link>
+                            </div>
+                            )
                         }
                     </CardContent>
                 </Card>

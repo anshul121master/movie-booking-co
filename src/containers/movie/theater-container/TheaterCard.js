@@ -17,6 +17,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { header, headerText, buttonAvailable, buttonAvailableText } from '../../../theme'
+import { Redirect } from 'react-router-dom';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = (theme) => ({
     root: {
@@ -60,7 +66,9 @@ class TheaterCard extends Component {
     state = {
         expanded: false,
         screens: null,
-        screenTimesArray: ['S12', 'S15', 'S18', 'S21', 'S23']
+        screenTimesArray: ['S12', 'S15', 'S18', 'S21', 'S23'],
+        open: false,
+        redirect: false
     }
 
     //when show timing btn is clicked
@@ -106,44 +114,82 @@ class TheaterCard extends Component {
         //this.getScreenObject(this.props.theater)
     }
 
+    handleClickOpen = () => {
+        this.setState({
+            open: true
+        })
+    };
+
+    handleClose = (redirect) => {
+        this.setState({
+            open: false,
+            redirect
+        })
+    };
+
     render() {
         const { theater, classes } = this.props;
         const { screenTimesArray } = this.state;
         return (
-            <Card className={classes.root}>
-                <CardHeader
-                    avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                            {/* {theater.rating} */}4.5
+            this.state.redirect ? (<Redirect to={{ pathname: '/screen' }} />) :
+                (<Card className={classes.root}>
+                    <CardHeader
+                        avatar={
+                            <Avatar aria-label="recipe" className={classes.avatar}>
+                                {/* {theater.rating} */}4.5
                         </Avatar>
-                    }
-                    title="PVR Cinemas"
-                    subheader="Near CST Railway Station, Mumbai - 201006, Maharashtra"
-                />
-                <CardActions className={classes.action}>
-                    <Tooltip title="Expand to check on movie screening times" aria-label="add">
-                        <IconButton
-                            className={clsx(classes.expand, {
-                                [classes.expandOpen]: this.state.expanded,
-                            })}
-                            onClick={this.handleExpandClick}
-                            aria-expanded={this.state.expanded}
-                            aria-label="show more"
-                        >
-                            <ExpandMoreIcon />
-                        </IconButton>
-                    </Tooltip>
-                </CardActions>
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent className={classes.content}>
-                        <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
-                        {screenTimesArray.map(time =>
-                            <Button className={classes.button}>
-                                {time.split('S')[1]}:00
-                            </Button>)}
-                    </CardContent>
-                </Collapse>
-            </Card>
+                        }
+                        title="PVR Cinemas"
+                        subheader="Near CST Railway Station, Mumbai - 201006, Maharashtra"
+                    />
+                    <CardActions className={classes.action}>
+                        <Tooltip title="Expand to check on movie screening times" aria-label="add">
+                            <IconButton
+                                className={clsx(classes.expand, {
+                                    [classes.expandOpen]: this.state.expanded,
+                                })}
+                                onClick={this.handleExpandClick}
+                                aria-expanded={this.state.expanded}
+                                aria-label="show more"
+                            >
+                                <ExpandMoreIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </CardActions>
+                    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                        <CardContent className={classes.content}>
+                            <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
+                            {screenTimesArray.map(time =>
+                                <div>
+                                    <Button className={classes.button} onClick={this.handleClickOpen}>
+                                        {time.split('S')[1]}:00
+                                </Button>
+                                    <Dialog
+                                        open={this.state.open}
+                                        onClose={this.handleClose}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogTitle id="alert-dialog-title">{"Do you want to navigate to seat selection page?"}</DialogTitle>
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-description">
+                                                Do you want to navigate to seat selection page for {time.split('S')[1]}:00 tickets?
+                              </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button onClick={() => this.handleClose(false)}>
+                                                No
+                                        </Button>
+                                            <Button onClick={() => this.handleClose(true)} autoFocus>
+                                                Yes
+                                        </Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Collapse>
+                </Card>)
         )
     }
 }

@@ -69,6 +69,6 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
   fetch(`${url}/v1/bookings`, reqObj).then((response) => {
     if (response.ok) return response.json().bookingStatus
     else
-      return console.error("Error occurred")
+      return console.error("Error")
   })
 }
