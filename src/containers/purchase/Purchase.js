@@ -7,6 +7,28 @@ import { headerText, } from '../../theme'
 import { IconButton } from '@material-ui/core'
 
 class Purchase extends Component {
+
+    state = {
+        bookingStatus: ''
+    }
+
+    purchaseTicket = (event) => {
+        event.preventDefault()
+        const { theaterDetails, screenName, selectedSeats, price, movieName, time, date, seatPlanId } = this.props
+        // purchaseTickets({ theaterDetails, screenName, selectedSeats, price, movieName, time, date, seatPlanId }).then(
+        //     response => {
+        //         if(response.bookingStatus === 'BOOKED'){
+        //             this.setState({
+        //                 bookingStatus: 'BOOKED'
+        //             })
+        //         }
+        //     }
+        // )
+        this.setState({
+            bookingStatus: 'BOOKED'
+        })
+    }
+
     render() {
         return (
             <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
@@ -24,13 +46,12 @@ class Purchase extends Component {
                     </div>
                 </div>
                 <div className='purchase-container'>
-                    <PaymentForm />
+                    <PaymentForm purchaseTicket={this.purchaseTicket} bookingStatus={this.state.bookingStatus} />
                     <Ticket
                         theater={{
                             "screenName": "s2",
                             "dimension": "_2D",
-                            "name": 'PVR Cinemas',
-                            "city": "Mumbai"
+                            "theaterDetails": 'PVR Cinemas, Mumbai',
                         }}
                         selectedSeats={['GR1C1', 'GR1C2']}
                         price={450}
@@ -40,6 +61,7 @@ class Purchase extends Component {
                         }}
                         time='S21'
                         date='2020-11-30'
+                        bookingStatus={this.state.bookingStatus}
                     />
                 </div>
             </div>

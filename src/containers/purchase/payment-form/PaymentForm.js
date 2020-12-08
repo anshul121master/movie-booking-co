@@ -6,35 +6,14 @@ import { DoneAllRounded } from '@material-ui/icons'
 
 class PaymentForm extends Component {
 
-    state = {
-        bookingStatus: ''
-    }
-
-    purchaseTicket = (event) => {
-        event.preventDefault()
-        const { theaterDetails, screenName, selectedSeats, price, movieName, time, date, seatPlanId } = this.props
-        // purchaseTickets({ theaterDetails, screenName, selectedSeats, price, movieName, time, date, seatPlanId }).then(
-        //     response => {
-        //         if(response.bookingStatus === 'BOOKED'){
-        //             this.setState({
-        //                 bookingStatus: 'BOOKED'
-        //             })
-        //         }
-        //     }
-        // )
-        this.setState({
-            bookingStatus: 'BOOKED'
-        })
-    }
-
     render() {
         return (
             <div className='payment-form'>
                 <Card variant='outlined'>
                     <CardContent>
-                        {this.state.bookingStatus === '' ? (<div className="checkout">
+                        {this.props.bookingStatus === '' ? (<div className="checkout">
                             <div className="checkout-container">
-                                <form onSubmit={(event) => this.purchaseTicket(event)}>
+                                <form onSubmit={(event) => this.props.purchaseTicket(event)}>
                                     <h3 className="heading-3">Credit / Debit card checkout</h3>
                                     <Input label="Cardholder's Name" type="text" name="name" />
                                     <Input label="Card Number" type="number" name="card_number" />
@@ -52,8 +31,8 @@ class PaymentForm extends Component {
                         </div>
                         ) :
                             (<div className='booking-checkout-container'>
-                                <DoneAllRounded fontSize='large' color='primary' />
-                                <div style={{margin: '5', fontSize: '2em'}}>Booking Confirmed</div>
+                                <DoneAllRounded fontSize='large' style={{ color: 'green' }} />
+                                <div style={{ margin: '5', fontSize: '2em' }}>Booking Confirmed</div>
                             </div>)
                         }
                     </CardContent>

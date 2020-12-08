@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { footer } from '../../theme'
+import { DoneRounded } from '@material-ui/icons'
 
 const useStyles = makeStyles({
     root: {
@@ -45,7 +46,7 @@ export default function Ticket(props) {
                 <CardContent>
                     <Typography variant="h6" component="h4">
                         {movie.name.toUpperCase()},
-                        <span style={{ fontSize: '15px' }}>({movie.genre})</span>
+                        <span style={{ fontSize: '15px' }}> {movie.genre} </span>
                     </Typography>
                 </CardContent>
                 <CardContent>
@@ -56,7 +57,7 @@ export default function Ticket(props) {
                 </CardContent>
                 <CardContent>
                     <Typography className={classes.pos} color="textSecondary">
-                        {theater.name} {theater.city}, Screen : {theater.screenName.toUpperCase()}
+                        {theater.theaterDetails}, Screen : {theater.screenName.toUpperCase()}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
                         Time : {time.split('S')[1]}:00
@@ -64,6 +65,10 @@ export default function Ticket(props) {
                     <Typography className={classes.pos} color="textSecondary">
                         Date : {date}
                     </Typography>
+                    {props.bookingStatus !== '' ?
+                        (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
+                        <DoneRounded style={{color:'green'}} fontSize='small'/></Typography>) :
+                        <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
                 </CardContent>
                 <CardActions className={classes.action}>
                     <Typography variant="h5" component="h2">
