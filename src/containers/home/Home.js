@@ -40,7 +40,7 @@ class Home extends Component {
             <div>
                 {(citySelected === true && (
                     <React.Fragment>
-                    <Header listOfCities={listOfCities} setCityInStorage= {this.setCityInStorage}/>
+                    <Header listOfCities={listOfCities} />
                     <MovieContainer />
                     <Footer />
                     </React.Fragment>

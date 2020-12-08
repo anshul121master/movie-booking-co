@@ -177,7 +177,7 @@ class Header extends Component {
         <div className={classes.drawerHeader}>
           <IconButton onClick={this.handleDrawerClose} style={{color: headerText}}>
             <ChevronRightIcon />
-            <Typography variant="subtitle" component="h5">Hi!</Typography>
+            <Typography variant="subtitle1" component="h5">Hi!</Typography>
           </IconButton>
         </div>
         <Divider />
@@ -188,11 +188,10 @@ class Header extends Component {
             </ListItem>
             <ListItem button key='bookingsHistory'>
               <ListItemIcon><ConfirmationNumberIcon /></ListItemIcon>
-              <ListItemText primary='Booking History' />
+              <ListItemText primary='My Bookings' />
             </ListItem>
-            <ListItem button key='upcomingBookings'>
-              <ListItemIcon><ConfirmationNumberIcon /></ListItemIcon>
-              <ListItemText primary='Upcoming Bookings' />
+            <ListItem button key='signout' style={{backgroundColor: header, color: headerText, textAlign:'center'}}>
+              <ListItemText primary='Sign Out' />
             </ListItem>
         </List>
       </Drawer>

@@ -11,157 +11,7 @@ import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 class MovieContainer extends Component {
     state = {
-        movieSelected: false,
-        moviesList: [
-			{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "Zero",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },
-            {
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "Zero1",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1610193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "abc",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            }
-            ,{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "abc",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "abc",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "abc",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "abc",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },{
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "abc",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1151193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            },
-            {
-				"movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-				"name": "cde",
-				"genre": "Comedy/ Drama",
-				"duration": "2.8 hrs",
-				"movieDimension": "2D",
-				"rating": 9.1,
-				"moviePoster": "1708887362549_zero.jpeg",
-				"dateReleased": 1610193600000,
-				"casts": [
-					"Shahrukh Khan",
-					"Anushka Sharma"
-				],
-				"languages": [
-					"Hindi"
-				]
-            }
-		]
+        movieSelected: false
     }
 
     handleSelectedMovie = (movie) => {
@@ -171,7 +21,6 @@ class MovieContainer extends Component {
         this.setState({
             movieSelected: true
         })
-        console.log(JSON.stringify(movie))
             // dispatch movie object and theatersList to store
             // setstate to true
             // navigate to moviepage
@@ -194,8 +43,8 @@ class MovieContainer extends Component {
 	  }
 
     render() {
-        const {moviesList} = this.state;
-        //const {moviesList} = this.props;
+       // const {moviesList} = this.state;
+        const {moviesList} = this.props;
         return (
             <div>
 				<React.Fragment>
@@ -208,10 +57,10 @@ class MovieContainer extends Component {
 					
 					<GridList style={{flexWrap: 'wrap'}} cols={this.getGridListCols()} spacing={15}>
 					{moviesList.filter(movie => new Date(movie.dateReleased) < new Date()).map(movie => 
-					<GridListTile style={{height:'100%'}}>
-						<MovieCard key={movie.movieId} movie ={movie} handleSelectedMovie={this.handleSelectedMovie}/> 
+					<GridListTile  key={movie.movieId} style={{height:'100%'}}>
+						<MovieCard  movie ={movie} handleSelectedMovie={this.handleSelectedMovie}/> 
 					</GridListTile>
-					)}
+					)} 
 					</GridList>
 				 </div>
 				 
@@ -222,10 +71,10 @@ class MovieContainer extends Component {
 					
 					<GridList style={{flexWrap: 'nowrap'}} cols={this.getGridListCols()} spacing={15}>
 					{moviesList.filter(movie => new Date(movie.dateReleased) > new Date()).map(movie => 
-					<GridListTile style={{height:'100%'}}>
-						<MovieCard key={movie.movieId} movie ={movie} handleSelectedMovie={this.handleSelectedMovie}/> 
+					<GridListTile key={movie.movieId} style={{height:'100%'}}>
+						<MovieCard movie ={movie} handleSelectedMovie={this.handleSelectedMovie}/> 
 					</GridListTile>
-					)}
+					)} 
 					</GridList>
 				 </div>
             </div>

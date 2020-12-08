@@ -1,0 +1,17 @@
+{
+    "bookingId": "7a7f8b36-aba4-4374-b7b9-5495dd27dae9",
+    "theaterDetails": "Address1 ",
+    "dateOfShow": "2021-02-20T00:00:00.000+00:00",
+    "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
+    "showTiming": "2:30Pm ",
+    "screenName": " 1-C ",
+    "movieName": " Dolby ",
+    "amount": 222.0,
+    "bookedSeats": [
+        "GR1C2",
+        "PR1C2"
+    ],
+    "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
+    "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
+    "bookingStatus": "BOOKED"
+}

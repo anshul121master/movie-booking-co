@@ -1,36 +1,123 @@
-import seatPlan from "../store/reducers/seatPlan"
+import { api, mockApi } from "../config/apiConfig";
 
-const url = "https://moviebooking.co"
+const mockEnabled = false;
+const endpoints = mockEnabled ? mockApi : api;
+
+//api's for user journey
+
+//signin
+export const login = (userCredentials) => {
+  let reqObj = {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userCredentials),
+  };
+  const url = endpoints.login();
+  return fetch(url, reqObj).then((response) => {
+    if (response.ok) return response.json();
+    else
+      return {
+        error: "Login Failed",
+        status: response.status,
+      };
+  });
+};
+
+//signup
+export const signup = (userInfo) => {
+  let reqObj = {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userInfo),
+  };
+  const url = endpoints.signup();
+  return fetch(url, reqObj).then((response) => {
+    if (response.ok) return "success";
+    else return "failed";
+  });
+};
+
+export const getProfile = () => {
+  const url = endpoints.profile();
+  return fetch(url).then((response) => {
+    if (response.ok) return response.json();
+    else
+      return {
+        error: "Some error occured. Unable to fetch profile",
+        status: response.status,
+      };
+  });
+};
+
+//uploadImage
+export const uploadImage = (userInfo) => {
+  let reqObj = {
+    method: "PUT",
+    credentials: "same-origin",
+    body: userInfo,
+  };
+  const url = endpoints.imageUpload();
+  return fetch(url, reqObj).then((response) => {
+    if (response.ok) return response.json();
+    else
+      return {
+        error: "Image Upload Failed",
+        status: response.status,
+      };
+  });
+};
+
+//updateProfile
+export const updateProfile = (userInfo) => {
+  let reqObj = {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userInfo),
+  };
+  const url = endpoints.updateProfile();
+  return fetch(url, reqObj).then((response) => {
+    if (response.ok) return "success";
+    else return "failed";
+  });
+};
 
 //get all cities
 export const getCities = () => {
-  fetch(`${url}/v1/cities`)
-    .then(response => response.json())
-}
-
+  const url = endpoints.cities();
+  return fetch(url).then((response) => response.json());
+};
 
 // get all movies in a particular city
 export const getMovies = (cityId) => {
-  fetch(`${url}/v1/cities/${cityId}/movies/details`)
-    .then(response => response.json())
-}
+  const url = endpoints.movies(cityId);
+  return fetch(url).then((response) => response.json());
+};
 
 //get all theaters for a particular movie
 export const getTheaters = (cityId, movieId) => {
-  fetch(`${url}/v1/cities/${cityId}/theaters/${movieId}`)
-    .then(response => response.json())
-}
+  const url = endpoints.theaters(cityId, movieId);
+  return fetch(url).then((response) => response.json());
+};
 
 // get show timings for a particular movie in a particular theater
-export const getScreens = (movieId, theaterId) =>
-  fetch(`${url}/v1/screens/theater/${theaterId}/${movieId}`)
-    .then(res => res.json())
-
-//get seat plan 
+export const getScreens = (movieId, theaterId) => {
+  const url = endpoints.screens(movieId, theaterId);
+  return fetch(url).then((res) => res.json());
+};
+//get seat plan
 export const getSeatPlan = (seatPlanId) => {
-  fetch(`${url}/v1/seats/${seatPlanId}`)
-    .then(res => res.json())
-}
+  const url = endpoints.seatPlan(seatPlanId);
+  return fetch(url).then((res) => res.json());
+};
 
 export const lockSeats = (seatPlanId, selectedSeats) => {
   let reqObj = {
@@ -41,7 +128,8 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     },
     body: JSON.stringify(selectedSeats),
   }
-  fetch(`${url}/v1/seats/lockSeats/${seatPlanId}`, reqObj).then((response) => {
+  const url= endpoints.lockSeats(seatPlanId);
+  fetch(url, reqObj).then((response) => {
     if (response.ok) return true
     else
       return false
@@ -66,15 +154,16 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
       seatPlanId
     }),
   }
-  fetch(`${url}/v1/bookings`, reqObj).then((response) => {
+  const url = endpoints.booking();
+  fetch(url, reqObj).then((response) => {
     if (response.ok) return response.json().bookingStatus
     else
       return console.error("Error occurred")
   })
 }
 
-  //get all booking
+  //get all bookings for a particular user
 export const getAllBookings = () => {
-  fetch(`${url}/v1/bookings`)
-    .then(response => response.json())
+  const url = endpoints.bookingHistory();
+  return fetch(url).then((res) => res.json());
 }
