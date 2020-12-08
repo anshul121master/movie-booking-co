@@ -49,8 +49,8 @@ const styles = (theme) => ({
         alignItems: 'center'
     },
     button: {
-        color: buttonAvailable,
-        backgroundColor: buttonAvailableText,
+        color: buttonAvailableText,
+        backgroundColor: buttonAvailable,
         margin: 7
     }
 });
@@ -67,9 +67,18 @@ class TheaterCard extends Component {
     getScreenObject = (theater) => {
         const { selectedMovie } = this.props;
         getScreens(selectedMovie.movieId, theater.theaterId)
-            .then((screens) => this.setState({
-                screens: screens
-            }))
+            .then((screens) => {
+
+                let screenTimeArray = []
+                screens.forEach(screen => {
+                    screenTimeArray = screenTimeArray.concat(screen.screenTimes.map(time => time.showTiming))
+                })
+
+                this.setState({
+                    screens: screens,
+                    screenTimeArray: screenTimeArray
+                })
+            })
     }
 
     //when clicked on any show time
