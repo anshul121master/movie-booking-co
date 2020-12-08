@@ -208,3 +208,9 @@ const screens = [
     }
   }
 ]
+
+//get all booking
+export const getAllBookings = () => {
+  fetch(`${url}/v1/bookings`)
+    .then(response => response.json())
+}
