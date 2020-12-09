@@ -144,7 +144,8 @@ div.info{
     float: left;
     padding: 15px 10px;
     margin:40px;
-    max-height: 420px;
+    max-height: 450px;
+    max-width: 420px;
   }
   
   .ticket-container:after,
@@ -171,13 +172,14 @@ div.info{
   }
 
   div.payment-form{
-    width: 700px;
+    max-width: 700px;
+    min-width: 320px;
     margin: 40px;
   }
 
   div.purchase-container{
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
   }
 
   .no-gutters {
@@ -193,7 +195,8 @@ div.info{
   
   .app-container {
     margin: 5% auto;
-    width: 635px;
+    max-width: 635px;
+    min-width: 300px;
     max-height: 430px;
     min-height: 320px;
     background: white;
@@ -303,3 +306,14 @@ div.info{
     cursor: pointer;
   }
   
+  @media(min-width: 901px) {
+    div.purchase-container{
+      display: flex;
+      flex-direction: row;
+  }
+  div.payment-form{
+    width: 700px;
+    min-width: 320px;
+    margin: 40px;
+  }
+  }

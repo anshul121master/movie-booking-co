@@ -2,6 +2,7 @@ import { setSelectedCity } from './city';
 import { getAllMovies, setSelectedMovie } from './movie';
 import { getMovies, getTheaters, getScreens, getSeatPlan, lockSeats, purchaseTickets } from '../../utils/api';
 import { getAllTheaters, setSeatPlan, setSelectedTheater, setShowTimings } from './theater';
+import { setSelectedScreen } from './screen';
 import seatPlan from '../reducers/seatPlan';
 
 export const SET_SEATS_AND_PRICE = 'SET_SEATS_AND_PRICE'
@@ -25,15 +26,19 @@ export function setMovieAndTheaterList(movie) {
     }
 }
 
-export function setTheaterAndSeatPlan(theater, seatPlanId) {
+export function setTheaterAndSeatPlan(theater, seatPlanId, screen) {
     return (dispatch) => {
         dispatch(setSelectedTheater(theater));
+
+        dispatch(setSelectedScreen(screen));
+        
         getSeatPlan(seatPlanId)
             .then(seatPlan => dispatch(setSeatPlan(seatPlan)))
     }
 }
 
 function lockSeatsAndPrice(selectedSeats, price) {
+    debugger
     return {
         type: SET_SEATS_AND_PRICE,
         selectedSeats,
@@ -43,8 +48,8 @@ function lockSeatsAndPrice(selectedSeats, price) {
 
 export function setSeatsAndPrice(selectedSeats, seatPlanId, price) {
     return (dispatch) => {
-        lockSeats(seatPlanId, selectedSeats)
-            .then(response => response ? dispatch(lockSeatsAndPrice(selectedSeats, price)) : console.error('error'))
+        lockSeats(seatPlanId, selectedSeats).then(response => response ? 
+                dispatch(lockSeatsAndPrice(selectedSeats, price)) : console.error('error'))
     }
 }
 

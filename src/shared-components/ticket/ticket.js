@@ -10,8 +10,10 @@ import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
-        maxWidth: 350,
+        minWidth: 375,
+        maxWidth: 420,
+        maxHeight: 450,
+        minHeight: 420,
     },
     bullet: {
         display: 'inline-block',
@@ -47,7 +49,7 @@ export default function Ticket(props) {
                 <CardContent>
                     <Typography variant="h6" component="h4">
                         {movie.name.toUpperCase()}
-                       { (movie.genre !== '' && (<span style={{ fontSize: '15px' }}> `,${movie.genre}` </span>))}
+                        {(movie.genre !== '' && (<span style={{ fontSize: '15px' }}> ,{movie.genre} </span>))}
                     </Typography>
                 </CardContent>
                 <CardContent>
@@ -68,8 +70,8 @@ export default function Ticket(props) {
                     </Typography>
                     <div style={{display: 'flex',justifyContent:'space-between', alignItems:'center'}}> 
                     {props.bookingStatus !== '' ?
-                        (<Typography style={{display:'inline-block', marginBottom: 0}} className={classes.pos} color="textSecondary">{props.bookingStatus}
-                        {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{color:'green'}} fontSize='small'/>)}</Typography>) :
+                        (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
+                            {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{ color: 'green' }} fontSize='small' />)}</Typography>) :
                         <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
                     {(props.cancelTicket !== undefined  && props.bookingStatus.toUpperCase()==='BOOKED')&& 
                         <Button variant="contained" color="secondary" style={{display:'inline-block', alignSelf:'flex-end'}}

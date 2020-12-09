@@ -1,35 +1,65 @@
 [
-    {
-      "screenId": "4bf32d4c-96e2-42ef-9023-ebb5e818ac28",
-      "theaterId": "112cfce8-0f9e-4e44-83cf-43c18661697f",
-      "screenName": "S454",
-      "dimension": "_2D",
-      "screenTimes": [
-        {
-          "showTiming": "S11",
-          "movieId": "1082d145-9d26-4178-9823-64be925b8cba",
-          "seatPlanId": "8c3ba47b-4b8c-41ad-8443-f25240651103",
-          "moviePlayingFromDate": "2020-11-23T12:26:10.907+00:00",
-          "moviePlayingToDate": "2020-11-30T12:24:00.763+00:00"
-        },
-        {
-          "showTiming": "S14",
-          "movieId": "1082d145-9d26-4178-9823-64be925b8cba",
-          "seatPlanId": "706b783a-412e-4733-91c1-51a748349e90",
-          "moviePlayingFromDate": "2020-11-23T12:27:15.613+00:00",
-          "moviePlayingToDate": "2020-11-30T12:27:15.479+00:00"
-        }
-      ],
-      "columns": 3,
-      "noOfRowsPerSeatType": {
-        "PLATINUM": 1,
-        "GOLD": 1,
-        "DIAMOND": 1
+  {
+    "screenId": "4bf32d4c-96e2-42ef-9023-ebb5e818ac28",
+    "theaterId": "112cfce8-0f9e-4e44-83cf-43c18661697f",
+    "screenName": "S454",
+    "dimension": "_2D",
+    "screenTimes": [
+      {
+        "showTiming": "S11",
+        "movieId": "1082d145-9d26-4178-9823-64be925b8cba",
+        "showDateList": [
+          {
+            "seatPlanId": "32f576a3-3076-4af3-a9e5-f6f27825ce3d",
+            "moviePlayingDate": "2020-12-06T13:43:57.827+00:00"
+          },
+          {
+            "seatPlanId": "453f8fef-31ec-40ea-8541-8bc7346e82a6",
+            "moviePlayingDate": "2020-12-07T13:43:57.827+00:00"
+          },
+          {
+            "seatPlanId": "4a6de352-c465-49cb-837d-b849dfe6806a",
+            "moviePlayingDate": "2020-12-08T13:43:57.827+00:00"
+          },
+          {
+            "seatPlanId": "36e52e7a-d588-4a68-bca6-9e7d1c72a926",
+            "moviePlayingDate": "2020-12-09T13:43:57.827+00:00"
+          }
+        ]
       },
-      "priceOfDifferentSeatType": {
-        "PLATINUM": 1,
-        "GOLD": 1,
-        "DIAMOND": 1
+      {
+        "showTiming": "S14",
+        "movieId": "1082d145-9d26-4178-9823-64be925b8cba",
+        "showDateList": [
+          {
+            "seatPlanId": "32f576a3-3076-4af3-a9e5-f6f27825ce3d",
+            "moviePlayingDate": "2020-12-06T13:43:57.827+00:00"
+          },
+          {
+            "seatPlanId": "453f8fef-31ec-40ea-8541-8bc7346e82a6",
+            "moviePlayingDate": "2020-12-07T13:43:57.827+00:00"
+          },
+          {
+            "seatPlanId": "4a6de352-c465-49cb-837d-b849dfe6806a",
+            "moviePlayingDate": "2020-12-08T13:43:57.827+00:00"
+          },
+          {
+            "seatPlanId": "36e52e7a-d588-4a68-bca6-9e7d1c72a926",
+            "moviePlayingDate": "2020-12-09T13:43:57.827+00:00"
+          }
+        ]
       }
+    ],
+    "columns": 12,
+    "noOfRowsPerSeatType": {
+      "PLATINUM": 2,
+      "GOLD": 4,
+      "DIAMOND": 2
+    },
+    "priceOfDifferentSeatType": {
+      "PLATINUM": 250,
+      "GOLD": 210,
+      "DIAMOND": 180
     }
-  ]
+  }
+]

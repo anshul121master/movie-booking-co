@@ -144,25 +144,5 @@ const Button = (props) => (
     <button type='submit' className="checkout-btn">{props.text}</button>
 );
 
-const mapStateToProps = ({ /*theater, selectedSeats, price, movie, time, date, seatPlanId */ }) => {
-    const theater = {
-        "screenName": "s2",
-        "dimension": "_2D",
-        "name": 'PVR Cinemas',
-        "city": "Mumbai"
-    }
-    const selectedSeats = ['GR1C1', 'GR1C2']
-    const price = 450
-    const movie = {
-        "name": "Jab tak hai jaan",
-        "genre": "Romance",
-    }
-    const time = 'S21'
-    const date = '2020-11-30'
-    const seatPlanId = "e5c7b582-03c0-492f-8fe9-1026e5be461c"
 
-    return { theater, selectedSeats, price, movie, time, date, seatPlanId }
-
-}
-
-export default connect(mapStateToProps)(PaymentForm)
+export default connect()(PaymentForm)
