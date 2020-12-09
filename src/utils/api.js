@@ -90,6 +90,44 @@ export const updateProfile = (userInfo) => {
   });
 };
 
+//sendOtp
+export const sendOtp = (emailObj) => {
+  let reqObj = {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(emailObj),
+  };
+  const url = endpoints.getOtp();
+  return fetch(url, reqObj).then((response) => {
+    if (response.ok) return {
+      successMsg: "otp sent successfully"
+    }
+    else return response.json();
+  });
+};
+
+//resetPassword
+export const resetPassword = (pwdDetails) => {
+  let reqObj = {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(pwdDetails),
+  };
+  const url = endpoints.reset();
+  return fetch(url).then((response) => {
+    if (!response.ok) return {
+      successMsg: "Password Changed Successfully"
+    }
+    else return response.json();
+  });
+};
+
 //get all cities
 export const getCities = () => {
   const url = endpoints.cities();

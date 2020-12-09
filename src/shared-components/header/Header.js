@@ -7,9 +7,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { setCityAndMoviesList } from '../../store/actions/shared'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -22,6 +20,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import {Link} from 'react-router-dom'
 
 
 const drawerWidth = 240; 
@@ -84,7 +83,19 @@ const styles = (theme) => ({
         backgroundColor: header,
         color: headerText,
         height: '95px'
-    }
+    },
+    select: {
+        color: headerText,
+        '&:before': {
+            borderColor: headerText,
+        },
+        '&:after': {
+            borderColor: headerText,
+        }
+    },
+    icon: {
+        fill: headerText,
+    },
 })
 
 
@@ -120,48 +131,56 @@ class Header extends Component {
         return (
             <header>
             <AppBar position="relative"  className={clsx([classes.appBar,classes.color], {
-          [classes.appBarShift]: open})}>
+                    [classes.appBarShift]: open})}>
                 <Toolbar className={classes.toolBar}>
                 <div>
                     <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
                 </div>
                 <div className={classes.leftDiv}>
-                    <FormControl variant="filled" className={classes.color} style={{ backgroundColor: '#F5F4F2' }}>
-                        <InputLabel id="demo-simple-select-filled-label">Select City</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={selectedCity.id}
-                        onChange={this.onCityChange}
+                        <Select className={classes.select}
+                            inputProps={{
+                                classes: {
+                                    icon: classes.icon,
+                                },
+                            }}
+                            labelId="demo-simple-select-filled-label"
+                            id="demo-simple-select-filled"
+                            value={selectedCity.id}
+                            onChange={this.onCityChange}
                         >
                         {listOfCities.map(city => 
                             <MenuItem key={city.id} value={city.id}><em>{city.cityName}</em></MenuItem>
                         )}
                         </Select>
-                    </FormControl>
-                    {(authedUser === null && (
-                        <ButtonGroup style={{ width: '10%' }}>
-                        <Button style={{ backgroundColor: '#F5F4F2' }}>
+                    {(authedUser === null ||  authedUser === undefined) && (
+                        <ButtonGroup>
+                        <Button style={{ backgroundColor: header, color: headerText, border: `1px solid ${headerText}` }}>
                             Log In
                         </Button>
                     </ButtonGroup>
-                    ))}
-                    {(authedUser !== null && (
-                        <div className={classes.userName}>
-                        <Typography variant="body1">Welcome {authedUser.fullName}</Typography>
-                        {(authedUser.imageUrl  === null ? <AccountCircleIcon  style={{fontSize:'2.5em'}}/> 
-                            : <Avatar alt="user" src="/icon.png" /*src={authedUser.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} /> )}
+                    )}
+
+                    {authedUser !== null && authedUser !== undefined
+                    ? <React.Fragment className={classes.userName}>
+                        <Typography variant="body1">Welcome {authedUser.fullName}</Typography> 
+                        {(authedUser.imageUrl !== null 
+                        ? <Avatar alt="user" src="/icon.png" /*src={authedUser.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} />
+                        : <AccountCircleIcon  style={{fontSize:'2.5em'}}/> )}
                         <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={this.handleDrawerOpen}
-                        className={clsx(open && classes.hide)}
-                        edge="start"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    </div>
-                    ))}
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={this.handleDrawerOpen}
+                            className={clsx(open && classes.hide)}
+                            edge="start"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                      </React.Fragment>
+                    : <React.Fragment>
+                        <Typography variant="body1">Welcome Guest</Typography>
+                        <AccountCircleIcon  style={{fontSize:'2.5em'}}/> 
+                      </React.Fragment>
+                    } 
                 </div>
                 </Toolbar>
             </AppBar>  
@@ -182,15 +201,16 @@ class Header extends Component {
         </div>
         <Divider />
         <List>
-            <ListItem button key ='profile'>
+            <ListItem button key ='profile' component={Link} to="/profile">
               <ListItemIcon><AccountCircleIcon /></ListItemIcon>
               <ListItemText primary='My Profile' />
             </ListItem>
-            <ListItem button key='bookingsHistory'>
+            <ListItem button key='bookingsHistory' component={Link} to="/upcoming">
               <ListItemIcon><ConfirmationNumberIcon /></ListItemIcon>
               <ListItemText primary='My Bookings' />
             </ListItem>
-            <ListItem button key='signout' style={{backgroundColor: header, color: headerText, textAlign:'center'}}>
+            <ListItem button key='signout' component={Link} to="/signout"
+                style={{backgroundColor: header, color: headerText, textAlign:'center'}}>
               <ListItemText primary='Sign Out' />
             </ListItem>
         </List>
@@ -200,7 +220,7 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ /*authedUser, */selectedCity }, ownProps) {
+function mapStateToProps({ /*authedUser,*/ selectedCity }, ownProps) {
     const { listOfCities } = ownProps;
     const authedUser  = {
         "fullName": "FirstName LastName",
@@ -208,7 +228,7 @@ function mapStateToProps({ /*authedUser, */selectedCity }, ownProps) {
         "phoneNumber": "0000000000",
         "dateOfBirth": 896466600000,
         "imageUrl": null
-        }
+    }
     return {
         listOfCities,
         selectedCity,
