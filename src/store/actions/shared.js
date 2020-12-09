@@ -10,8 +10,7 @@ export function setCityAndMoviesList(city) {
         //dispatch selected city to store
         dispatch(setSelectedCity(city));
         //api call to fetch all movies in the selected city and dispatch the moviesList to store
-        getMovies(city.id).then(moviesList => moviesList.json())
-        .then(moviesList => dispatch(getAllMovies(moviesList)))
+        getMovies(city.id).then(moviesList => dispatch(getAllMovies(moviesList)))
     }
 }
 
