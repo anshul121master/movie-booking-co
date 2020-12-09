@@ -100,7 +100,6 @@ const styles = (theme) => ({
 
 
 class Header extends Component {
-    
     state = {
         open: false
     }
@@ -122,7 +121,7 @@ class Header extends Component {
         const { listOfCities, dispatch } = this.props; // from home component
         const selectedCityObject = listOfCities.filter(city => city.id === cityId);
         dispatch(setCityAndMoviesList(selectedCityObject[0]))
-        localStorage.setItem('city',JSON.stringify(selectedCityObject[0]))
+        sessionStorage.setItem('city',JSON.stringify(selectedCityObject[0]))
     }
 
     render() {
@@ -134,7 +133,9 @@ class Header extends Component {
                     [classes.appBarShift]: open})}>
                 <Toolbar className={classes.toolBar}>
                 <div>
-                    <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
+                    <Link to='/'>
+                        <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
+                    </Link>
                 </div>
                 <div className={classes.leftDiv}>
                         <Select className={classes.select}
@@ -161,7 +162,7 @@ class Header extends Component {
                     )}
 
                     {authedUser !== null && authedUser !== undefined
-                    ? <React.Fragment className={classes.userName}>
+                    ? <React.Fragment>
                         <Typography variant="body1">Welcome {authedUser.fullName}</Typography> 
                         {(authedUser.imageUrl !== null 
                         ? <Avatar alt="user" src="/icon.png" /*src={authedUser.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} />
@@ -220,15 +221,8 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ /*authedUser,*/ selectedCity }, ownProps) {
+function mapStateToProps({ authedUser, selectedCity }, ownProps) {
     const { listOfCities } = ownProps;
-    const authedUser  = {
-        "fullName": "FirstName LastName",
-        "email": "xyz@gmail.com",
-        "phoneNumber": "0000000000",
-        "dateOfBirth": 896466600000,
-        "imageUrl": null
-    }
     return {
         listOfCities,
         selectedCity,

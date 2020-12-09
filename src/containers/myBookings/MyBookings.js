@@ -1,20 +1,30 @@
 import React, { Component } from 'react'
 import BookingHistory from './bookingHistory/BookingHistory'
 import Header from '../../shared-components/header/Header'
-import Footer from '../../shared-components/footer/Footer'
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Link, Route, BrowserRouter, Switch } from "react-router-dom";
-import {getAllBookings} from '../../utils/api'
-import { background, buttonAvailable ,header, headerText} from '../../theme'
-
+import {getAllBookings, cancelBooking} from '../../utils/api'
+import { header, headerText} from '../../theme'
 
 export default class MyBookings extends Component {
     state = {
         value: 0,
         upcomingBookings: [],
         previousBookings: []
+    }
+    cancelTicket = (bookingId) => {
+        cancelBooking(bookingId).then((response) => {
+            this.setState((previousState) => {
+                return {
+                ...previousState,
+                upcomingBookings: previousState.upcomingBookings
+                    .filter((booking)=> booking.bookingId !== response.bookingId).concat([response])
+            };
+            })
+        }).then(console.log(this.state))
+        
     }
 
     componentDidMount() {
@@ -45,10 +55,9 @@ export default class MyBookings extends Component {
                     <Tabs value={value} onChange={this.handleChange} 
                             TabIndicatorProps={{
                                 style: {
-                                  
                                   backgroundColor: header}
                               }}
-                            fullWidth
+                            fullwidth="true"
                             aria-label="simple tabs example">
                         <Tab label="Upcoming Bookings" id="upcomingBookingsTabPanel"
                                 aria-controls="upcomingBookingsTabPanel"
@@ -60,16 +69,14 @@ export default class MyBookings extends Component {
                 </AppBar>
 
                 <Switch>
-                    <Route path="/upcoming">
-                        <BookingHistory bookings={this.state.upcomingBookings}/>
+                    <Route exact path="/upcoming">
+                        <BookingHistory bookings={this.state.upcomingBookings} cancelTicket={this.cancelTicket}/>
                     </Route>
-                    <Route path="/previous">
+                    <Route exact path="/previous">
                         <BookingHistory bookings={this.state.previousBookings}/>
                     </Route>
                 </Switch>
             </BrowserRouter>
-            {/* <BookingHistory /> */}
-            {/* <Footer /> */}
         </React.Fragment>
         );
     }

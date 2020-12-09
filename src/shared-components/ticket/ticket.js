@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { footer } from '../../theme'
 import { DoneRounded } from '@material-ui/icons'
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles({
     root: {
@@ -65,10 +66,17 @@ export default function Ticket(props) {
                     <Typography className={classes.pos} color="textSecondary">
                         Date : {date}
                     </Typography>
+                    <div style={{display: 'flex',justifyContent:'space-between', alignItems:'center'}}> 
                     {props.bookingStatus !== '' ?
-                        (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
+                        (<Typography style={{display:'inline-block', marginBottom: 0}} className={classes.pos} color="textSecondary">{props.bookingStatus}
                         {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{color:'green'}} fontSize='small'/>)}</Typography>) :
                         <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
+                    {(props.cancelTicket !== undefined  && props.bookingStatus.toUpperCase()==='BOOKED')&& 
+                        <Button variant="contained" color="secondary" style={{display:'inline-block', alignSelf:'flex-end'}}
+                            onClick={()=>props.cancelTicket(props.bookingId)}>
+                            Cancel Ticket
+                        </Button>}
+                    </div>
                 </CardContent>
                 <CardActions className={classes.action}>
                     <Typography variant="h5" component="h2">
@@ -79,6 +87,7 @@ export default function Ticket(props) {
                     </Typography>
                 </CardActions>
             </Card>
+            
         </div >
     )
 }

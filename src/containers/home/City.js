@@ -12,6 +12,7 @@ export default class City extends Component {
         this.setState({ open: true})
     }
 
+
   render() {
     const {listOfCities, setCityInStorage} = this.props;
     return (
@@ -19,7 +20,7 @@ export default class City extends Component {
                 open={this.state.open} style={{width:'60%', margin: 'auto'}}>
       <DialogTitle id="city-select-dialog">Select a city</DialogTitle>
       <DialogContent>
-            <List>
+            <List style={{display:'grid'}}>
                 {listOfCities.map(city => 
                 <ListItem key= {city.id} onClick={(event) => {
                     if(event.target.nodeName === 'SPAN'){

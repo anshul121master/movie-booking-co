@@ -47,6 +47,9 @@ class MovieContainer extends Component {
 	render() {
 		// const {moviesList} = this.state;
 		const { moviesList } = this.props;
+		const currentlyRunning = moviesList.filter(movie => new Date(movie.dateReleased) < new Date());
+		const upcoming = moviesList.filter(movie => new Date(movie.dateReleased) > new Date());
+
 		return (
 			this.state.redirect ? (<Redirect to={{ pathname: '/movie' }} />) : (
 				<div>
@@ -57,28 +60,30 @@ class MovieContainer extends Component {
 						<Typography gutterBottom variant="h5" component="h2" style={{ fontWeight: 'bold' }}>
 							Currently Running
 					</Typography>
-
+					{(currentlyRunning.length > 0 ?
 						<GridList style={{ flexWrap: 'wrap' }} cols={this.getGridListCols()} spacing={15}>
-							{moviesList.filter(movie => new Date(movie.dateReleased) < new Date()).map(movie =>
+							{currentlyRunning.map(movie =>
 								<GridListTile key={movie.movieId} style={{ height: '100%' }}>
 									<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
 								</GridListTile>
 							)}
 						</GridList>
+					: <p>No movies available at this time</p> )}
 					</div>
 
 					<div style={{ margin: 25, padding: 10 }}>
 						<Typography gutterBottom variant="h6" component="h2" style={{ fontWeight: 'bold' }}>
 							Upcoming Movies
 					</Typography>
-
+						{(upcoming.length > 0 ?
 						<GridList style={{ flexWrap: 'nowrap' }} cols={this.getGridListCols()} spacing={15}>
-							{moviesList.filter(movie => new Date(movie.dateReleased) > new Date()).map(movie =>
+							{upcoming.map(movie =>
 								<GridListTile key={movie.movieId} style={{ height: '100%' }}>
 									<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
 								</GridListTile>
 							)}
 						</GridList>
+						: <p>No movies available at this time</p> )}
 					</div>
 				</div>)
 		)

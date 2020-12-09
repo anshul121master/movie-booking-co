@@ -13,7 +13,7 @@ class Home extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        const city =localStorage.getItem('city');
+        const city =sessionStorage.getItem('city');
         if(city !== undefined && city !==null) {
             this.setState({
                 citySelected: true
@@ -24,7 +24,7 @@ class Home extends Component {
 
     setCityInStorage = (selectedCity) => {
         const { listOfCities, dispatch } = this.props;
-        localStorage.setItem('city',JSON.stringify(selectedCity))
+        sessionStorage.setItem('city',JSON.stringify(selectedCity))
         const selectedCityObject = listOfCities.filter((city) => city.cityName === selectedCity.cityName);
         dispatch(setCityAndMoviesList(selectedCityObject[0]))
         this.setState({

@@ -203,7 +203,7 @@ div.info{
   
 
   .checkout {
-    max-height: 430px;
+    max-height: 470px;
     min-height: 320px;
     background:#0F222D;
     color: white;
@@ -263,6 +263,10 @@ div.info{
     margin-right: 5px;
   }
   
+  .errorMsg {
+    color:red;
+    font-size: 12px;
+  }
   /* Removes form Controls  */
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
