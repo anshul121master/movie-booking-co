@@ -9,8 +9,10 @@ import { DoneRounded } from '@material-ui/icons'
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
-        maxWidth: 350,
+        minWidth: 375,
+        maxWidth: 420,
+        maxHeight: 450,
+        minHeight: 420,
     },
     bullet: {
         display: 'inline-block',
@@ -46,7 +48,7 @@ export default function Ticket(props) {
                 <CardContent>
                     <Typography variant="h6" component="h4">
                         {movie.name.toUpperCase()}
-                       { (movie.genre !== '' && (<span style={{ fontSize: '15px' }}> `,${movie.genre}` </span>))}
+                        {(movie.genre !== '' && (<span style={{ fontSize: '15px' }}> ,{movie.genre} </span>))}
                     </Typography>
                 </CardContent>
                 <CardContent>
@@ -67,7 +69,7 @@ export default function Ticket(props) {
                     </Typography>
                     {props.bookingStatus !== '' ?
                         (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
-                        {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{color:'green'}} fontSize='small'/>)}</Typography>) :
+                            {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{ color: 'green' }} fontSize='small' />)}</Typography>) :
                         <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
                 </CardContent>
                 <CardActions className={classes.action}>

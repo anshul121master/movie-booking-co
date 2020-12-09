@@ -28,7 +28,7 @@ export default class App extends Component {
         <Router>
           <Switch>
             <Route exact path='/' component={() => <Home listOfCities={listOfCities} />} />
-            {/* <Route exact path='/bookings' component={() => <MyBookings listOfCities={listOfCities} />} /> */}
+            <Route exact path='/bookings' component={() => <MyBookings listOfCities={listOfCities} />} />
             <Route exact path='/movie' component={() => <Movie listOfCities={listOfCities} />} />
             <Route exact path='/screen' component={Screen} />
             <Route exact path='/purchase' component={Purchase} />
