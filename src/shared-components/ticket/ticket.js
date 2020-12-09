@@ -45,8 +45,8 @@ export default function Ticket(props) {
                 </CardContent>
                 <CardContent>
                     <Typography variant="h6" component="h4">
-                        {movie.name.toUpperCase()},
-                        <span style={{ fontSize: '15px' }}> {movie.genre} </span>
+                        {movie.name.toUpperCase()}
+                       { (movie.genre !== '' && (<span style={{ fontSize: '15px' }}> `,${movie.genre}` </span>))}
                     </Typography>
                 </CardContent>
                 <CardContent>
@@ -67,7 +67,7 @@ export default function Ticket(props) {
                     </Typography>
                     {props.bookingStatus !== '' ?
                         (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
-                        <DoneRounded style={{color:'green'}} fontSize='small'/></Typography>) :
+                        {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{color:'green'}} fontSize='small'/>)}</Typography>) :
                         <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
                 </CardContent>
                 <CardActions className={classes.action}>

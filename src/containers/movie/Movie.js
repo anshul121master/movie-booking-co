@@ -6,10 +6,11 @@ import TheaterContainer from './theater-container/TheaterContainer'
 import Footer from '../../shared-components/footer/Footer'
 
 class Movie extends Component {
+
     render() {
         return (
             <div>
-                <Header />
+                <Header listOfCities={this.props.listOfCities} />
                 <MovieDetails selectedMovie={this.props.selectedMovie} />
                 <TheaterContainer />
                 <Footer />
@@ -18,7 +19,7 @@ class Movie extends Component {
     }
 }
 
-function mapStateToProps({ selectedMovie }) {
+function mapStateToProps({ selectedMovie, }) {
     return {
         selectedMovie
     }
