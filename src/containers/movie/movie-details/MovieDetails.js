@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-        marginTop: 5,
-        marginBottom: 5,
+        marginTop: 15,
+        marginBottom: 10,
         width: '100%',
         height: '25%',
         border: "none",
@@ -46,53 +46,39 @@ export default function MovieDetails(props) {
                 <CardMedia
                     className={classes.media}
                     image="/movieposter.jpg"
-                    title="Avengers Endgame"
+                    title={props.selectedMovie.name}
                 />
                 <CardContent className={classes.content}>
                     <Typography gutterBottom variant="h5" component="h2">
-                        {/*props.selectedMovie.name*/}Avengers Endgame
+                        {props.selectedMovie.name.toUpperCase()}
                     </Typography>
                     <Typography className={classes.nestedcontent}>
                         <Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                Genre: {/*props.selectedMovie.genre*/}Suspense Thriller
-                        </Typography>
+                                Genre: {props.selectedMovie.genre}
+                            </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                Length: {/*props.selectedMovie.duration*/}2 hrs
-                        </Typography>
+                                Length: {props.selectedMovie.duration}
+                            </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                Rating: {/*props.selectedMovie.rating*/}3.4
+                                Rating: {props.selectedMovie.rating}
                             </Typography>
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            {/*props.selectedMovie.rating*/}Cast/Crew
-                        <Typography variant="body2" color="textSecondary" component="li">
-                                {/*props.selectedMovie.rating*/}Robert Downey Jr.
-                        </Typography>
+                            Cast/Crew
+                        {props.selectedMovie.casts.map(cast =>
                             <Typography variant="body2" color="textSecondary" component="li">
-                                {/*props.selectedMovie.rating*/}Scarlett Johansson
-                        </Typography>
-                            <Typography variant="body2" color="textSecondary" component="li">
-                                {/*props.selectedMovie.rating*/}Chris Evans
-                        </Typography>
+                                {cast}
+                            </Typography>)}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            {/*props.selectedMovie.rating*/}Languages
-                        <Typography variant="body2" color="textSecondary" component="li">
-                                {/*props.selectedMovie.rating*/}English
-                        </Typography>
+                            Languages
+                            {props.selectedMovie.languages.map(language =>
                             <Typography variant="body2" color="textSecondary" component="li">
-                                {/*props.selectedMovie.rating*/}Hindi
+                                {language}
+                            </Typography>)}
                         </Typography>
-                        </Typography>
-
                     </Typography>
-                    {/* {props.selectedMovie.casts.map(cast => 
-                <Typography variant="body2" color="textSecondary" component="p">
-                </Typography>)} */}
-                    {/* {selectedMovie.languages.map(cast => 
-                <Typography variant="body2" color="textSecondary" component="p">
-                </Typography>)} */}
                 </CardContent>
             </CardActionArea>
         </Card>

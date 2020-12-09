@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card';
 import { withStyles } from "@material-ui/core/styles";
 import compose from 'recompose/compose';
-import { CardContent, Typography, IconButton, Button } from '@material-ui/core';
+import { CardContent, Typography, IconButton, Button, Tooltip } from '@material-ui/core';
 import { ArrowBackIosRounded } from '@material-ui/icons'
 import { headerText, buttonAvailable, buttonAvailableText } from '../../theme'
 import { setSeatsAndPrice } from '../../store/actions/shared'
+import { Redirect, Link } from 'react-router-dom'
 
 const styles = (theme) => ({
     root: {
@@ -20,7 +21,8 @@ const styles = (theme) => ({
 class Screen extends Component {
     state = {
         selectedSeats: [],
-        price: 0
+        price: 0,
+        redirect: false
     }
 
     calculatePrice(theater, selectedSeats) {
@@ -65,10 +67,16 @@ class Screen extends Component {
             localStorage.setItem('movie', this.props.movie)
             localStorage.setItem('theater', this.props.theater)
             localStorage.setItem('price', this.props.price)
+            this.setState({
+                redirect: true
+            })
         }
         else {
             /*Redirect to payment page and store state information in redux store*/
-            this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlanId, this.state.price))
+            //this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlanId, this.state.price))
+            this.setState({
+                redirect: true
+            })
         }
     }
 
@@ -97,67 +105,84 @@ class Screen extends Component {
         const { seatPlan, theater, movie, classes } = this.props
         const seatMap = this.createSeatMap(theater)
         return (
-            <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
-                <div className='screen-header'>
-                    <IconButton >
-                        <ArrowBackIosRounded style={{ color: headerText }} />
-                    </IconButton>
-                    <span>{movie.name}</span>
+            this.state.redirect ? (<Redirect to={{ pathname: '/purchase' }} />) : (
+                <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
+                    <div className='screen-header'>
+                        <IconButton >
+                            <Link style={{ textDecoration: 'none' }} to={{
+                                pathname: "/",
+                            }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>
+                        </IconButton>
+                        <span>{movie.name}</span>s
                     <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                        PVR Cinemas Pune</span>
-                    <div className='screen-info'>
-                        <div className='info'>
-                            <div className='seat' style={{ fontSize: '0.7em' }}>Available Seats</div>
-                            <div className='seat chosen' style={{ fontSize: '0.7em' }}>Selected Seats</div>
-                            <div className='seat booked' style={{ fontSize: '0.7em' }}>Unavailable Seats</div>
+                            PVR Cinemas Pune</span>
+                        <div className='screen-info'>
+                            <div className='info'>
+                                <div className='seat' style={{ fontSize: '0.7em', backgroundColor: 'white', cursor: 'default' }}>Available Seats</div>
+                                <div className='seat chosen' style={{ fontSize: '0.7em', cursor: 'default' }}>Selected Seats</div>
+                                <Tooltip title="Other users have booked this seat" aria-label="add">
+                                    <div className='seat booked' style={{ fontSize: '0.7em' }}>Booked Seats</div>
+                                </Tooltip>
+                                <Tooltip title="Other users have locked these seats but payment is yet to be made" aria-label="add">
+                                    <div className='seat locked' style={{ fontSize: '0.7em' }}>Locked Seats</div>
+                                </Tooltip>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className='seat-container'>
-                    <Card className={classes.root} variant="outlined">
-                        {Object.keys(theater.noOfRowsPerSeatType).map((seatType, index) => (
-                            <CardContent>
-                                <Typography variant="body2" color="textSecondary">
-                                    {seatType + ' - Rs. ' + theater.priceOfDifferentSeatType[seatType]}
-                                </Typography>
-                                <div className='seat-map'>
-                                    {seatMap[index].map((row, rowindex) => (
-                                        <div className='seat-row'>
-                                            {seatMap[index][rowindex].map(
-                                                (col, colIndex) => (
-                                                    (seatPlan.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                        <div className='seat booked' key={seatMap[index][rowindex][colIndex]}>
-                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                        </div>
-                                                        : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                            <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
-                                                                onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
-                                                            >
-                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                            </div>
-                                                            : <div className='seat' key={seatMap[index][rowindex][colIndex]}
-                                                                onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
-                                                            >
-                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                            </div>)
+                    <div className='seat-container'>
+                        <Card className={classes.root} variant="outlined">
+                            {Object.keys(theater.noOfRowsPerSeatType).map((seatType, index) => (
+                                <CardContent>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {seatType + ' - Rs. ' + theater.priceOfDifferentSeatType[seatType]}
+                                    </Typography>
+                                    <div className='seat-map'>
+                                        {seatMap[index].map((row, rowindex) => (
+                                            <div className='seat-row'>
+                                                {seatMap[index][rowindex].map(
+                                                    (col, colIndex) => (
+                                                        (seatPlan.bookedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                            <Tooltip title="Other user booked this seat" aria-label="add">
+                                                                <div className='seat booked' key={seatMap[index][rowindex][colIndex]}>
+                                                                    {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                </div>
+                                                            </Tooltip>
+                                                            : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
+                                                                    onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
+                                                                >
+                                                                    {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                </div>
+                                                                : (seatPlan.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                    <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
+                                                                        <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
+                                                                        >
+                                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                        </div></Tooltip>
+                                                                    : <Tooltip title="Click to select this seat" aria-label="add">
+                                                                        <div className='seat' key={seatMap[index][rowindex][colIndex]}
+                                                                            onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
+                                                                        >
+                                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                        </div></Tooltip>))
 
-                                                    )))}
-                                        </div>))}
-                                </div>
-                            </CardContent>
-                        ))}
-                        <div style={{ margin: 10, display: 'flex', alignItems: "center", justifyContent: "center" }}>
-                            <Button style={{
-                                color: buttonAvailableText,
-                                backgroundColor: buttonAvailable,
-                            }} disabled={this.state.selectedSeats.length === 0}
-                            // onClick= {this.purchaseSeats}
-                            >
-                                Purchase - Rs {this.state.price}</Button>
-                        </div>
-                    </Card>
-                </div >
-            </div>
+                                                        )))}
+                                            </div>))}
+                                    </div>
+                                </CardContent>
+                            ))}
+                            <div style={{ margin: 10, display: 'flex', alignItems: "center", justifyContent: "center" }}>
+                                <Button style={{
+                                    color: buttonAvailableText,
+                                    backgroundColor: buttonAvailable,
+                                }} disabled={this.state.selectedSeats.length === 0}
+                                    onClick={this.purchaseSeats}
+                                >
+                                    Purchase - Rs {this.state.price}</Button>
+                            </div>
+                        </Card>
+                    </div >
+                </div>)
         )
     }
 }
@@ -252,7 +277,8 @@ const mapStateToProps = ({/* theater, seatPlan, movie, authedUser */ }) => {
     }
     const seatPlan = {
         "seatPlanId": "706b783a-412e-4733-91c1-51a748349e90",
-        "bookedSeats": [],
+        "bookedSeats": ["GR1C3",
+            "PR1C4"],
         "lockedSeats": [
             "GR1C2",
             "PR1C2"

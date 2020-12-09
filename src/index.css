@@ -104,7 +104,14 @@ div.seat.booked{
     color: lightgrey;
     background-color: rgb(112, 112, 112);
     border: 1px solid darkgray;
-    cursor: text;
+    cursor: default;
+  }
+
+div.seat.locked{
+  color: lightgrey;
+  background-color: rgb(255, 128, 44);
+  border: 1px solid darkgray;
+  cursor: default;
 }
 
 div.seat.chosen{

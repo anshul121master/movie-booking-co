@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-const mockEnabled = false;
+const mockEnabled = true;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -158,7 +158,7 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
   fetch(url, reqObj).then((response) => {
     if (response.ok) return response.json().bookingStatus
     else
-      return console.error("Error occurred")
+      return console.error("Error")
   })
 }
 
