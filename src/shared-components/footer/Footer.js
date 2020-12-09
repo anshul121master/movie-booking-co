@@ -10,7 +10,7 @@ export default function Footer() {
         paddingTop: '1em',
         paddingBottom: '1em',
         position: 'relative',
-        bottom: '-300px',
+        bottom: '-50px',
         width: '100%',
         top: 'auto'
     }

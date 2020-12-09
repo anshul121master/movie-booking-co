@@ -156,3 +156,52 @@ export const getSeatPlan = (seatPlanId) => {
   const url = endpoints.seatPlan(seatPlanId);
   return fetch(url).then((res) => res.json());
 };
+
+export const lockSeats = (seatPlanId, selectedSeats) => {
+  let reqObj = {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(selectedSeats),
+  }
+  const url= endpoints.lockSeats(seatPlanId);
+  fetch(url, reqObj).then((response) => {
+    if (response.ok) return true
+    else
+      return false
+  })
+}
+
+export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, price, movieName, time, date, seatPlanId }) => {
+  let reqObj = {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      theaterDetails,
+      dateOfShow: date,
+      showTiming: time,
+      screenName,
+      movieName,
+      amount: price,
+      bookedSeats: selectedSeats,
+      seatPlanId
+    }),
+  }
+  const url = endpoints.booking();
+  fetch(url, reqObj).then((response) => {
+    if (response.ok) return response.json().bookingStatus
+    else
+      return console.error("Error")
+  })
+}
+
+  //get all bookings for a particular user
+export const getAllBookings = () => {
+  const url = endpoints.bookingHistory();
+  return fetch(url).then((res) => res.json());
+}

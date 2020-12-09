@@ -4,5 +4,7 @@ const header = '#0F222D'
 const footer = '#FFF5D0'
 const footerText = '#0F222D'
 const headerText = '#FFF5D0'
+const buttonAvailableText = '#3C5B41'
+const buttonAvailable = '#E2FDE6'
 
-export { background, card, header, footer, footerText, headerText }
+export { background, card, header, footer, footerText, headerText, buttonAvailableText, buttonAvailable }

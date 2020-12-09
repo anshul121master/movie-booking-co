@@ -13,6 +13,9 @@ export const api ={
     theaters: (cityId, movieId) => `${url}/v1/cities/${cityId}/theaters/${movieId}`,
     screens: (movieId, theaterId) => `${url}/v1/screens/theater/${theaterId}/${movieId}`,
     seatPlan: (seatPlanId) => `${url}/v1/seats/${seatPlanId}`,
+    bookingHistory: () => `${url}/v1/bookings`,
+    booking: () => `${url}/v1/bookings`,
+    lockSeats: (seatPlanId) => `${url}/v1/seats/lockSeats/${seatPlanId}`
 }
 
 export const mockApi = {
@@ -28,4 +31,7 @@ export const mockApi = {
     theaters: (cityId, movieId) => './data/theaters.json',
     screens: (movieId, theaterId) => './data/screens.json',
     seatPlan: (seatPlanId) => './data/seatplan.json',
+    bookingHistory: () => './data/bookingHistory.json',
+    booking: () => './data/booking.json',
+    lockSeats: (seatPlanId) => './data/lockSeats.json'
 }
