@@ -20,6 +20,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Copyright from '../../shared-components/Copyright'
+import { userProfilePhoto } from '../../config'
 
 const styles = (theme) => ({
   profileInfoDiv: {
@@ -272,7 +273,7 @@ class Profile extends Component {
                   />
                 ) : (
                   <img
-                    src={`https://moviebooking.co/user-profile-photos/${imageUrl}`}
+                    src={userProfilePhoto+imageUrl}
                     alt="profile image"
                     className={classes.profileImg}
                   />

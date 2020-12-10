@@ -1,5 +1,8 @@
 const url = "https://moviebooking.co";
 
+export const userProfilePhoto = "https://moviebooking.co/user-profile-photos/"
+export const moviePosters = "https://moviebooking.co/movie-posters/"
+
 export const api ={
     login: () => `${url}/login`,
     signup: () => `${url}/signUp`,
