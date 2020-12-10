@@ -21,7 +21,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import {Link} from 'react-router-dom'
-
+import '../../../src/index.css'
 
 const drawerWidth = 240; 
 const styles = (theme) => ({
@@ -100,7 +100,6 @@ const styles = (theme) => ({
 
 
 class Header extends Component {
-    
     state = {
         open: false
     }
@@ -122,7 +121,7 @@ class Header extends Component {
         const { listOfCities, dispatch } = this.props; // from home component
         const selectedCityObject = listOfCities.filter(city => city.id === cityId);
         dispatch(setCityAndMoviesList(selectedCityObject[0]))
-        localStorage.setItem('city',JSON.stringify(selectedCityObject[0]))
+        sessionStorage.setItem('city',JSON.stringify(selectedCityObject[0]))
     }
 
     render() {
@@ -132,9 +131,11 @@ class Header extends Component {
             <header>
             <AppBar position="relative"  className={clsx([classes.appBar,classes.color], {
                     [classes.appBarShift]: open})}>
-                <Toolbar className={classes.toolBar}>
+                <Toolbar className="toolBar">
                 <div>
-                    <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
+                    <Link to='/'>
+                        <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
+                    </Link>
                 </div>
                 <div className={classes.leftDiv}>
                         <Select className={classes.select}
@@ -153,18 +154,20 @@ class Header extends Component {
                         )}
                         </Select>
                     {(authedUser === null ||  authedUser === undefined) && (
+                        <Link to='/login'>
                         <ButtonGroup>
                         <Button style={{ backgroundColor: header, color: headerText, border: `1px solid ${headerText}` }}>
                             Log In
                         </Button>
                     </ButtonGroup>
+                    </Link>
                     )}
 
                     {authedUser !== null && authedUser !== undefined
-                    ? <React.Fragment className={classes.userName}>
-                        <Typography variant="body1">Welcome {authedUser.fullName}</Typography> 
-                        {(authedUser.imageUrl !== null 
-                        ? <Avatar alt="user" src="/icon.png" /*src={authedUser.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} />
+                    ? <React.Fragment>
+                        <Typography variant="body1">Welcome {authedUser.response.fullName}</Typography> 
+                        {(authedUser.response.imageUrl !== null 
+                        ? <Avatar alt="user" src="/icon.png" /*src={authedUser.response.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} />
                         : <AccountCircleIcon  style={{fontSize:'2.5em'}}/> )}
                         <IconButton
                             color="inherit"
@@ -220,15 +223,9 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ /*authedUser,*/ selectedCity }, ownProps) {
+function mapStateToProps({ authedUser, selectedCity }, ownProps) {
     const { listOfCities } = ownProps;
-    const authedUser  = {
-        "fullName": "FirstName LastName",
-        "email": "xyz@gmail.com",
-        "phoneNumber": "0000000000",
-        "dateOfBirth": 896466600000,
-        "imageUrl": null
-    }
+      
     return {
         listOfCities,
         selectedCity,

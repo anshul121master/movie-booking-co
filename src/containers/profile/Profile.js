@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -20,7 +20,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Copyright from '../../shared-components/Copyright'
-import { userProfilePhoto } from '../../config'
+import { userProfilePhoto } from '../../config/apiConfig'
 
 const styles = (theme) => ({
   profileInfoDiv: {
@@ -415,7 +415,7 @@ class Profile extends Component {
                   </Grid>
                   <Grid container justify="flex-end">
                     <Grid item>
-                      <Link href="/" variant="body2">
+                      <Link to="/">
                         Proceed to home
                       </Link>
                     </Grid>

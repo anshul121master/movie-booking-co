@@ -50,7 +50,7 @@ export default function MovieDetails(props) {
                 />
                 <CardContent className={classes.content}>
                     <Typography gutterBottom variant="h5" component="h2">
-                        {props.selectedMovie.name.toUpperCase()}
+                        {props.selectedMovie.name}
                     </Typography>
                     <Typography className={classes.nestedcontent}>
                         <Typography>

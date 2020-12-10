@@ -5,7 +5,7 @@ import Ticket from '../../../shared-components/ticket/Ticket'
 export default class BookingHistory extends Component {
 
     render() {
-        const { bookings } = this.props;
+        const { bookings, cancelTicket } = this.props;
         return (
             <React.Fragment>
             {(bookings.length > 0 ? (<div>
@@ -25,13 +25,16 @@ export default class BookingHistory extends Component {
                         const bookingStatus=ticket.bookingStatus;
                         const time = ticket.showTiming;
                         return <Ticket key={ticket.bookingId}
-                            theater={theater}
-                            selectedSeats={selectedSeats}
-                            price={price}
-                            movie={movie}
-                            date={date}
-                            time={time}
-                            bookingStatus ={bookingStatus} />
+                                    theater={theater}
+                                    selectedSeats={selectedSeats}
+                                    price={price}
+                                    movie={movie}
+                                    date={date}
+                                    time={time}
+                                    bookingStatus ={bookingStatus} 
+                                    cancelTicket= {cancelTicket}
+                                    bookingId= {ticket.bookingId}
+                                    />
                     })}
         </div>) : <p>You don't seem to have any bookings</p>
         )}

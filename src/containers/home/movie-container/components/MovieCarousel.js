@@ -18,8 +18,10 @@ export default function MovieCarousel(props) {
             <Carousel style={{flex:1, height:'250px'}} fullHeightHover={false} autoPlay={false} navButtonsAlwaysVisible={true}>
             {moviesList.map((movie, index) => 
             <div key={movie.movieId}>
-                {index %2===0 ? <img src='/logo192.png' width={'100%'} onClick={() =>handleSelectedMovie(movie)}/>
-                : <img src='/moviePoster.jpg' width={'100%'} onClick={() =>handleSelectedMovie(movie)}/> }
+                {index %2===0 ? <img src='/logo192.png' width={'100%'} onClick={() =>handleSelectedMovie(movie)}
+                                      alt={`${movie.name} Poster`}/>
+                : <img src='/moviePoster.jpg' width={'100%'} onClick={() =>handleSelectedMovie(movie)}
+                        alt={`${movie.name} Poster`}/> }
             </div>
             )}
             </Carousel>

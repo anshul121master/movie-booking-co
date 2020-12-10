@@ -1,3 +1,4 @@
+import { TramOutlined } from "@material-ui/icons";
 import { api, mockApi } from "../config/apiConfig";
 
 const mockEnabled = true;
@@ -16,7 +17,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url, reqObj).then(resp => resp.json());
+  return fetch(url).then(resp => resp.json());
 };
 
 //signup
@@ -206,8 +207,8 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     },
     body: JSON.stringify(selectedSeats),
   }
-  const url= endpoints.lockSeats(seatPlanId);
-  fetch(url, reqObj).then((response) => {
+  const url = endpoints.lockSeats(seatPlanId);
+  return fetch(url).then((response) => {
     if (response.ok) return true
     else
       return false
@@ -233,15 +234,27 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
     }),
   }
   const url = endpoints.booking();
-  fetch(url, reqObj).then((response) => {
-    if (response.ok) return response.json().bookingStatus
+  return fetch(url).then((response) => {
+    if (response.ok) return response.json()
     else
       return console.error("Error")
   })
 }
 
-  //get all bookings for a particular user
+//get all bookings for a particular user
 export const getAllBookings = () => {
   const url = endpoints.bookingHistory();
   return fetch(url).then((res) => res.json());
+}
+
+// cancel a particular booking using bookingId
+export const cancelBooking = (bookingId) => {
+  let reqObj = {
+    method: "PUT",
+    credentials: "same-origin"
+  };
+  const url = endpoints.cancelBooking(bookingId);
+  return fetch(url, reqObj).then((response) => {
+    if (response.ok) return response.json()
+  })
 }

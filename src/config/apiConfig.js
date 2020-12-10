@@ -18,7 +18,8 @@ export const api ={
     seatPlan: (seatPlanId) => `${url}/v1/seats/${seatPlanId}`,
     bookingHistory: () => `${url}/v1/bookings`,
     booking: () => `${url}/v1/bookings`,
-    lockSeats: (seatPlanId) => `${url}/v1/seats/lockSeats/${seatPlanId}`
+    lockSeats: (seatPlanId) => `${url}/v1/seats/lockSeats/${seatPlanId}`,
+    cancelBooking: (bookingId) => `${url}/v1/bookings/${bookingId}`
 }
 
 export const mockApi = {
@@ -36,5 +37,6 @@ export const mockApi = {
     seatPlan: (seatPlanId) => './data/seatplan.json',
     bookingHistory: () => './data/bookingHistory.json',
     booking: () => './data/booking.json',
-    lockSeats: (seatPlanId) => './data/lockSeats.json'
+    lockSeats: (seatPlanId) => './data/lockSeats.json',
+    cancelBooking: (bookingId) => `./data/cancelBooking.json`
 }

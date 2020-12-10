@@ -144,7 +144,8 @@ div.info{
     float: left;
     padding: 15px 10px;
     margin:40px;
-    max-height: 420px;
+    max-height: 450px;
+    max-width: 420px;
   }
   
   .ticket-container:after,
@@ -171,13 +172,14 @@ div.info{
   }
 
   div.payment-form{
-    width: 700px;
+    max-width: 700px;
+    min-width: 320px;
     margin: 40px;
   }
 
   div.purchase-container{
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
   }
 
   .no-gutters {
@@ -193,7 +195,8 @@ div.info{
   
   .app-container {
     margin: 5% auto;
-    width: 635px;
+    max-width: 635px;
+    min-width: 300px;
     max-height: 430px;
     min-height: 320px;
     background: white;
@@ -203,7 +206,7 @@ div.info{
   
 
   .checkout {
-    max-height: 430px;
+    max-height: 470px;
     min-height: 320px;
     background:#0F222D;
     color: white;
@@ -263,6 +266,11 @@ div.info{
     margin-right: 5px;
   }
   
+  .errorMsg {
+    color:red;
+    font-size: 12px;
+  }
+
   /* Removes form Controls  */
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
@@ -299,3 +307,72 @@ div.info{
     cursor: pointer;
   }
   
+  @media(min-width: 901px) {
+    div.purchase-container{
+      display: flex;
+      flex-direction: row;
+  }
+  div.payment-form{
+    width: 700px;
+    min-width: 320px;
+    margin: 40px;
+  }
+
+  
+  }
+  
+
+  div.login {
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  div.login-container {
+    height: 50%;
+    width: 50%;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+  }
+
+  div.login-label {
+    font-size: 2em;
+  }
+  
+  .toolBar {
+    justify-content: space-between;
+  }
+
+  .leftDiv {
+    justify-content:'space-around';
+    width: 35%;
+    padding: 10px;
+    align-items: center;
+    margin: 10px;
+    display: flex;
+    flex-direction: row
+  }
+  @media (max-width: 767px) {
+   .toolBar {
+     justify-content: center;
+     flex-direction: column;
+     display: flex;
+   }
+
+   .leftDiv {
+    justify-content:'space-between';
+  }
+  }
+  @media (min-width: 600px){
+  .MuiToolbar-regular {
+      min-height: 64px;
+    }
+  }

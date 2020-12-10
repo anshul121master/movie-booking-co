@@ -1,55 +1,58 @@
-[
-  {
-    "theaterId": "14343144-5a4a-4884-aa93-10961f631e79",
-    "cityId": "872d3baf-e718-4af0-aad2-080501299248",
-    "theaterName": "PVR Cinemas",
-    "address": {
-      "city": "Mumbai",
-      "state": "Maharashtra",
-      "area": "Near CST Railway Station",
-      "pincode": "201006"
+{
+  "response": [
+    {
+      "theaterId": "14343144-5a4a-4884-aa93-10961f631e79",
+      "cityId": "872d3baf-e718-4af0-aad2-080501299248",
+      "theaterName": "PVR Cinemas",
+      "address": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "area": "Near CST Railway Station",
+        "pincode": "201006"
+      },
+      "rating": 4.7,
+      "movies": [
+        {
+          "id": "688e7562-2eeb-47fb-8fe3-df66a62e122c",
+          "startDate": "2020-12-06",
+          "endDate": "2020-12-09"
+        },
+        {
+          "id": "f16579ce-cccf-4a4d-9825-823fa4f1d021",
+          "startDate": "2020-12-06",
+          "endDate": "2020-12-09"
+        }
+      ]
     },
-    "rating": 4.7,
-    "movies": [
-      {
-        "id": "1082d145-9d26-4178-9823-64be925b8cba",
-        "startDate": "2020-12-06",
-        "endDate": "2020-12-09"
+    {
+      "theaterId": "157895444-5a4a-4884-aa93-gvft654gb456",
+      "cityId": "872d3baf-e718-4af0-aad2-080501299248",
+      "theaterName": "Suncity Cinemas",
+      "address": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "area": "Juhu",
+        "pincode": "201006"
       },
-      {
-        "id": "f16579ce-cccf-4a4d-9825-823fa4f1d021",
-        "startDate": "2020-12-06",
-        "endDate": "2020-12-09"
-      }
-    ]
-  },
-  {
-    "theaterId": "157895444-5a4a-4884-aa93-gvft654gb456",
-    "cityId": "872d3baf-e718-4af0-aad2-080501299248",
-    "theaterName": "Suncity Cinemas",
-    "address": {
-      "city": "Mumbai",
-      "state": "Maharashtra",
-      "area": "Juhu",
-      "pincode": "201006"
-    },
-    "rating": 4.3,
-    "movies": [
-      {
-        "id": "1082d145-9d26-4178-9823-64be925b8cba",
-        "startDate": "2020-12-06",
-        "endDate": "2020-12-09"
-      },
-      {
-        "id": "dasrwsfr-trcf-4a4d-9825-823fa4f1d021",
-        "startDate": "2020-12-06",
-        "endDate": "2020-12-09"
-      },
-      {
-        "id": "csj32432-trcf-432h-9820-8fgsdgg34202",
-        "startDate": "2020-12-06",
-        "endDate": "2020-12-09"
-      }
-    ]
-  }
-]
+      "rating": 4.3,
+      "movies": [
+        {
+          "id": "688e7562-2eeb-47fb-8fe3-df66a62e122c",
+          "startDate": "2020-12-06",
+          "endDate": "2020-12-09"
+        },
+        {
+          "id": "dasrwsfr-trcf-4a4d-9825-823fa4f1d021",
+          "startDate": "2020-12-06",
+          "endDate": "2020-12-09"
+        },
+        {
+          "id": "csj32432-trcf-432h-9820-8fgsdgg34202",
+          "startDate": "2020-12-06",
+          "endDate": "2020-12-09"
+        }
+      ]
+    }
+  ],
+  "exception": null
+}

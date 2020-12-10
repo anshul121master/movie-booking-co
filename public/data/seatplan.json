@@ -1,8 +1,11 @@
 {
-    "seatPlanId": "706b783a-412e-4733-91c1-51a748349e90",
+  "response": {
+    "seatPlanId": "32f576a3-3076-4af3-a9e5-f6f27825ce3d",
     "bookedSeats": [],
     "lockedSeats": [
       "GR1C2",
       "PR1C2"
     ]
-  }
+  },
+  "exception": null
+}
