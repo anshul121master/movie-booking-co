@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-const mockEnabled = false;
+const mockEnabled = true;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -209,8 +209,12 @@ export const getAllBookings = () => {
 
 // cancel a particular booking using bookingId
 export const cancelBooking = (bookingId) => {
+  let reqObj = {
+    method: "PUT",
+    credentials: "same-origin"
+  };
   const url = endpoints.cancelBooking(bookingId);
-  return fetch(url).then((response) => {
+  return fetch(url, reqObj).then((response) => {
     if (response.ok) return response.json()
   })
 }

@@ -28,10 +28,10 @@ export default class App extends Component {
     const { listOfCities } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           Movie Booking App
           {console.log(JSON.stringify(listOfCities))}
-        </header>
+        </header> */}
         {/*<Home listOfCities= {listOfCities} />*/}
         {/* <ForgotPassword /> */}
        <Router>

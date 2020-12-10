@@ -21,7 +21,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import {Link} from 'react-router-dom'
-
+import '../../../src/index.css'
 
 const drawerWidth = 240; 
 const styles = (theme) => ({
@@ -131,7 +131,7 @@ class Header extends Component {
             <header>
             <AppBar position="relative"  className={clsx([classes.appBar,classes.color], {
                     [classes.appBarShift]: open})}>
-                <Toolbar className={classes.toolBar}>
+                <Toolbar className="toolBar">
                 <div>
                     <Link to='/'>
                         <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
