@@ -166,7 +166,6 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     },
     body: JSON.stringify(selectedSeats),
   }
-  debugger
   const url = endpoints.lockSeats(seatPlanId);
   return fetch(url).then((response) => {
     if (response.ok) return true

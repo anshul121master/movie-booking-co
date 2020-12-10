@@ -5,6 +5,7 @@ import Footer from '../../shared-components/footer/Footer';
 import City from './City'
 import { connect } from 'react-redux';
 import { setCityAndMoviesList } from '../../store/actions/shared'
+import Error from '../../shared-components/error/Error'
 
 class Home extends Component {
     state = {
@@ -25,7 +26,7 @@ class Home extends Component {
     setCityInStorage = (selectedCity) => {
         const { listOfCities, dispatch } = this.props;
         sessionStorage.setItem('city',JSON.stringify(selectedCity))
-        const selectedCityObject = listOfCities.filter((city) => city.cityName === selectedCity.cityName);
+        const selectedCityObject = listOfCities.response.filter((city) => city.cityName === selectedCity.cityName);
         dispatch(setCityAndMoviesList(selectedCityObject[0]))
         this.setState({
             citySelected: true,
@@ -35,19 +36,21 @@ class Home extends Component {
 
     render() {
         const { listOfCities } = this.props; // from app component
-        const {citySelected} = this.state;
+        const { citySelected } = this.state;
         return (
             <div>
-                {(citySelected === true && (
-                    <React.Fragment>
-                    <Header listOfCities={listOfCities} />
-                    <MovieContainer />
-                    <Footer />
-                    </React.Fragment>
-                ))}
-                {(citySelected === false && (
-                <City listOfCities={listOfCities} setCityInStorage= {this.setCityInStorage}/>
-                ))}
+                {(listOfCities.exception === null) ? 
+                    ((citySelected === true) ? (
+                        <React.Fragment>
+                            <Header listOfCities={listOfCities.response} />
+                            <MovieContainer />
+                            <Footer />
+                        </React.Fragment>
+                    )
+                    : (
+                    <City listOfCities={listOfCities.response} setCityInStorage= {this.setCityInStorage}/>
+                    ))
+                : <Error exception={listOfCities.exception} /> }
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TheaterCard from './TheaterCard'
+import {Redirect} from 'react-router-dom'
 
 class TheaterContainer extends Component {
 
@@ -30,10 +31,12 @@ class TheaterContainer extends Component {
     }
 
     render() {
-        const { theatersList, selectedMovie } = this.props;
+        const { theatersList, selectedMovie, sortedTheatersList } = this.props;
+        const {exception} = theatersList;
         const { selectedDate, initialCalendar } = this.state;
         return (
-            this.props.selectedDate === '' ? <div>Loading..</div> : (<div>
+			(exception === null || exception === undefined ? 
+            (this.props.selectedDate === ''  ? <div>Loading..</div> : (<div>
                 <div className='date-container'>
                     {Array.from(Array(7).keys()).map((value) =>
                         selectedDate === this.getDateValue(value).date
@@ -42,7 +45,7 @@ class TheaterContainer extends Component {
                                 this.setState({
                                     selectedDate: this.getDateValue(value).date,
                                     initialCalendar: false,
-                                    filteredtheatersList: this.filterTheatres(this.getDateValue(value).date, theatersList, selectedMovie)
+                                    filteredtheatersList: this.filterTheatres(this.getDateValue(value).date, sortedTheatersList, selectedMovie)
                                 })
                             }>
                                 <span className='span-date'>{this.getDateValue(value).day}</span>
@@ -52,7 +55,7 @@ class TheaterContainer extends Component {
                                 this.setState({
                                     selectedDate: this.getDateValue(value).date,
                                     initialCalendar: false,
-                                    filteredtheatersList: this.filterTheatres(this.getDateValue(value).date, theatersList, selectedMovie)
+                                    filteredtheatersList: this.filterTheatres(this.getDateValue(value).date, sortedTheatersList, selectedMovie)
                                 })
                             }>
                                 <span className='span-date'>{this.getDateValue(value).day}</span>
@@ -63,9 +66,9 @@ class TheaterContainer extends Component {
                 <div className='theatre-container'>
                     {
                         this.state.initialCalendar ?
-                            this.filterTheatres(this.props.selectedDate, theatersList, selectedMovie).length === 0?
+                            this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).length === 0?
                                 <div>No theaters available on this day</div> :
-                                this.filterTheatres(this.props.selectedDate, theatersList, selectedMovie).map(
+                                this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).map(
                                     theater =>
                                         <TheaterCard key={theater.theaterId} theater={theater} selectedDate={this.props.selectedDate} />
                                 )
@@ -78,7 +81,12 @@ class TheaterContainer extends Component {
                                 )
                     }
                 </div>
-            </div>)
+            </div>))
+            : <Redirect to={{pathname:'/error',
+                state:{
+                    exception:exception
+                }}} /> 
+            )
 
         )
     }
@@ -87,20 +95,26 @@ class TheaterContainer extends Component {
 function mapStateToProps({ theatersList, selectedMovie }) {
 
     let selectedDate;
-    if (theatersList.length === 0) {
-        selectedDate = ''
-    }
-    else {
-        theatersList = theatersList.sort((theaterA, theaterB) => {
-            const theaterAstartDate = theaterA.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
-            const theaterBstartDate = theaterB.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
-            return (theaterBstartDate - theaterAstartDate)
-        })
-        selectedDate = theatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+    let sortedTheatersList=[]
+    if(theatersList.response !== null) {
+        if (theatersList.response === undefined  ) {
+            selectedDate = ''
+        }
+        else if(theatersList.response.length === 0){
+            selectedDate = ''
+        }
+        else {
+            sortedTheatersList = theatersList.response.sort((theaterA, theaterB) => {
+                const theaterAstartDate = theaterA.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+                const theaterBstartDate = theaterB.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+                return (theaterBstartDate - theaterAstartDate)
+            })
+            selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+        }
     }
 
     return {
-        theatersList, selectedMovie, selectedDate
+        theatersList, selectedMovie, selectedDate, sortedTheatersList
     }
 }
 

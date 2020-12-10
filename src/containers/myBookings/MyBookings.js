@@ -4,7 +4,7 @@ import Header from '../../shared-components/header/Header'
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link, Route, BrowserRouter, Switch } from "react-router-dom";
+import { Link, Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
 import {getAllBookings, cancelBooking} from '../../utils/api'
 import { header, headerText} from '../../theme'
 
@@ -12,33 +12,46 @@ export default class MyBookings extends Component {
     state = {
         value: 0,
         upcomingBookings: [],
-        previousBookings: []
+        previousBookings: [],
+        exception: null
     }
     cancelTicket = (bookingId) => {
         cancelBooking(bookingId).then((response) => {
-            this.setState((previousState) => {
-                return {
-                ...previousState,
-                upcomingBookings: previousState.upcomingBookings
-                    .filter((booking)=> booking.bookingId !== response.bookingId).concat([response])
-            };
+            if(response.exception === null) {
+                this.setState((previousState) => {
+                    return {
+                    ...previousState,
+                    upcomingBookings: previousState.upcomingBookings
+                        .filter((booking)=> booking.bookingId !== response.response.bookingId).concat([response.response])
+                    };
             })
-        }).then(console.log(this.state))
+            } else {
+                this.setState({
+                    exception: response.exception
+            })
+        }
+        })
         
     }
 
     componentDidMount() {
         getAllBookings()
         .then(response => {
-            const previous = response.filter(ticket => ticket.dateOfShow.split('T')[0] < new Date().toISOString().split('T')[0]);
-            const upcoming = response.filter(ticket => ticket.dateOfShow.split('T')[0] > new Date().toISOString().split('T')[0]);
-            return {previous, upcoming}
-        }).then(({previous, upcoming}) => this.setState({
-            previousBookings: previous,
-            upcomingBookings: upcoming
+            if(response.exception === null) {
+                const previous = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] < new Date().toISOString().split('T')[0]);
+                const upcoming = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] > new Date().toISOString().split('T')[0]);
+                this.setState({
+                    previousBookings: previous,
+                    upcomingBookings: upcoming
+                    })
+            }
+        else{
+            this.setState({
+                exception: response.exception
             })
-        )
-    }
+        }
+    })
+}
 
     handleChange = (event, value) => {
         this.setState({ value });
@@ -46,10 +59,11 @@ export default class MyBookings extends Component {
 
     
     render() {
-        const {value} = this.state;
+        const {value, exception} = this.state;
         return (
-        <React.Fragment>
-            <Header listOfCities = {this.props.listOfCities}/>
+            (exception === null ?
+        (<React.Fragment>
+            <Header listOfCities = {this.props.listOfCities.response}/>
             <BrowserRouter>
                 <AppBar position="static" style={{backgroundColor: headerText, color: header}}>
                     <Tabs value={value} onChange={this.handleChange} 
@@ -77,7 +91,11 @@ export default class MyBookings extends Component {
                     </Route>
                 </Switch>
             </BrowserRouter>
-        </React.Fragment>
+        </React.Fragment>) 
+        : <Redirect to={{pathname:'/error',
+								state:{
+									exception:exception
+								}}} /> )
         );
     }
 }

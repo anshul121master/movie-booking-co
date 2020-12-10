@@ -66,10 +66,12 @@ class TheaterCard extends Component {
     state = {
         expanded: false,
         screens: null,
-        screenTimesArray: ['S12', 'S15', 'S18', 'S21', 'S23'],
+        screenTimesArray: [],
         open: false,
         time: '',
         redirect: false,
+        error:null
+        
     }
 
     //when show timing btn is clicked
@@ -77,19 +79,24 @@ class TheaterCard extends Component {
         const { selectedMovie } = this.props;
         getScreens(selectedMovie.movieId, theater.theaterId)
             .then((screens) => {
-
+                if(screens.exception === null) {
                 let screenTimeArray = []
-                screens.forEach(screen => {
+                screens.response.forEach(screen => {
                     screenTimeArray = screenTimeArray.concat(screen.screenTimes.map(time => time.showTiming))
                 })
 
                 this.setState(currentState => {
                     return {
-                        screens: screens,
+                        screens: screens.response,
                         screenTimesArray: screenTimeArray,
-                        expanded: !currentState.expanded
+                        expanded: !currentState.expanded,
                     }
                 })
+            } else {
+                this.setState({
+                    error: screens.exception
+                })
+            }
             })
     }
 
@@ -131,9 +138,10 @@ class TheaterCard extends Component {
 
     render() {
         const { theater, classes } = this.props;
-        const { screenTimesArray } = this.state;
+        const { screenTimesArray, error } = this.state;
         return (
-            this.state.redirect ? (<Redirect to={{ pathname: '/screen' }} />) :
+            (error === null ) ?
+            (this.state.redirect ? (<Redirect to={{ pathname: '/screen' }} />) :
                 (
                     <div><Card className={classes.root}>
                         <CardHeader
@@ -192,7 +200,10 @@ class TheaterCard extends Component {
                             </DialogActions>
                         </Dialog>
                     </div>)
-        )
+        ) : <Redirect to={{pathname:'/error',
+                    state:{
+                        exception:error
+                    }}} />  )
     }
 }
 

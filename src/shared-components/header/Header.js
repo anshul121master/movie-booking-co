@@ -163,9 +163,9 @@ class Header extends Component {
 
                     {authedUser !== null && authedUser !== undefined
                     ? <React.Fragment>
-                        <Typography variant="body1">Welcome {authedUser.fullName}</Typography> 
-                        {(authedUser.imageUrl !== null 
-                        ? <Avatar alt="user" src="/icon.png" /*src={authedUser.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} />
+                        <Typography variant="body1">Welcome {authedUser.response.fullName}</Typography> 
+                        {(authedUser.response.imageUrl !== null 
+                        ? <Avatar alt="user" src="/icon.png" /*src={authedUser.response.imageUrl}*/ style={{ backgroundColor: '#F5F4F2', color: headerText }} />
                         : <AccountCircleIcon  style={{fontSize:'2.5em'}}/> )}
                         <IconButton
                             color="inherit"
@@ -221,8 +221,23 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ authedUser, selectedCity }, ownProps) {
+function mapStateToProps({ /*authedUser,*/ selectedCity }, ownProps) {
     const { listOfCities } = ownProps;
+    const authedUser = {
+        "response": {
+          "fullName":"FirstName LastName",
+          "email":"xyz@gmail.com",
+          "phoneNumber": "0000000000",
+          "dateOfBirth": 846966600000,
+          "imageUrl": null
+        },
+        "exception": {
+          "errorMsg":"Some message",
+          "cause":"",
+          "code":400
+        }
+      }
+      
     return {
         listOfCities,
         selectedCity,

@@ -131,8 +131,9 @@ class Screen extends Component {
                         </div>
                     </div>
                     <div className='seat-container'>
-                        {seatPlan === undefined ?
-                            <Card className={classes.root} variant="outlined">Loading Seat Plan</Card> : (<Card className={classes.root} variant="outlined">
+                        {Object.keys(seatPlan).length ===0  ?  
+                            <Card className={classes.root} variant="outlined">Loading Seat Plan</Card> 
+                            : (seatPlan.exception === null ? (<Card className={classes.root} variant="outlined">
                                 {Object.keys(selectedScreen.noOfRowsPerSeatType).map((seatType, index) => (
                                     <CardContent key={seatType}>
                                         <Typography variant="body2" color="textSecondary">
@@ -143,7 +144,7 @@ class Screen extends Component {
                                                 <div className='seat-row' key={row}>
                                                     {seatMap[index][rowindex].map(
                                                         (col, colIndex) => (
-                                                            (seatPlan.bookedSeats !== undefined && seatPlan.bookedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                            (seatPlan.response.bookedSeats !== undefined && seatPlan.response.bookedSeats.includes(seatMap[index][rowindex][colIndex]) ?
                                                                 <Tooltip title="Other user booked this seat" aria-label="add">
                                                                     <div className='seat booked' key={seatMap[index][rowindex][colIndex]}>
                                                                         {seatMap[index][rowindex][colIndex].split('C')[1]}
@@ -155,7 +156,7 @@ class Screen extends Component {
                                                                     >
                                                                         {seatMap[index][rowindex][colIndex].split('C')[1]}
                                                                     </div>
-                                                                    : (seatPlan.lockedSeats !== undefined && seatPlan.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                    : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
                                                                         <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
                                                                             <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
                                                                             >
@@ -183,7 +184,10 @@ class Screen extends Component {
                                         Purchase - Rs {this.state.price}</Button>
                                 </div>
                             </Card>
-                            )}
+                            ) : <Redirect to={{pathname:'/error',
+                            state:{
+                                exception:seatPlan.exception
+                            }}} /> )}
                     </div >
                 </div>)
         )

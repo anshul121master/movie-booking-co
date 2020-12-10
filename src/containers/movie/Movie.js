@@ -10,7 +10,7 @@ class Movie extends Component {
     render() {
         return (
             <div>
-                <Header listOfCities={this.props.listOfCities} />
+                <Header listOfCities={this.props.listOfCities.response} />
                 <MovieDetails selectedMovie={this.props.selectedMovie} />
                 <TheaterContainer />
                 <Footer />
@@ -19,7 +19,7 @@ class Movie extends Component {
     }
 }
 
-function mapStateToProps({ selectedMovie, }) {
+function mapStateToProps({ selectedMovie }) {
     return {
         selectedMovie
     }

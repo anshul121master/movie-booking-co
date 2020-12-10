@@ -7,12 +7,27 @@ import { headerText, } from '../../theme'
 import { IconButton } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { purchaseTickets } from '../../utils/api'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 class Purchase extends Component {
 
     state = {
-        bookingStatus: ''
+        bookingStatus: '',
+        exception: null,
+        open: false
     }
+
+    handleClose = () => {
+        this.setState({
+            open: false,
+            exception: null
+        })
+    };
 
     purchaseTicket = (event) => {
         event.preventDefault()
@@ -26,19 +41,21 @@ class Purchase extends Component {
             movieName: selectedMovie.name,
             time: this.getDateAndTime(seatPlan, selectedScreen).time,
             date: this.getDateAndTime(seatPlan, selectedScreen).date,
-            seatPlanId: seatPlan.seatPlanId
+            seatPlanId: seatPlan.response.seatPlanId
         }).then(
             response => {
-                if (response.bookingStatus === 'BOOKED') {
+                if (response.response !== null && response.response.bookingStatus === 'BOOKED') {
                     this.setState({
                         bookingStatus: 'BOOKED'
+                    })
+                }else {
+                    this.setState({
+                        exception: response.exception,
+                        open:true
                     })
                 }
             }
         )
-        this.setState({
-            bookingStatus: 'BOOKED'
-        })
     }
 
     getDateAndTime = (seatPlan, selectedScreen) => {
@@ -46,7 +63,7 @@ class Purchase extends Component {
         let time, date
 
         selectedScreen.screenTimes.forEach(screenTime => {
-            const selectedDate = screenTime.showDateList.filter(showDate => showDate.seatPlanId === seatPlan.seatPlanId)
+            const selectedDate = screenTime.showDateList.filter(showDate => showDate.seatPlanId === seatPlan.response.seatPlanId)
             if (selectedDate.length !== 0) {
                 time = screenTime.showTiming
                 date = selectedDate[0].moviePlayingDate.split('T')[0]
@@ -59,6 +76,7 @@ class Purchase extends Component {
 
     render() {
         const { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan } = this.props
+        const {exception} = this.state;
         return (
             <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
                 <div className='screen-header'>
@@ -94,7 +112,25 @@ class Purchase extends Component {
                         bookingStatus={this.state.bookingStatus}
                     />
                 </div>
-            </div>
+                {(exception !== null && <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                            <DialogTitle id="alert-dialog-title">{`Payment failed`}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {`Payment Failed with the message ${exception.errorMsg} and code ${exception.code}. Please try again.`}
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => this.handleClose()} autoFocus>
+                                    OK
+                                </Button>
+                            </DialogActions>
+                        </Dialog> )}
+                        </div>
         )
     }
 }
