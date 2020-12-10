@@ -30,9 +30,9 @@ class PaymentForm extends Component {
             this.setState({
                 nameValue: value,
                 isValidName: true,
-                nameErrorMsg:''
+                nameErrorMsg: ''
             });
-    } 
+    }
 
     handleCardNumberChange(e) {
         const value = e.target.value;
@@ -46,9 +46,9 @@ class PaymentForm extends Component {
             this.setState({
                 cardNumberValue: value,
                 isValidCardNumber: true,
-                cardNumberErrorMsg:''
+                cardNumberErrorMsg: ''
             });
-    } 
+    }
 
     handleCVVChange(e) {
         const value = e.target.value;
@@ -62,28 +62,28 @@ class PaymentForm extends Component {
             this.setState({
                 cvvValue: value,
                 isValidCVV: true,
-                cvvErrorMsg:''
+                cvvErrorMsg: ''
             });
-    } 
+    }
 
     handleSubmit(event) {
         event.preventDefault();
-        const {isValidName, isValidCVV, isValidCardNumber} = this.state;
-        if(isValidCVV && isValidCardNumber && isValidName){
+        const { isValidName, isValidCVV, isValidCardNumber } = this.state;
+        if (isValidCVV && isValidCardNumber && isValidName) {
             this.props.purchaseTicket(event)
         }
     }
 
     disableButton() {
-        const {isValidName, isValidCVV, isValidCardNumber} = this.state;
-        if(isValidCVV===false && isValidCardNumber===false && isValidName===false){
+        const { isValidName, isValidCVV, isValidCardNumber } = this.state;
+        if (isValidCVV === false && isValidCardNumber === false && isValidName === false) {
             return true;
-        }else return false;
+        } else return false;
     }
-  
+
 
     render() {
-        const {nameValue, cvvValue, cardNumberValue, nameErrorMsg, cvvErrorMsg, cardNumberErrorMsg} = this.state;
+        const { nameValue, cvvValue, cardNumberValue, nameErrorMsg, cvvErrorMsg, cardNumberErrorMsg } = this.state;
         return (
             <div className='payment-form'>
                 <Card variant='outlined'>
@@ -93,20 +93,20 @@ class PaymentForm extends Component {
                                 <form onSubmit={(event) => this.handleSubmit(event)
                                 }>
                                     <h3 className="heading-3">Credit / Debit card checkout</h3>
-                                    <Input label="Cardholder's Name" type="text" name="name" 
-                                        value={nameValue} onChange={(e) =>this.handleNameChange(e)}/>
-                                    <div className="errorMsg">{nameErrorMsg}</div>
-                                    <Input label="Card Number" type="number" name="card_number" 
-                                        value={cardNumberValue} onChange={(e) =>this.handleCardNumberChange(e)}/>
-                                    <div className="errorMsg">{cardNumberErrorMsg}</div>
+                                    <Input label="Cardholder's Name" type="text" name="name"
+                                        value={nameValue} onChange={(e) => this.handleNameChange(e)} />
+                                    <div className="errorMsg">{nameErrorMsg ? nameErrorMsg : ""}</div>
+                                    <Input label="Card Number" type="number" name="card_number"
+                                        value={cardNumberValue} onChange={(e) => this.handleCardNumberChange(e)} />
+                                    <div className="errorMsg">{cardNumberErrorMsg ? cardNumberErrorMsg : ""}</div>
                                     <div className="row">
                                         <div className="col">
                                             <Input label="Expiration Date" type="month" name="exp_date" />
                                         </div>
                                         <div className="col">
-                                            <Input label="CVV" type="password" name="cvv" 
-                                                value={cvvValue} onChange={(e) =>this.handleCVVChange(e)}/>
-                                            <div className="errorMsg">{cvvErrorMsg}</div>
+                                            <Input label="CVV" type="password" name="cvv"
+                                                value={cvvValue} onChange={(e) => this.handleCVVChange(e)} />
+                                            <div className="errorMsg">{cvvErrorMsg ? cvvErrorMsg : ""}</div>
                                         </div>
                                     </div>
                                     <Button disabled={this.disableButton()} text="Purchase" />
@@ -135,7 +135,7 @@ const Input = (props) => (
     <div className="input">
         <label>{props.label}</label>
         <div className="input-field">
-            <input type={props.type} name={props.name} required onChange={props.onChange} value={props.value}/>
+            <input type={props.type} name={props.name} required onChange={props.onChange} value={props.value} />
         </div>
     </div>
 );

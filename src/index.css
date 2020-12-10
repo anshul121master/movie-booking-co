@@ -270,6 +270,7 @@ div.info{
     color:red;
     font-size: 12px;
   }
+
   /* Removes form Controls  */
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
@@ -317,6 +318,35 @@ div.info{
     margin: 40px;
   }
 
+  
+  }
+  
+
+  div.login {
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  div.login-container {
+    height: 50%;
+    width: 50%;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+  }
+
+  div.login-label {
+    font-size: 2em;
+  }
+  
   .toolBar {
     justify-content: space-between;
   }
@@ -331,5 +361,4 @@ div.info{
   .MuiToolbar-regular {
       min-height: 64px;
     }
-  }
   }

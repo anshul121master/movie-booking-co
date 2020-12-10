@@ -1,70 +1,73 @@
-[
-    {
-        "bookingId": "123456",
-        "theaterDetails": "Address1 ",
-        "dateOfShow": "2021-02-20T00:00:00.000+00:00",
-        "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
-        "showTiming": "S11",
-        "screenName": " 1-C ",
-        "movieName": " Dolby ",
-        "amount": 222.0,
-        "bookedSeats": [
-            "GR1C2",
-            "PR1C2"
-        ],
-        "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
-        "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
-        "bookingStatus": "BOOKED"
-    },
-    {
-        "bookingId": "3184de0e-0289-47be-88a2-d08071380d47",
-        "theaterDetails": "Address1 ",
-        "dateOfShow": "2021-02-20T00:00:00.000+00:00",
-        "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
-        "showTiming": "S14",
-        "screenName": " 1-C ",
-        "movieName": " Dolby ",
-        "amount": 222.0,
-        "bookedSeats": [
-            "GR1C2",
-            "PR1C2"
-        ],
-        "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
-        "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
-        "bookingStatus": "CANCELLED"
-    },
-    {
-        "bookingId": "7a7f8b36-aba4-4374-b7b9",
-        "theaterDetails": "Address1",
-        "dateOfShow": "2020-02-20T00:00:00.000+00:00",
-        "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
-        "showTiming": "S20",
-        "screenName": " 1-C ",
-        "movieName": " Dolby3",
-        "amount": 222.0,
-        "bookedSeats": [
-            "GR1C2",
-            "PR1C2"
-        ],
-        "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
-        "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
-        "bookingStatus": "BOOKED"
-    },
-    {
-        "bookingId": "3184de0e-0289-47be-d08071380d47",
-        "theaterDetails": "Address1 ",
-        "dateOfShow": "2020-02-20T00:00:00.000+00:00",
-        "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
-        "showTiming": "S18",
-        "screenName": " 1-C ",
-        "movieName": " Dolby4",
-        "amount": 222.0,
-        "bookedSeats": [
-            "GR1C2",
-            "PR1C2"
-        ],
-        "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
-        "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
-        "bookingStatus": "CANCELLED"
-    }
-]
+{
+    "response": [
+        {
+            "bookingId": "123456",
+            "theaterDetails": "Address1 ",
+            "dateOfShow": "2021-02-20T00:00:00.000+00:00",
+            "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
+            "showTiming": "S11",
+            "screenName": " 1-C ",
+            "movieName": " Dolby ",
+            "amount": 222.0,
+            "bookedSeats": [
+                "GR1C2",
+                "PR1C2"
+            ],
+            "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
+            "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
+            "bookingStatus": "BOOKED"
+        },
+        {
+            "bookingId": "3184de0e-0289-47be-88a2-d08071380d47",
+            "theaterDetails": "Address1 ",
+            "dateOfShow": "2021-02-20T00:00:00.000+00:00",
+            "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
+            "showTiming": "S14",
+            "screenName": " 1-C ",
+            "movieName": " Dolby ",
+            "amount": 222.0,
+            "bookedSeats": [
+                "GR1C2",
+                "PR1C2"
+            ],
+            "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
+            "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
+            "bookingStatus": "CANCELLED"
+        },
+        {
+            "bookingId": "7a7f8b36-aba4-4374-b7b9",
+            "theaterDetails": "Address1",
+            "dateOfShow": "2020-02-20T00:00:00.000+00:00",
+            "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
+            "showTiming": "S20",
+            "screenName": " 1-C ",
+            "movieName": " Dolby3",
+            "amount": 222.0,
+            "bookedSeats": [
+                "GR1C2",
+                "PR1C2"
+            ],
+            "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
+            "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
+            "bookingStatus": "BOOKED"
+        },
+        {
+            "bookingId": "3184de0e-0289-47be-d08071380d47",
+            "theaterDetails": "Address1 ",
+            "dateOfShow": "2020-02-20T00:00:00.000+00:00",
+            "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
+            "showTiming": "S18",
+            "screenName": " 1-C ",
+            "movieName": " Dolby4",
+            "amount": 222.0,
+            "bookedSeats": [
+                "GR1C2",
+                "PR1C2"
+            ],
+            "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
+            "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
+            "bookingStatus": "CANCELLED"
+        }
+    ],
+    "exception": null
+}
