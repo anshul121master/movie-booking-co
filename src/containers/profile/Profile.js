@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -19,21 +18,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { background } from "../../theme";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        MovieBooking
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from '../../shared-components/Copyright'
 
 const styles = (theme) => ({
   profileInfoDiv: {
@@ -51,15 +37,11 @@ const styles = (theme) => ({
   cardStyle: {
     minWidth: "70vw",
     boxShadow: "5px 10px 18px #888888",
-    // backgroundColor: "#2F363F"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
-  //   textFieldColor:{
-  //     backgroundColor: "white"
-  //   },
   button: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -100,32 +82,39 @@ class Profile extends Component {
   state = {
     fnameIsValid: true,
     lnameIsValid: true,
-    firstName: "Anshul",
-    lastName: "Agarwal",
-    phone: "+91-7376487376",
-    email: "anshula128@gmail.com",
-    birthday: "1997-05-18",
-    imageUrl: "dffd",
-    infoMessage: "Successfully",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    birthday: "",
+    imageUrl: "",
+    infoMessage: "",
+    loadProfileMessage: "",
     imageUploadErrorMessage: "",
     loading: false,
   };
 
-  //   componentDidMount() {
-  //     getProfile().then((userProfile) => {
-  //       if (userProfile.error === undefined) {
-  //         const birthday = this.formatDate(userProfile.dateOfBirth);
-  //         this.setState({
-  //           firstName: userProfile.fullName.split(" ")[0],
-  //           lastName: userProfile.fullName.split(" ")[1],
-  //           email: userProfile.email,
-  //           phone: userProfile.phoneNumber,
-  //           birthday,
-  //           imageUrl: userProfile.imageUrl,
-  //         });
-  //       }
-  //     });
-  //   }
+  componentDidMount() {
+    getProfile().then((res) => {
+      if (res.status === 200) {
+        let userProfile = res.response;
+        const birthday = this.formatDate(userProfile.dateOfBirth);
+        this.setState({
+          loadProfileMessage: "",
+          firstName: userProfile.fullName.split(" ")[0],
+          lastName: userProfile.fullName.split(" ")[1],
+          email: userProfile.email,
+          phone: userProfile.phoneNumber,
+          birthday,
+          imageUrl: userProfile.imageUrl,
+        });
+      } else {
+        this.setState({
+          loadProfileMessage: res.exception.errorMsg,
+        });
+      }
+    });
+  }
   validateName = (event) => {
     const field = event.target.name;
     const name = event.target.value;
@@ -163,16 +152,16 @@ class Profile extends Component {
     // Update the formData object
     formData.append("profilePhoto", imageObj);
 
-    uploadImage(formData).then((resp) => {
-      if (resp.error === undefined) {
-        const imageUrl = resp.imageUrl;
+    uploadImage(formData).then((res) => {
+      if (res.status === 200) {
+        const imageUrl = res.response.imageUrl;
         this.setState({
+          imageUploadErrorMessage: "",
           imageUrl,
         });
       } else
         this.setState({
-          imageUploadErrorMessage:
-            "Some Error Occurred in uploading profile photo. Please retry.",
+          imageUploadErrorMessage: res.exception.errorMsg,
         });
     });
   };
@@ -233,14 +222,14 @@ class Profile extends Component {
         imageUrl,
       };
       updateProfile(userInfo).then((res) => {
-        if (res === "success")
+        if (res.status === 200)
           this.setState({
             infoMessage: "Profile Updated Successfully",
             loading: false,
           });
         else
           this.setState({
-            infoMessage: "Some Error Occured. Could not update Profile",
+            infoMessage: res.exception.errorMsg,
             loading: false,
           });
       });
@@ -260,20 +249,21 @@ class Profile extends Component {
       imageUrl,
       infoMessage,
       imageUploadErrorMessage,
+      loadProfileMessage,
       loading,
     } = this.state;
-
-    //if(redirectToSignin) return <Redirect to="/signin" />
-
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        {/* <div className={classes.profileInfoDiv}></div> */}
-
         <Grid container justify="center">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
               <div className={classes.paper}>
+                {loadProfileMessage !== "" && (
+                  <Typography className={classes.failedMessageColor}>
+                    {loadProfileMessage}
+                  </Typography>
+                )}
                 {imageUrl === "" ? (
                   <FontAwesomeIcon
                     icon={faUserCircle}
@@ -282,7 +272,7 @@ class Profile extends Component {
                   />
                 ) : (
                   <img
-                    src="gorilla.jpg"
+                    src={`https://moviebooking.co/user-profile-photos/${imageUrl}`}
                     alt="profile image"
                     className={classes.profileImg}
                   />
@@ -424,7 +414,7 @@ class Profile extends Component {
                   </Grid>
                   <Grid container justify="flex-end">
                     <Grid item>
-                      <Link href="/home" variant="body2">
+                      <Link href="/" variant="body2">
                         Proceed to home
                       </Link>
                     </Grid>

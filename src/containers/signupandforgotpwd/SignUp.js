@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -14,20 +12,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import MuiPhoneNumber from "material-ui-phone-number";
 import { signup } from "../../utils/api";
-import  Password  from "./Password"
+import Password from "./Password";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Redirect } from "react-router-dom";
+import Copyright from '../../shared-components/Copyright'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        MovieBooking
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const styles = (theme) => ({
   paper: {
@@ -47,11 +36,14 @@ const styles = (theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  errorColor: {
+    color: "red",
+  },
 });
 
 class SignUp extends Component {
   state = {
-    redirectToSignin: false,
+    redirectTologin: false,
     firstName: "",
     lastName: "",
     phone: "",
@@ -61,18 +53,20 @@ class SignUp extends Component {
     // phoneIsValid:false,
     birthday: "",
     password: "",
-  //  confirmPassword: "",
     passwordIsValid: true,
     confirmPasswordIsValid: true,
+    loading: false,
+    responseOnSuccess: "",
+    responseOnError: "",
   };
 
-  passwordsAreValid = (password, passwordIsValid, confirmPasswordIsValid) =>{
+  passwordsAreValid = (password, passwordIsValid, confirmPasswordIsValid) => {
     this.setState({
-        password,
-        passwordIsValid,
-        confirmPasswordIsValid
-    })
-  }
+      password,
+      passwordIsValid,
+      confirmPasswordIsValid,
+    });
+  };
 
   validateName = (event) => {
     const field = event.target.name;
@@ -127,49 +121,6 @@ class SignUp extends Component {
       phone,
     });
   };
-//   validatePassword = (event) => {
-//     let pwd = event.target.value;
-//     if (
-//       !(
-//         pwd.length >= 6 &&
-//         (pwd.includes("@") || pwd.includes("$") || pwd.includes("#"))
-//       )
-//     )
-//       this.setState({
-//         password: pwd,
-//         confirmPassword: "",
-//         passwordIsValid: false,
-//         confirmPasswordIsValid: true,
-//       });
-//     else
-//       this.setState({
-//         password: pwd,
-//         confirmPassword: "",
-//         passwordIsValid: true,
-//         confirmPasswordIsValid: true,
-//       });
-//   };
-
-//   validateConfirmPassword = (event) => {
-//     const cpwd = event.target.value;
-//     const { password } = this.state;
-//     if (cpwd !== password)
-//       this.setState({
-//         confirmPassword: cpwd,
-//         confirmPasswordIsValid: false,
-//       });
-//     else
-//       this.setState({
-//         confirmPassword: cpwd,
-//         confirmPasswordIsValid: true,
-//       });
-//   };
-
-//   clearConfirmPwd = () => {
-//     this.setState({
-//       confirmPassword: "",
-//     });
-//   };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -192,7 +143,11 @@ class SignUp extends Component {
       passwordIsValid === true &&
       confirmPasswordIsValid === true
     ) {
-      console.log("all fields contains valid inputs");
+      console.log("all fields contain valid inputs");
+      this.setState({
+        loading: true,
+      });
+      //setting payload
       let userInfo = {
         email,
         name: `${firstName} ${lastName}`,
@@ -201,9 +156,17 @@ class SignUp extends Component {
         dateOfBirth: birthday,
       };
       signup(userInfo).then((res) => {
-        if (res === "success")
+        if (res.status === 200)
           this.setState({
+            loading: false,
+            responseOnError: "",
+            responseOnSuccess: res.response,
             redirectToLogin: true,
+          });
+        else
+          this.setState({
+            loading: false,
+            responseOnError: res.exception.errorMsg,
           });
       });
     }
@@ -214,14 +177,21 @@ class SignUp extends Component {
     const {
       fnameIsValid,
       lnameIsValid,
-    //   passwordIsValid,
-    //   confirmPasswordIsValid,
-    //   confirmPassword,
-      // password,
-      redirectToSignin,
+      loading,
+      redirectToLogin,
+      responseOnSuccess,
+      responseOnError,
     } = this.state;
 
-    //if(redirectToSignin) return <Redirect to="/signin" />
+    if (redirectToLogin)
+      return (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { responseOnSuccess },
+          }}
+        />
+      );
 
     return (
       <Container component="main" maxWidth="xs">
@@ -233,6 +203,13 @@ class SignUp extends Component {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
+          {responseOnError !== "" && (
+            <Typography className={classes.errorColor}>
+              {responseOnError}
+            </Typography>
+          )}
+
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -266,7 +243,6 @@ class SignUp extends Component {
                     lnameIsValid ? "" : "Should contain only alphabets"
                   }
                   onBlur={this.validateName}
-                 
                 />
               </Grid>
               <Grid item xs={12}>
@@ -311,52 +287,9 @@ class SignUp extends Component {
                   onBlur={this.setBirthday}
                 />
               </Grid>
-              </Grid>
-              <Password passwordsAreValid={this.passwordsAreValid}/>
-             {/* <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  error={passwordIsValid ? false : true}
-                  helperText={
-                    passwordIsValid
-                      ? ""
-                      : "Password should be min 6 characters long and must include atleast one special character (@, $, #)"
-                  }
-                  onChange={this.validatePassword}
-                  //onFocus={this.clearConfirmPwd}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  autoComplete="current-password"
-                  disabled={
-                    password === "" ? true : passwordIsValid ? false : true
-                  }
-                  error={confirmPasswordIsValid ? false : true}
-                  helperText={
-                    confirmPasswordIsValid
-                      ? ""
-                      : "Password do not Match. Please check."
-                  }
-                  onChange={this.validateConfirmPassword}
-                />
-                </Grid> */}
-            
+            </Grid>
+            <Password passwordsAreValid={this.passwordsAreValid} />
+
             <Button
               type="submit"
               fullWidth
@@ -366,13 +299,22 @@ class SignUp extends Component {
             >
               Sign Up
             </Button>
+
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
+
+            {loading && (
+              <Grid container spacing={5} justify="center">
+                <Grid item>
+                  <CircularProgress />
+                </Grid>
+              </Grid>
+            )}
           </form>
         </div>
         <Box mt={5}>

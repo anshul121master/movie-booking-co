@@ -16,14 +16,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return response.json();
-    else
-      return {
-        error: "Login Failed",
-        status: response.status,
-      };
-  });
+  return fetch(url, reqObj).then(resp => resp.json());
 };
 
 //signup
@@ -37,21 +30,36 @@ export const signup = (userInfo) => {
     body: JSON.stringify(userInfo),
   };
   const url = endpoints.signup();
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return "success";
-    else return "failed";
+  return fetch(url, reqObj).then((resp) => {
+    if (resp.ok){
+     return resp.json().then(({ response }) => ({
+        status: resp.status,
+        response: "!Verification link has been sent to your registered email id. Please verify your account before login."
+      }))
+    }else{
+      return resp.json().then(({ exception }) => ({
+        status: resp.status,
+        exception
+      }))
+    }
   });
 };
 
 export const getProfile = () => {
   const url = endpoints.profile();
-  return fetch(url).then((response) => {
-    if (response.ok) return response.json();
-    else
-      return {
-        error: "Some error occured. Unable to fetch profile",
-        status: response.status,
-      };
+  return fetch(url).then((resp) => {
+    if (resp.ok){
+      return resp.json().then(({ response }) => ({
+         status: resp.status,
+         response
+       }))
+     }
+     else{
+      return resp.json().then(({ exception }) => ({
+        status: resp.status,
+        exception
+      }))
+    }
   });
 };
 
@@ -63,13 +71,19 @@ export const uploadImage = (userInfo) => {
     body: userInfo,
   };
   const url = endpoints.imageUpload();
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return response.json();
-    else
-      return {
-        error: "Image Upload Failed",
-        status: response.status,
-      };
+  return fetch(url, reqObj).then((resp) => {
+    if (resp.ok){
+      return resp.json().then(({ response }) => ({
+         status: resp.status,
+         response
+       }))
+     }
+     else{
+      return resp.json().then(({ exception }) => ({
+        status: resp.status,
+        exception
+      }))
+    }
   });
 };
 
@@ -83,10 +97,20 @@ export const updateProfile = (userInfo) => {
     },
     body: JSON.stringify(userInfo),
   };
-  const url = endpoints.updateProfile();
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return "success";
-    else return "failed";
+  const url = endpoints.profileUpdate();
+  return fetch(url, reqObj).then((resp) => {
+    if (resp.ok){
+      return resp.json().then(({ response }) => ({
+         status: resp.status,
+         response
+       }))
+     }
+     else{
+      return resp.json().then(({ exception }) => ({
+        status: resp.status,
+        exception
+      }))
+    }
   });
 };
 
@@ -101,11 +125,19 @@ export const sendOtp = (emailObj) => {
     body: JSON.stringify(emailObj),
   };
   const url = endpoints.getOtp();
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return {
-      successMsg: "otp sent successfully"
+  return fetch(url, reqObj).then((resp) => {
+    if (resp.ok){
+      return resp.json().then(({ response }) => ({
+         status: resp.status,
+         response
+       }))
+     }
+     else{
+      return resp.json().then(({ exception }) => ({
+        status: resp.status,
+        exception
+      }))
     }
-    else return response.json();
   });
 };
 
@@ -120,11 +152,19 @@ export const resetPassword = (pwdDetails) => {
     body: JSON.stringify(pwdDetails),
   };
   const url = endpoints.reset();
-  return fetch(url).then((response) => {
-    if (!response.ok) return {
-      successMsg: "Password Changed Successfully"
+  return fetch(url, reqObj).then((resp) => {
+    if (resp.ok){
+      return resp.json().then(({ response }) => ({
+         status: resp.status,
+         response
+       }))
+     }
+     else{
+      return resp.json().then(({ exception }) => ({
+        status: resp.status,
+        exception
+      }))
     }
-    else return response.json();
   });
 };
 

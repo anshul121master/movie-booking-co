@@ -1,3 +1,4 @@
 {
-    "errorMsg" : "!Could not reset Password"
-}
+    "response": "Changed Password Successfully",
+    "exception": null
+  }

@@ -33,13 +33,31 @@ export default class App extends Component {
           {console.log(JSON.stringify(listOfCities))}
         </header>
         {/*<Home listOfCities= {listOfCities} />*/}
-        <ForgotPassword />
-      {/*  <Router>
+      
+        <Router>
           <Switch>
+          <Route path="/login" render={(props) => <SignIn {...props}/>}/>
             <Route
               exact
               path="/"
               component={() => <Home listOfCities={listOfCities} />}
+            />
+            <Route
+              exact
+              path="/signup"
+              component={SignUp}
+            />
+
+            <Route
+              exact
+              path="/profile"
+              component={Profile}
+            />
+
+            <Route
+              exact
+              path="/forgotPassword"
+              component={ForgotPassword}
             />
            
             <Route
@@ -50,7 +68,7 @@ export default class App extends Component {
             <Route exact path="/screen" component={Screen} />
             <Route exact path="/purchase" component={Purchase} />
           </Switch>
-    </Router> */}
+    </Router> 
 
       </div>
     );

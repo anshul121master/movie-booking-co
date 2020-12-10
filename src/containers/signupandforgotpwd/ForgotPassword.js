@@ -16,20 +16,10 @@ import { sendOtp, resetPassword } from "../../utils/api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Copyright from '../../shared-components/Copyright'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        MovieBookingCo
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const styles = (theme) => ({
   paper: {
@@ -59,8 +49,8 @@ const styles = (theme) => ({
   errorColor: {
     color: "red",
   },
-  successColor:{
-    color: "green"
+  successColor: {
+    color: "green",
   },
   cardStyle: {
     minWidth: 400,
@@ -70,18 +60,17 @@ const styles = (theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  loginButton:{
+  loginButton: {
     backgroundColor: "green",
     color: "white",
     marginTop: 20,
-    marginLeft: 30
+    marginLeft: 30,
   },
-  checkBoxIcon:{
+  checkBoxIcon: {
     minWidth: 40,
     minHeight: 40,
-    color: "green"
-  }
-
+    color: "green",
+  },
 });
 
 class ForgotPassword extends Component {
@@ -98,6 +87,7 @@ class ForgotPassword extends Component {
     redirectToLogin: false,
     passwordChangeSuccess: "",
     passwordChangeFailed: "",
+    loading: false,
   };
 
   passwordsAreValid = (password, passwordIsValid, confirmPasswordIsValid) => {
@@ -123,12 +113,16 @@ class ForgotPassword extends Component {
     event.preventDefault();
     const { sendOtpOnSubmit, email } = this.state;
     if (sendOtpOnSubmit) {
+      this.setState({
+        loading: true,
+      });
       const emailObj = {
         email,
       };
       sendOtp(emailObj).then((res) => {
-        if ("successMsg" in res)
+        if (res.status === 200)
           this.setState({
+            loading: false,
             otp: "",
             passwordChangeFailed: "",
             otpErrorMsg: "",
@@ -138,8 +132,9 @@ class ForgotPassword extends Component {
           });
         else
           this.setState({
+            loading: false,
             passwordChangeFailed: "",
-            otpErrorMsg: res.errorMsg,
+            otpErrorMsg: res.exception.errorMsg,
           });
       });
     } else {
@@ -152,23 +147,35 @@ class ForgotPassword extends Component {
       } = this.state;
       const otpLength = otp.length;
       if (passwordIsValid && confirmPasswordIsValid && otpLength === 6) {
+        this.setState({
+          loading: true,
+        });
         const pwdDetails = {
           username: email,
           password,
           code: otp,
         };
         resetPassword(pwdDetails).then((res) => {
-          if ("successMsg" in res) {
+          if (res.status === 200) {
             this.setState({
-              passwordChangeSuccess: res.successMsg,
+              loading: false,
+              passwordChangeSuccess: res.response,
             });
           } else {
-            this.setState({
-              passwordChangeFailed: res.errorMsg,
-              emailDisabled: false,
-              showNewPasswordPanel: false,
-              sendOtpOnSubmit: true,
-            });
+            if (res.status >= 400 && res.status <= 499)
+              this.setState({
+                loading: false,
+                otp: "",
+                passwordChangeFailed: res.exception.errorMsg,
+              });
+            else
+              this.setState({
+                loading: false,
+                passwordChangeFailed: res.exception.errorMsg,
+                emailDisabled: false,
+                showNewPasswordPanel: false,
+                sendOtpOnSubmit: true,
+              });
           }
         });
       }
@@ -185,6 +192,7 @@ class ForgotPassword extends Component {
       otpErrorMsg,
       passwordChangeFailed,
       passwordChangeSuccess,
+      loading,
     } = this.state;
 
     return (
@@ -199,11 +207,17 @@ class ForgotPassword extends Component {
           </Typography>
           {passwordChangeSuccess !== "" ? (
             <Card className={classes.cardStyle} variant="outlined">
-            <CheckBoxIcon className={classes.checkBoxIcon} />
+              <CheckBoxIcon className={classes.checkBoxIcon} />
               <CardContent>
-                <Typography className={classes.successColor}>Password Changed Successfully</Typography>
+                <Typography className={classes.successColor}>
+                  Password Changed Successfully
+                </Typography>
                 <CardActions>
-                  <Button size="medium" className={classes.loginButton}>Proceed to login</Button>
+                  <Link href="/login" variant="body2">
+                    <Button size="medium" className={classes.loginButton}>
+                      Proceed to login
+                    </Button>
+                  </Link>
                 </CardActions>
               </CardContent>
             </Card>
@@ -262,6 +276,14 @@ class ForgotPassword extends Component {
                 {showNewPasswordPanel ? "Change Password" : "Send OTP"}
               </Button>
 
+              {loading && (
+                <Grid container spacing={5} justify="center">
+                  <Grid item>
+                    <CircularProgress />
+                  </Grid>
+                </Grid>
+              )}
+
               {otpErrorMsg !== "" && (
                 <Typography className={classes.errorColor}>
                   {otpErrorMsg}
@@ -275,7 +297,7 @@ class ForgotPassword extends Component {
 
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/login" variant="body2">
                     Proceed to login
                   </Link>
                 </Grid>
