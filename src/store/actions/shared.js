@@ -1,9 +1,10 @@
 import { setSelectedCity } from './city';
 import { getAllMovies, setSelectedMovie } from './movie';
-import { getMovies, getTheaters, getScreens, getSeatPlan, lockSeats, purchaseTickets } from '../../utils/api';
+import { getMovies, getTheaters, getSeatPlan, lockSeats } from '../../utils/api';
 import { getAllTheaters, setSeatPlan, setSelectedTheater, setShowTimings } from './theater';
 import { setSelectedScreen } from './screen';
-import seatPlan from '../reducers/seatPlan';
+import { useForkRef } from '@material-ui/core';
+
 
 export const SET_SEATS_AND_PRICE = 'SET_SEATS_AND_PRICE'
 
@@ -17,10 +18,12 @@ export function setCityAndMoviesList(city) {
     }
 }
 
-export function setMovieAndTheaterList(movie) {
+export function setMovieAndTheaterList(movie, setMovie = true) {
     return (dispatch, getState) => {
         const { selectedCity } = getState();
-        dispatch(setSelectedMovie(movie));
+        if (setMovie) {
+            dispatch(setSelectedMovie(movie));
+        }
         getTheaters(selectedCity.id, movie.movieId)
             .then(theatersList => dispatch(getAllTheaters(theatersList)))
     }
@@ -31,14 +34,13 @@ export function setTheaterAndSeatPlan(theater, seatPlanId, screen) {
         dispatch(setSelectedTheater(theater));
 
         dispatch(setSelectedScreen(screen));
-        
+
         getSeatPlan(seatPlanId)
             .then(seatPlan => dispatch(setSeatPlan(seatPlan)))
     }
 }
 
 function lockSeatsAndPrice(selectedSeats, price) {
-    debugger
     return {
         type: SET_SEATS_AND_PRICE,
         selectedSeats,
@@ -48,8 +50,8 @@ function lockSeatsAndPrice(selectedSeats, price) {
 
 export function setSeatsAndPrice(selectedSeats, seatPlanId, price) {
     return (dispatch) => {
-        lockSeats(seatPlanId, selectedSeats).then(response => response ? 
-                dispatch(lockSeatsAndPrice(selectedSeats, price)) : console.error('error'))
+        lockSeats(seatPlanId, selectedSeats).then(response => response ?
+            dispatch(lockSeatsAndPrice(selectedSeats, price)) : console.error('error'))
     }
 }
 

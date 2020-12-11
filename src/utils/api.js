@@ -1,4 +1,3 @@
-import { TramOutlined } from "@material-ui/icons";
 import { api, mockApi } from "../config/apiConfig";
 
 export const mockEnabled = true;
@@ -31,13 +30,13 @@ export const signup = (userInfo) => {
     body: JSON.stringify(userInfo),
   };
   const url = endpoints.signup();
-  return fetch(url, reqObj).then((resp) => {
-    if (resp.ok){
-     return resp.json().then(({ response }) => ({
+  return fetch(url).then((resp) => {
+    if (resp.ok) {
+      return resp.json().then(({ response }) => ({
         status: resp.status,
         response: "!Verification link has been sent to your registered email id. Please verify your account before login."
       }))
-    }else{
+    } else {
       return resp.json().then(({ exception }) => ({
         status: resp.status,
         exception
@@ -49,13 +48,13 @@ export const signup = (userInfo) => {
 export const getProfile = () => {
   const url = endpoints.profile();
   return fetch(url).then((resp) => {
-    if (resp.ok){
+    if (resp.ok) {
       return resp.json().then(({ response }) => ({
-         status: resp.status,
-         response
-       }))
-     }
-     else{
+        status: resp.status,
+        response
+      }))
+    }
+    else {
       return resp.json().then(({ exception }) => ({
         status: resp.status,
         exception
@@ -73,13 +72,13 @@ export const uploadImage = (userInfo) => {
   };
   const url = endpoints.imageUpload();
   return fetch(url, reqObj).then((resp) => {
-    if (resp.ok){
+    if (resp.ok) {
       return resp.json().then(({ response }) => ({
-         status: resp.status,
-         response
-       }))
-     }
-     else{
+        status: resp.status,
+        response
+      }))
+    }
+    else {
       return resp.json().then(({ exception }) => ({
         status: resp.status,
         exception
@@ -100,13 +99,13 @@ export const updateProfile = (userInfo) => {
   };
   const url = endpoints.profileUpdate();
   return fetch(url, reqObj).then((resp) => {
-    if (resp.ok){
+    if (resp.ok) {
       return resp.json().then(({ response }) => ({
-         status: resp.status,
-         response
-       }))
-     }
-     else{
+        status: resp.status,
+        response
+      }))
+    }
+    else {
       return resp.json().then(({ exception }) => ({
         status: resp.status,
         exception
@@ -127,13 +126,13 @@ export const sendOtp = (emailObj) => {
   };
   const url = endpoints.getOtp();
   return fetch(url, reqObj).then((resp) => {
-    if (resp.ok){
+    if (resp.ok) {
       return resp.json().then(({ response }) => ({
-         status: resp.status,
-         response
-       }))
-     }
-     else{
+        status: resp.status,
+        response
+      }))
+    }
+    else {
       return resp.json().then(({ exception }) => ({
         status: resp.status,
         exception
@@ -154,13 +153,13 @@ export const resetPassword = (pwdDetails) => {
   };
   const url = endpoints.reset();
   return fetch(url, reqObj).then((resp) => {
-    if (resp.ok){
+    if (resp.ok) {
       return resp.json().then(({ response }) => ({
-         status: resp.status,
-         response
-       }))
-     }
-     else{
+        status: resp.status,
+        response
+      }))
+    }
+    else {
       return resp.json().then(({ exception }) => ({
         status: resp.status,
         exception

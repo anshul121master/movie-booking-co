@@ -8,6 +8,7 @@ import { ArrowBackIosRounded } from '@material-ui/icons'
 import { headerText, buttonAvailable, buttonAvailableText } from '../../theme'
 import { setSeatsAndPrice } from '../../store/actions/shared'
 import { Redirect, Link } from 'react-router-dom'
+import Loader from '../../shared-components/Loader'
 
 const styles = (theme) => ({
     root: {
@@ -103,93 +104,97 @@ class Screen extends Component {
 
     render() {
         const { seatPlan, selectedScreen, selectedTheater, selectedMovie, classes } = this.props
-        const seatMap = this.createSeatMap(selectedScreen)
+
+        const seatMap = Object.keys(selectedMovie).length === 0 ? [] : this.createSeatMap(selectedScreen)
         return (
-            this.state.redirect ? (<Redirect to={{ pathname: '/purchase' }} />) : (
-                <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
-                    <div className='screen-header'>
-                        <IconButton >
-                            <Link style={{ textDecoration: 'none' }} to={{
-                                pathname: "/movie",
-                            }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>
-                        </IconButton>
-                        <span>{selectedMovie.name}</span>
-                        
-                        <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                            {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
-                        <div className='screen-info'>
-                            <div className='info'>
-                                <div className='seat' style={{ fontSize: '0.7em', backgroundColor: 'white', cursor: 'default' }}>Available Seats</div>
-                                <div className='seat chosen' style={{ fontSize: '0.7em', cursor: 'default' }}>Selected Seats</div>
-                                <Tooltip title="Other users have booked this seat" aria-label="add">
-                                    <div className='seat booked' style={{ fontSize: '0.7em' }}>Booked Seats</div>
-                                </Tooltip>
-                                <Tooltip title="Other users have locked these seats but payment is yet to be made" aria-label="add">
-                                    <div className='seat locked' style={{ fontSize: '0.7em' }}>Locked Seats</div>
-                                </Tooltip>
+            Object.keys(selectedMovie).length === 0 ? <Redirect to="/" /> :
+                this.state.redirect ? (<Redirect to={{ pathname: '/purchase' }} />) : (
+                    <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
+                        <div className='screen-header'>
+                            <IconButton >
+                                <Link style={{ textDecoration: 'none' }} to={{
+                                    pathname: "/movie",
+                                }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>
+                            </IconButton>
+                            <span>{selectedMovie.name}</span>
+
+                            <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
+                                {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+                            <div className='screen-info'>
+                                <div className='info'>
+                                    <div className='seat' style={{ fontSize: '0.7em', backgroundColor: 'white', cursor: 'default' }}>Available Seats</div>
+                                    <div className='seat chosen' style={{ fontSize: '0.7em', cursor: 'default' }}>Selected Seats</div>
+                                    <Tooltip title="Other users have booked this seat" aria-label="add">
+                                        <div className='seat booked' style={{ fontSize: '0.7em' }}>Booked Seats</div>
+                                    </Tooltip>
+                                    <Tooltip title="Other users have locked these seats but payment is yet to be made" aria-label="add">
+                                        <div className='seat locked' style={{ fontSize: '0.7em' }}>Locked Seats</div>
+                                    </Tooltip>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='seat-container'>
-                        {Object.keys(seatPlan).length ===0  ?  
-                            <Card className={classes.root} variant="outlined">Loading Seat Plan</Card> 
-                            : (seatPlan.exception === null ? (<Card className={classes.root} variant="outlined">
-                                {Object.keys(selectedScreen.noOfRowsPerSeatType).map((seatType, index) => (
-                                    <CardContent key={seatType}>
-                                        <Typography variant="body2" color="textSecondary">
-                                            {seatType + ' - Rs. ' + selectedScreen.priceOfDifferentSeatType[seatType]}
-                                        </Typography>
-                                        <div className='seat-map'>
-                                            {seatMap[index].map((row, rowindex) => (
-                                                <div className='seat-row' key={row}>
-                                                    {seatMap[index][rowindex].map(
-                                                        (col, colIndex) => (
-                                                            (seatPlan.response.bookedSeats !== undefined && seatPlan.response.bookedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                <Tooltip title="Other user booked this seat" aria-label="add">
-                                                                    <div className='seat booked' key={seatMap[index][rowindex][colIndex]}>
-                                                                        {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                    </div>
-                                                                </Tooltip>
-                                                                : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                    <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
-                                                                        onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
-                                                                    >
-                                                                        {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                    </div>
-                                                                    : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                        <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
-                                                                            <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
-                                                                            >
-                                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                            </div></Tooltip>
-                                                                        : <Tooltip title="Click to select this seat" aria-label="add">
-                                                                            <div className='seat' key={seatMap[index][rowindex][colIndex]}
-                                                                                onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
-                                                                            >
-                                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                            </div></Tooltip>))
+                        <div className='seat-container'>
+                            {Object.keys(seatPlan).length === 0 ?
+                                <Loader />
+                                : (seatPlan.exception === null ? (<Card className={classes.root} variant="outlined">
+                                    {Object.keys(selectedScreen.noOfRowsPerSeatType).map((seatType, index) => (
+                                        <CardContent key={seatType}>
+                                            <Typography variant="body2" color="textSecondary">
+                                                {seatType + ' - Rs. ' + selectedScreen.priceOfDifferentSeatType[seatType]}
+                                            </Typography>
+                                            <div className='seat-map'>
+                                                {seatMap[index].map((row, rowindex) => (
+                                                    <div className='seat-row' key={row}>
+                                                        {seatMap[index][rowindex].map(
+                                                            (col, colIndex) => (
+                                                                (seatPlan.response.bookedSeats !== undefined && seatPlan.response.bookedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                    <Tooltip title="Other user booked this seat" aria-label="add">
+                                                                        <div className='seat booked' key={seatMap[index][rowindex][colIndex]}>
+                                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                        </div>
+                                                                    </Tooltip>
+                                                                    : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                        <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
+                                                                            onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
+                                                                        >
+                                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                        </div>
+                                                                        : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                            <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
+                                                                                <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
+                                                                                >
+                                                                                    {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                                </div></Tooltip>
+                                                                            : <Tooltip title="Click to select this seat" aria-label="add">
+                                                                                <div className='seat' key={seatMap[index][rowindex][colIndex]}
+                                                                                    onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
+                                                                                >
+                                                                                    {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                                </div></Tooltip>))
 
-                                                            )))}
-                                                </div>))}
-                                        </div>
-                                    </CardContent>
-                                ))}
-                                <div style={{ margin: 10, display: 'flex', alignItems: "center", justifyContent: "center" }}>
-                                    <Button style={{
-                                        color: buttonAvailableText,
-                                        backgroundColor: buttonAvailable,
-                                    }} disabled={this.state.selectedSeats.length === 0}
-                                        onClick={this.purchaseSeats}
-                                    >
-                                        Purchase - Rs {this.state.price}</Button>
-                                </div>
-                            </Card>
-                            ) : <Redirect to={{pathname:'/error',
-                            state:{
-                                exception:seatPlan.exception
-                            }}} /> )}
-                    </div >
-                </div>)
+                                                                )))}
+                                                    </div>))}
+                                            </div>
+                                        </CardContent>
+                                    ))}
+                                    <div style={{ margin: 10, display: 'flex', alignItems: "center", justifyContent: "center" }}>
+                                        <Button style={{
+                                            color: buttonAvailableText,
+                                            backgroundColor: buttonAvailable,
+                                        }} disabled={this.state.selectedSeats.length === 0}
+                                            onClick={this.purchaseSeats}
+                                        >
+                                            Purchase - Rs {this.state.price}</Button>
+                                    </div>
+                                </Card>
+                                ) : <Redirect to={{
+                                    pathname: '/error',
+                                    state: {
+                                        exception: seatPlan.exception
+                                    }
+                                }} />)}
+                        </div >
+                    </div>)
         )
     }
 }

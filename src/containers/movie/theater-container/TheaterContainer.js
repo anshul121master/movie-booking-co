@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TheaterCard from './TheaterCard'
 import { Redirect } from 'react-router-dom'
+import Loader from "../../../shared-components/Loader";
 
 class TheaterContainer extends Component {
 
@@ -36,13 +37,13 @@ class TheaterContainer extends Component {
         const { selectedDate, initialCalendar } = this.state;
         return (
             (exception === null || exception === undefined ?
-                (this.props.selectedDate === '' ? <div>Loading..</div> :
+                (this.props.selectedDate === '' ? <Loader /> :
                     this.props.selectedDate === 'No Theatres' ? (
                         <div>
                             <div className='date-container'>
                             </div>
                             <div className='theatre-container' style={{ fontSize: '1.2em', paddingTop: '1.5em', paddingBottom: '1.5em' }}>
-                                No Theatres available for {selectedMovie.name} in the chosen location
+                                No Theatres available for {selectedMovie.name} in the your location
                 </div>
                         </div>
                     ) :

@@ -16,7 +16,7 @@ export default function MovieCarousel(props) {
   const {moviesList, handleSelectedMovie} = props;
 
   return (
-        <div style={{width:'60%',margin: 'auto',padding:15}}>
+        <div className="carousel">
             <Carousel style={{flex:1, height:'250px'}} fullHeightHover={false} autoPlay={false} navButtonsAlwaysVisible={true}>
             {moviesList.map((movie, index) => 
             <div key={movie.movieId}>

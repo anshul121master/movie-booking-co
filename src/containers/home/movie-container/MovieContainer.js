@@ -8,7 +8,7 @@ import GridList from '@material-ui/core/GridList';
 import { GridListTile } from '@material-ui/core';
 import MovieCarousel from './components/MovieCarousel'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import Error from '../../../shared-components/error/Error'
+import Loader from "../../../shared-components/Loader";
 
 class MovieContainer extends Component {
 	state = {
@@ -17,7 +17,7 @@ class MovieContainer extends Component {
 
 	handleSelectedMovie = (movie) => {
 		const { dispatch } = this.props;
-		dispatch(setMovieAndTheaterList(movie));
+		dispatch(setMovieAndTheaterList(movie, true));
 		this.setState({
 			redirect: true
 		})
@@ -43,52 +43,54 @@ class MovieContainer extends Component {
 	}
 
 	render() {
-		const {moviesList} = this.props;
+		const { moviesList } = this.props;
 		const { response, exception } = moviesList;
 
 		return (
-			(Object.keys(moviesList).length!==0 ? 
-			((exception === null ? 
-			(this.state.redirect ? (<Redirect to={{ pathname: '/movie' }} />) : (
-				<div>
-					<React.Fragment>
-						<MovieCarousel moviesList={moviesList.response} handleSelectedMovie={this.handleSelectedMovie} />
-					</React.Fragment>
-					<div style={{ margin: 25, padding: 10 }}>
-						<Typography gutterBottom variant="h5" component="h2" style={{ fontWeight: 'bold' }}>
-							Currently Running
+			(Object.keys(moviesList).length !== 0 ?
+				((exception === null ?
+					(this.state.redirect ? (<Redirect to={{ pathname: '/movie' }} />) : (
+						<div>
+							<React.Fragment>
+								<MovieCarousel moviesList={moviesList.response} handleSelectedMovie={this.handleSelectedMovie} />
+							</React.Fragment>
+							<div style={{ margin: 25, padding: 10 }}>
+								<Typography gutterBottom variant="h5" component="h2" style={{ fontWeight: 'bold' }}>
+									Currently Running
 					</Typography>
-					{(response.filter(movie => new Date(movie.dateReleased) < new Date()).length > 0 ?
-						<GridList style={{ flexWrap: 'wrap' }} cols={this.getGridListCols()} spacing={15}>
-							{response.filter(movie => new Date(movie.dateReleased) < new Date()).map(movie =>
-								<GridListTile key={movie.movieId} style={{ height: '100%' }}>
-									<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
-								</GridListTile>
-							)}
-						</GridList>
-					: <p>No movies available at this time</p> )}
-					</div>
+								{(response.filter(movie => new Date(movie.dateReleased) < new Date()).length > 0 ?
+									<GridList style={{ flexWrap: 'wrap' }} cols={this.getGridListCols()} spacing={15}>
+										{response.filter(movie => new Date(movie.dateReleased) < new Date()).map(movie =>
+											<GridListTile key={movie.movieId} style={{ height: '100%' }}>
+												<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
+											</GridListTile>
+										)}
+									</GridList>
+									: <p>No movies available at this time</p>)}
+							</div>
 
-					<div style={{ margin: 25, padding: 10 }}>
-						<Typography gutterBottom variant="h6" component="h2" style={{ fontWeight: 'bold' }}>
-							Upcoming Movies
+							<div style={{ margin: 25, padding: 10 }}>
+								<Typography gutterBottom variant="h6" component="h2" style={{ fontWeight: 'bold' }}>
+									Upcoming Movies
 					</Typography>
-						{(response.filter(movie => new Date(movie.dateReleased) > new Date()).length > 0 ?
-						<GridList style={{ flexWrap: 'nowrap' }} cols={this.getGridListCols()} spacing={15}>
-							{response.filter(movie => new Date(movie.dateReleased) > new Date()).map(movie =>
-								<GridListTile key={movie.movieId} style={{ height: '100%' }}>
-									<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
-								</GridListTile>
-							)}
-						</GridList>
-						: <p>No movies available at this time</p> )}
-					</div>
-				</div>))
-				:  <Redirect to={{pathname:'/error',
-								state:{
-									exception:exception
-								}}} /> ))
-			: <p>Loading</p>)
+								{(response.filter(movie => new Date(movie.dateReleased) > new Date()).length > 0 ?
+									<GridList style={{ flexWrap: 'nowrap' }} cols={this.getGridListCols()} spacing={15}>
+										{response.filter(movie => new Date(movie.dateReleased) > new Date()).map(movie =>
+											<GridListTile key={movie.movieId} style={{ height: '100%' }}>
+												<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
+											</GridListTile>
+										)}
+									</GridList>
+									: <p>No movies available at this time</p>)}
+							</div>
+						</div>))
+					: <Redirect to={{
+						pathname: '/error',
+						state: {
+							exception: exception
+						}
+					}} />))
+				: <Loader />)
 		)
 	}
 }
