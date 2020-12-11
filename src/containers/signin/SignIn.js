@@ -13,7 +13,6 @@ import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { handleAuthedUser } from "../../store/actions/authedUser";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from "react-router-dom";
 import Copyright from '../../shared-components/Copyright'
 import Loader from "../../shared-components/Loader"
@@ -114,6 +113,8 @@ class SignIn extends Component {
               {authedUser.exception.errorMsg}
             </Typography>
           )}
+
+          
 
           {location.state !== undefined &&
             location.state.responseOnSuccess !== undefined && (
