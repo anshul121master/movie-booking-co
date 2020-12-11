@@ -137,8 +137,8 @@ class Header extends Component {
                         <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
                     </Link>
                 </div>
-                <div className={classes.leftDiv}>
-                        <Select className={classes.select}
+                <div className="leftDiv">
+                     {(listOfCities !== undefined && <Select className={classes.select}
                             inputProps={{
                                 classes: {
                                     icon: classes.icon,
@@ -152,7 +152,7 @@ class Header extends Component {
                         {listOfCities.map(city => 
                             <MenuItem key={city.id} value={city.id}><em>{city.cityName}</em></MenuItem>
                         )}
-                        </Select>
+                        </Select>)}
                     {(authedUser === null ||  authedUser === undefined) && (
                         <Link to='/login'>
                         <ButtonGroup>

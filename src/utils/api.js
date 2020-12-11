@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-const mockEnabled = false;
+export const mockEnabled = false;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey

@@ -5,6 +5,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { moviePosters } from '../../../config/apiConfig'
+import { mockEnabled } from '../../../utils/api'
 
 const useStyles = makeStyles({
     root: {
@@ -45,7 +47,7 @@ export default function MovieDetails(props) {
             <CardActionArea className={classes.actionarea} disableRipple>
                 <CardMedia
                     className={classes.media}
-                    image="/movieposter.jpg"
+                    image={mockEnabled ? "moviePoster.jpg" : `${moviePosters}${props.selectedMovie.moviePoster}`}
                     title={props.selectedMovie.name}
                 />
                 <CardContent className={classes.content}>

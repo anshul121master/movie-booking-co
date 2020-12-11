@@ -9,11 +9,11 @@ import { Redirect } from "react-router-dom";
 class Movie extends Component {
 
     render() {
-        const { selectedMovie, listOfCities } = this.props
+        const { selectedMovie } = this.props
         return (
             Object.keys(selectedMovie).length === 0 ? <Redirect to="/" /> :
             <div>
-                <Header listOfCities={listOfCities.response} />
+                <Header />
                 <MovieDetails selectedMovie={selectedMovie} />
                 <TheaterContainer />
                 <Footer />

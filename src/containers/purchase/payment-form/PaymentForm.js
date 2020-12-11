@@ -20,7 +20,7 @@ class PaymentForm extends Component {
 
     handleNameChange(e) {
         const value = e.target.value;
-        if (!(value.match(/^[A-Za-z]+$/) || value === ""))
+        if (!(value.match(/^[a-zA-Z\x20]+$/) || value === ""))
             this.setState({
                 nameValue: value,
                 isValidName: false,
