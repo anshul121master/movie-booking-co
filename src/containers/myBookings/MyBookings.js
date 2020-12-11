@@ -63,7 +63,7 @@ export default class MyBookings extends Component {
         return (
             (exception === null ?
         (<React.Fragment>
-            <Header listOfCities = {this.props.listOfCities.response}/>
+            <Header/>
             <BrowserRouter>
                 <AppBar position="static" style={{backgroundColor: headerText, color: header}}>
                     <Tabs value={value} onChange={this.handleChange} 

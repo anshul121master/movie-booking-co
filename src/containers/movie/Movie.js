@@ -10,7 +10,7 @@ class Movie extends Component {
     render() {
         return (
             <div>
-                <Header listOfCities={this.props.listOfCities.response} />
+                <Header />
                 <MovieDetails selectedMovie={this.props.selectedMovie} />
                 <TheaterContainer />
                 <Footer />
