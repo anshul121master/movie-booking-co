@@ -11,6 +11,8 @@ import Purchase from "./purchase/Purchase";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyBookings from "./myBookings/MyBookings";
 import Error from "../shared-components/error/Error";
+import ProtectedRoute from "./ProtectedRoute"
+
 
 export default class App extends Component {
   state = {
@@ -29,7 +31,6 @@ export default class App extends Component {
     const { listOfCities } = this.state;
     return (
       <div className="App">
-    
         {Object.keys(listOfCities).length !== 0 ? (
           <Router>
             <Switch>
@@ -37,7 +38,7 @@ export default class App extends Component {
 
               <Route exact path="/signup" component={SignUp} />
 
-              <Route exact path="/profile" component={Profile} />
+              <ProtectedRoute exact path="/profile" component={Profile} />
 
               <Route exact path="/forgotPassword" component={ForgotPassword} />
 
@@ -46,7 +47,7 @@ export default class App extends Component {
                 path="/"
                 component={() => <Home listOfCities={listOfCities} />}
               />
-              <Route
+              <ProtectedRoute
                 exact
                 path="/upcoming"
                 component={() => <MyBookings listOfCities={listOfCities} />}
@@ -57,7 +58,7 @@ export default class App extends Component {
                 component={() => <Movie listOfCities={listOfCities} />}
               />
               <Route exact path="/screen" component={Screen} />
-              <Route exact path="/purchase" component={Purchase} />
+              <ProtectedRoute exact path="/purchase" component={Purchase} />
               <Route exact path="/error" component={Error} />
             </Switch>
           </Router>

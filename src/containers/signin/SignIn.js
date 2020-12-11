@@ -3,7 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+import { Link }  from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -16,9 +16,18 @@ import { handleAuthedUser } from "../../store/actions/authedUser";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from "react-router-dom";
 import Copyright from '../../shared-components/Copyright'
-
+import Loader from "../../shared-components/Loader"
 
 const styles = (theme) => ({
+  containerStyle:{
+   backgroundColor:"#F5F4F2",
+    width: "100vw",
+    height: "100vh",
+    margin: 0,
+    padding: 0,
+    position: "absolute",
+    top:0
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -73,7 +82,7 @@ class SignIn extends Component {
   };
 
   render() {
-    const { classes, loading, authedUser, location } = this.props;
+    const { classes, loading, authedUser, location, selectedMovie } = this.props;
     const { email, password } = this.state;
 
     if (authedUser !== null && authedUser.exception === null) {
@@ -81,12 +90,17 @@ class SignIn extends Component {
       else if(location.state.from === undefined) return <Redirect to="/" />;
       else{
         const { from } = location.state;
+        if(from.pathname === '/purchase' && Object.keys(selectedMovie).length === 0)  return <Redirect to='/' />;
         return <Redirect to={from} />;
       }
     }
     return (
-      <Container component="main" maxWidth="xs">
+      <div  className={classes.containerStyle}>
+      <Container style={{backgroundColor : "white"}} component="main" maxWidth="xs">
         <CssBaseline />
+        {loading && (
+          <Loader />
+        )}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -144,22 +158,14 @@ class SignIn extends Component {
               Sign In
             </Button>
 
-            {loading && (
-              <Grid container spacing={5} justify="center">
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              </Grid>
-            )}
-
             <Grid container>
               <Grid item xs>
-                <Link href="/forgotPassword" variant="body2">
+                <Link to="/forgotPassword">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link to="/signup">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -170,14 +176,16 @@ class SignIn extends Component {
           <Copyright />
         </Box>
       </Container>
+      </div>
     );
   }
 }
 
-function mapStateToProps({ loading, authedUser }, ownProps) {
+function mapStateToProps({ loading, authedUser, selectedMovie }, ownProps) {
   return {
     loading,
     authedUser,
+    selectedMovie
   };
 }
 

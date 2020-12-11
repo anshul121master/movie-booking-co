@@ -1,0 +1,12 @@
+version: 0.2
+phases:
+    install:
+        runtime-versions:
+            nodejs: 12
+    build:
+        commands:
+            - npm install
+            - npm run-script build
+    post_build:
+        commands:
+            - aws s3 cp --recursive ./build s3://mb-team3-static/

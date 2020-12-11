@@ -21,8 +21,18 @@ import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Copyright from '../../shared-components/Copyright'
 import { userProfilePhoto } from '../../config/apiConfig'
+//import Loader from "../../shared-components/Loader"
 
 const styles = (theme) => ({
+  containerStyle:{
+    backgroundColor:"#F5F4F2",
+     width: "100%",
+     height: "100%",
+     margin: 0,
+     padding: 0,
+     position: "absolute",
+     top:0
+   },
   profileInfoDiv: {
     width: "100vw",
     height: "30vh",
@@ -256,6 +266,9 @@ class Profile extends Component {
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {/*loading && (
+          <Loader />
+        )*/}
         <Grid container justify="center">
           <Card className={classes.cardStyle} variant="outlined">
             <CardContent>
@@ -384,13 +397,6 @@ class Profile extends Component {
                       />
                     </Grid>
                   </Grid>
-                  {loading && (
-                    <Grid container spacing={5} justify="center">
-                      <Grid item>
-                        <CircularProgress />
-                      </Grid>
-                    </Grid>
-                  )}
                   <Button
                     type="submit"
                     fullWidth
@@ -400,6 +406,15 @@ class Profile extends Component {
                   >
                     Update Changes
                   </Button>
+
+                  {loading && (
+                    <Grid container spacing={5} justify="center">
+                      <Grid item>
+                        <CircularProgress />
+                      </Grid>
+                    </Grid>
+                  )}
+                  
                   <Grid container justify="flex-start">
                     <Grid item>
                       <Typography

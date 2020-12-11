@@ -1,9 +1,9 @@
 import { setSelectedCity } from './city';
 import { getAllMovies, setSelectedMovie } from './movie';
-import { getMovies, getTheaters, getScreens, getSeatPlan, lockSeats, purchaseTickets } from '../../utils/api';
+import { getMovies, getTheaters, getSeatPlan, lockSeats } from '../../utils/api';
 import { getAllTheaters, setSeatPlan, setSelectedTheater, setShowTimings } from './theater';
 import { setSelectedScreen } from './screen';
-import seatPlan from '../reducers/seatPlan';
+
 
 export const SET_SEATS_AND_PRICE = 'SET_SEATS_AND_PRICE'
 
@@ -38,7 +38,6 @@ export function setTheaterAndSeatPlan(theater, seatPlanId, screen) {
 }
 
 function lockSeatsAndPrice(selectedSeats, price) {
-    debugger
     return {
         type: SET_SEATS_AND_PRICE,
         selectedSeats,

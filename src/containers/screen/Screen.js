@@ -103,8 +103,10 @@ class Screen extends Component {
 
     render() {
         const { seatPlan, selectedScreen, selectedTheater, selectedMovie, classes } = this.props
-        const seatMap = this.createSeatMap(selectedScreen)
+         
+        const seatMap = Object.keys(selectedMovie).length === 0 ? [] : this.createSeatMap(selectedScreen)
         return (
+            Object.keys(selectedMovie).length === 0 ? <Redirect to="/" /> :
             this.state.redirect ? (<Redirect to={{ pathname: '/purchase' }} />) : (
                 <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
                     <div className='screen-header'>
