@@ -1,5 +1,8 @@
 const url = "https://moviebooking.co";
 
+export const userProfilePhoto = "https://moviebooking.co/user-profile-photos/"
+export const moviePosters = "https://moviebooking.co/movie-posters/"
+
 export const api ={
     login: () => `${url}/login`,
     signup: () => `${url}/signUp`,
@@ -7,7 +10,7 @@ export const api ={
     getOtp: () => `${url}/v1/forgotPassword`,
     reset: () => `${url}/v1/reset`,
     imageUpload: () => `${url}/v1/users/profilePhoto`,
-    updateProfile: () =>`${url}/v1/users`,
+    profileUpdate: () =>`${url}/v1/users`,
     cities: () => `${url}/v1/cities`,
     movies: (cityId) => `${url}/v1/cities/${cityId}/movies`,
     theaters: (cityId, movieId) => `${url}/v1/cities/${cityId}/theaters/${movieId}`,
@@ -26,7 +29,7 @@ export const mockApi = {
     getOtp: () => './data/forgotPassword.json',
     reset: () => './data/reset.json',
     imageUpload: () => './data/imageUpload.json',
-    updateProfile: () =>'./data/updateProfile.json',
+    profileUpdate: () =>'./data/updateProfile.json',
     cities: () =>'./data/cities.json',
     movies: (cityId) => './data/movies.json',
     theaters: (cityId, movieId) => './data/theaters.json',

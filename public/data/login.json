@@ -1,14 +1,10 @@
 {
   "response": {
-    "fullName":"FirstName LastName",
-    "email":"xyz@gmail.com",
+    "fullName": "Anshul Agarwal",
+    "email": "anshula128@gmail.com",
     "phoneNumber": "0000000000",
     "dateOfBirth": 846966600000,
     "imageUrl": null
   },
-  "exception": {
-    "errorMsg":"Some message",
-    "cause":"",
-    "code":400
-  }
+  "exception": null
 }

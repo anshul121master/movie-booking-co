@@ -1,7 +1,10 @@
 {
-    "fullName": "FirstName LastName",
-    "email": "xyz@gmail.com",
+  "response": {
+    "email": "anshula128@gmail.com",
+    "name": "Anshul Agarwal",
+    "password": "Xyz@123",
     "phoneNumber": "0000000000",
-    "dateOfBirth": 896466600000,
-    "imageUrl": ""
-  }
+    "dateOfBirth": "1998-05-30"
+  },
+  "exception": null
+}

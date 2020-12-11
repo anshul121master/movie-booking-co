@@ -154,11 +154,13 @@ class Header extends Component {
                         )}
                         </Select>
                     {(authedUser === null ||  authedUser === undefined) && (
+                        <Link to='/login'>
                         <ButtonGroup>
                         <Button style={{ backgroundColor: header, color: headerText, border: `1px solid ${headerText}` }}>
                             Log In
                         </Button>
                     </ButtonGroup>
+                    </Link>
                     )}
 
                     {authedUser !== null && authedUser !== undefined
@@ -221,22 +223,8 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ /*authedUser,*/ selectedCity }, ownProps) {
+function mapStateToProps({ authedUser, selectedCity }, ownProps) {
     const { listOfCities } = ownProps;
-    const authedUser = {
-        "response": {
-          "fullName":"FirstName LastName",
-          "email":"xyz@gmail.com",
-          "phoneNumber": "0000000000",
-          "dateOfBirth": 846966600000,
-          "imageUrl": null
-        },
-        "exception": {
-          "errorMsg":"Some message",
-          "cause":"",
-          "code":400
-        }
-      }
       
     return {
         listOfCities,

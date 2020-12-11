@@ -7,11 +7,12 @@ import seatPlan from './seatPlan'
 import seatsAndPrice from './seatsAndPrice'
 import selectedScreen from './screen'
 import authedUser from './authedUser'
-
+import loading from './loading'
 import { combineReducers } from 'redux'
 
 
 export default combineReducers({
+    loading,
     authedUser,
     selectedCity,
     moviesList,

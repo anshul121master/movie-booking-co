@@ -10,11 +10,11 @@ import Movie from "./movie/Movie";
 import Purchase from "./purchase/Purchase";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyBookings from "./myBookings/MyBookings";
-import Error from "../shared-components/error/Error"
+import Error from "../shared-components/error/Error";
 
 export default class App extends Component {
   state = {
-    listOfCities: {}
+    listOfCities: {},
   };
 
   componentDidMount() {
@@ -29,18 +29,41 @@ export default class App extends Component {
     const { listOfCities } = this.state;
     return (
       <div className="App">
-        {(Object.keys(listOfCities).length!==0 ? 
-       <Router>
-          <Switch>
-            <Route exact path='/' component={() => <Home listOfCities={listOfCities} />} />
-            <Route exact path='/upcoming' component={() => <MyBookings listOfCities={listOfCities} />} />
-            <Route exact path='/movie' component={() => <Movie listOfCities={listOfCities} />} />
-            <Route exact path='/screen' component={Screen} />
-            <Route exact path='/purchase' component={Purchase} />
-            <Route exact path='/error' component={Error} />
-          </Switch>
-      </Router>
-     : <p>Loading</p>)}
+    
+        {Object.keys(listOfCities).length !== 0 ? (
+          <Router>
+            <Switch>
+              <Route path="/login" render={(props) => <SignIn {...props} />} />
+
+              <Route exact path="/signup" component={SignUp} />
+
+              <Route exact path="/profile" component={Profile} />
+
+              <Route exact path="/forgotPassword" component={ForgotPassword} />
+
+              <Route
+                exact
+                path="/"
+                component={() => <Home listOfCities={listOfCities} />}
+              />
+              <Route
+                exact
+                path="/upcoming"
+                component={() => <MyBookings listOfCities={listOfCities} />}
+              />
+              <Route
+                exact
+                path="/movie"
+                component={() => <Movie listOfCities={listOfCities} />}
+              />
+              <Route exact path="/screen" component={Screen} />
+              <Route exact path="/purchase" component={Purchase} />
+              <Route exact path="/error" component={Error} />
+            </Switch>
+          </Router>
+        ) : (
+          <p>Loading</p>
+        )}
       </div>
     );
   }

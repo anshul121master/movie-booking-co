@@ -6,6 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import {Paper } from '@material-ui/core'
+import { moviePosters } from '../../../../config/apiConfig'
+import { mockEnabled } from '../../../../utils/api'
 
 const useStyles = makeStyles({
   root: {
@@ -27,8 +29,7 @@ export default function MovieCard(props) {
           component="img"
           alt={movie.name}
           height="140"
-          image="/moviePoster.jpg"
-          //{movie.moviePoster}
+          image={mockEnabled ? "moviePoster.jpg" : `${moviePosters}${movie.moviePoster}`}
           title="Movie"
         />
         <CardContent>

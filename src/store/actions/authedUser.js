@@ -1,19 +1,22 @@
 import { login } from "../../utils/api";
+import { setLoading } from "./loading";
 
 export const SET_AUTHED_USER = "SET_AUTHED_USER";
 
-function setAuthedUser(userDetails) {
+function setAuthedUser(authedUser) {
   return {
     type: SET_AUTHED_USER,
-    userDetails,
+    authedUser,
   };
 }
 
 export function handleAuthedUser(userCredentials) {
   return (dispatch) => {
-    login(userCredentials).then((userDetails) => {
-      if (userDetails.error === undefined)
-        return dispatch(setAuthedUser(userDetails));
+    dispatch(setLoading(true));
+    return login(userCredentials).then(authedUser => {
+      //dispatch loading false
+      dispatch(setLoading(false));
+      dispatch(setAuthedUser(authedUser))
     });
   };
 }
