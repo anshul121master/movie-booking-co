@@ -137,7 +137,7 @@ class Header extends Component {
                         <img  className={classes.logo} src="/brand.png" alt="moviebooking"/>
                     </Link>
                 </div>
-                <div className={classes.leftDiv}>
+                <div className="leftDiv">
                         <Select className={classes.select}
                             inputProps={{
                                 classes: {
