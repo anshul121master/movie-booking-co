@@ -16,6 +16,7 @@ import Password from "./Password";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from "react-router-dom";
 import Copyright from '../../shared-components/Copyright'
+import Loader from "../../shared-components/Loader"
 
 
 const styles = (theme) => ({
@@ -196,6 +197,7 @@ class SignUp extends Component {
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {loading && <Loader />}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -308,13 +310,13 @@ class SignUp extends Component {
               </Grid>
             </Grid>
 
-            {loading && (
+            {/*loading && (
               <Grid container spacing={5} justify="center">
                 <Grid item>
                   <CircularProgress />
                 </Grid>
               </Grid>
-            )}
+            )*/}
           </form>
         </div>
         <Box mt={5}>

@@ -10,9 +10,10 @@ export default function Footer() {
         paddingTop: '1em',
         paddingBottom: '1em',
         position: 'relative',
-        bottom: '-50px',
+        bottom: '0',
         width: '100%',
-        top: 'auto'
+        top: 'auto',
+        marginTop: '50px',
     }
 
     return (

@@ -10,20 +10,20 @@ import { mockEnabled } from '../../../utils/api'
 
 const useStyles = makeStyles({
     root: {
-        marginTop: 15,
+        marginTop: 20,
         marginBottom: 10,
         width: '100%',
-        height: '25%',
+        height: '50%',
         border: "none",
         boxShadow: "none",
         borderRadius: 0
     },
     media: {
-        height: 250,
-        width: '60%'
+        height: 400,
+        width: '65%'
     },
     content: {
-        width: '40%',
+        width: '35%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start'

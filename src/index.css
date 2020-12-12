@@ -1,4 +1,7 @@
-
+html{
+  height: 100%;
+  position: relative;
+}
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -6,7 +9,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #F5F4F2;
     padding: 0;
-    min-height: 100vh;
+    min-height: 100%;
 }
 
 code {

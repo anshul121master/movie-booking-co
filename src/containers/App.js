@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyBookings from "./myBookings/MyBookings";
 import Error from "../shared-components/error/Error";
 import ProtectedRoute from "./ProtectedRoute"
+import Loader from "../shared-components/Loader";
 
 
 export default class App extends Component {
@@ -63,8 +64,8 @@ export default class App extends Component {
             </Switch>
           </Router>
         ) : (
-          <p>Loading</p>
-        )}
+            <Loader />
+          )}
       </div>
     );
   }
