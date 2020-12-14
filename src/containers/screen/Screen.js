@@ -62,23 +62,11 @@ class Screen extends Component {
     }
 
     purchaseSeats = () => {
-        if (this.props.authedUser === null) {
-            /*Store state information in local storage*/
-            localStorage.setItem('selectedSeats', this.state.selectedSeats)
-            localStorage.setItem('selectedMovie', this.props.selectedMovie)
-            localStorage.setItem('theater', this.props.theater)
-            localStorage.setItem('price', this.props.price)
-            this.setState({
-                redirect: true
-            })
-        }
-        else {
-            /*Redirect to payment page and store state information in redux store*/
-            this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlanId, this.state.price))
-            this.setState({
-                redirect: true
-            })
-        }
+        /*Redirect to payment page and store state information in redux store*/
+        this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price))
+        this.setState({
+            redirect: true
+        })
     }
 
     createSeatMap = (selectedScreen) => {
