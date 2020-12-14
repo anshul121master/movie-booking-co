@@ -16,7 +16,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url, reqObj).then(resp => resp.json());
+  return fetch(url. reqObj).then(resp => resp.json());
 };
 
 //signup
@@ -30,7 +30,7 @@ export const signup = (userInfo) => {
     body: JSON.stringify(userInfo),
   };
   const url = endpoints.signup();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
@@ -71,7 +71,7 @@ export const uploadImage = (userInfo) => {
     body: userInfo,
   };
   const url = endpoints.imageUpload();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
