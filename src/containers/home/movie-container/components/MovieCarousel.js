@@ -19,10 +19,9 @@ export default function MovieCarousel(props) {
         <div className="carousel">
             <Carousel style={{flex:1, height:'250px'}} fullHeightHover={false} autoPlay={false} navButtonsAlwaysVisible={true}>
             {moviesList.map((movie, index) => 
-            <div key={movie.movieId}>
-                <img src={mockEnabled ? "moviePoster.jpg" : `${moviePosters}${movie.moviePoster}`} width={'100%'} onClick={() =>handleSelectedMovie(movie)}
+                <img key={movie.movieId} src={mockEnabled ? "moviePoster.jpg" : `${moviePosters}${movie.moviePoster}`} 
+                                      height='250px' width={'100%'} onClick={() =>handleSelectedMovie(movie)}
                                       alt={`${movie.name} Poster`}/>
-            </div>
             )}
             </Carousel>
         </div>
