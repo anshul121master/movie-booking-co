@@ -15,8 +15,9 @@ export default class Password extends Component {
     if (
       !(
         pwd === "" ||
-        (pwd.length >= 6 &&
-          (pwd.includes("@") || pwd.includes("$") || pwd.includes("#")))
+        pwd.match(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@$#!%*?&]{8,}$/
+        )
       )
     ) {
       this.props.passwordsAreValid(pwd, false, true);
@@ -86,7 +87,7 @@ export default class Password extends Component {
             helperText={
               passwordIsValid
                 ? ""
-                : "Password should be min 6 characters long and must include atleast one special character (@, $, #)"
+                : "*Password should be min 8 characters long, must contain atleast one uppercase letter, one lowercase letter, one number and one special character."
             }
             onChange={this.validatePassword}
             //onFocus={this.clearConfirmPwd}

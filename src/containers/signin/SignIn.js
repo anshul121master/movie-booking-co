@@ -13,27 +13,17 @@ import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { handleAuthedUser } from "../../store/actions/authedUser";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from "react-router-dom";
-import Copyright from '../../shared-components/Copyright'
-import Loader from "../../shared-components/Loader"
-import { header } from "../../theme"
+import Copyright from "../../shared-components/Copyright";
+import Loader from "../../shared-components/Loader";
+import { header } from "../../theme";
 
 const styles = (theme) => ({
-  containerStyle: {
-    backgroundColor: "#F5F4F2",
-    width: "100vw",
-    height: "100vh",
-    margin: 0,
-    padding: 0,
-    position: "absolute",
-    top: 0
-  },
   textInput: {
-    borderColor: "red"
+    borderColor: "red",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -48,11 +38,20 @@ const styles = (theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: header
+    backgroundColor: header,
+    height: 45,
+    borderRadius: 0
   },
   errorColor: {
     color: "red",
   },
+  infoMsg:{
+    backgroundColor:"#BDE5F8",
+    color: "#00529B",
+    padding: 6,
+    borderLeft:"5px solid blue",
+    marginTop: 10
+  }
 });
 
 class SignIn extends Component {
@@ -87,7 +86,13 @@ class SignIn extends Component {
   };
 
   render() {
-    const { classes, loading, authedUser, location, selectedMovie } = this.props;
+    const {
+      classes,
+      loading,
+      authedUser,
+      location,
+      selectedMovie,
+    } = this.props;
     const { email, password } = this.state;
 
     if (authedUser !== null && authedUser.exception === null) {
@@ -95,24 +100,29 @@ class SignIn extends Component {
       else if (location.state.from === undefined) return <Redirect to="/" />;
       else {
         const { from } = location.state;
-        if (from.pathname === '/purchase' && Object.keys(selectedMovie).length === 0) return <Redirect to='/' />;
+        if (
+          from.pathname === "/purchase" &&
+          Object.keys(selectedMovie).length === 0
+        )
+          return <Redirect to="/" />;
         return <Redirect to={from} />;
       }
     }
     return (
-      <div className={classes.containerStyle}>
-        <Container style={{ backgroundColor: "white" }} component="main" maxWidth="xs">
+        <Container
+          style={{ backgroundColor: "white", marginTop: 50}}
+          component="main"
+          maxWidth="xs"
+        >
           <CssBaseline />
-          {loading && (
-            <Loader />
-          )}
+          {loading && <Loader />}
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
-          </Typography>
+            </Typography>
 
             {authedUser !== null && authedUser.exception !== null && (
               <Typography className={classes.errorColor}>
@@ -122,7 +132,15 @@ class SignIn extends Component {
 
             {location.state !== undefined &&
               location.state.responseOnSuccess !== undefined && (
-                <Typography>{location.state.responseOnSuccess}</Typography>
+                <Typography className={classes.infoMsg}>{location.state.responseOnSuccess}</Typography>
+              )}
+
+            {location.state !== undefined &&
+              location.state.from !== undefined &&
+              location.state.from.pathname === "/purchase" && (
+                <Typography className={classes.infoMsg}>
+                  !Please Signin before proceeding to purchase.
+                </Typography>
               )}
 
             <form className={classes.form} onSubmit={this.handleSubmit}>
@@ -162,16 +180,22 @@ class SignIn extends Component {
                 className={classes.submit}
               >
                 Sign In
-            </Button>
+              </Button>
 
               <Grid container>
                 <Grid item xs>
-                  <Link to="/forgotPassword" style={{ textDecoration: 'none', color: header }}>
+                  <Link
+                    to="/forgotPassword"
+                    style={{ textDecoration: "none", color: header }}
+                  >
                     Forgot password?
-                </Link>
+                  </Link>
                 </Grid>
                 <Grid item>
-                  <Link to="/signup" style={{ textDecoration: 'none', color: header }}>
+                  <Link
+                    to="/signup"
+                    style={{ textDecoration: "none", color: header }}
+                  >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -182,7 +206,6 @@ class SignIn extends Component {
             <Copyright />
           </Box>
         </Container>
-      </div>
     );
   }
 }
@@ -191,7 +214,7 @@ function mapStateToProps({ loading, authedUser, selectedMovie }, ownProps) {
   return {
     loading,
     authedUser,
-    selectedMovie
+    selectedMovie,
   };
 }
 
