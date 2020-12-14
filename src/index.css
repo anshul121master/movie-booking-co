@@ -373,6 +373,13 @@ div.info{
     margin: auto;
     padding:15px;
   }
+
+  .actionarea {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
   @media (max-width: 767px) {
    .toolBar {
      justify-content: center;
@@ -389,11 +396,11 @@ div.info{
     margin: auto;
     padding:5px;
   }
+
+  .actionarea {
+    flex-direction: column;
+}
   }
-  @media (min-width: 600px){
-  .MuiToolbar-regular {
-      min-height: 64px;
-    }
-  }
+ 
 
  

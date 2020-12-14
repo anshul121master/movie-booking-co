@@ -5,6 +5,7 @@ export const moviePosters = "https://moviebooking.co/movie-posters/"
 
 export const api ={
     login: () => `${url}/login`,
+    logout: () => `${url}/logoutUser`,
     signup: () => `${url}/signUp`,
     profile: () => `${url}/v1/users`,
     getOtp: () => `${url}/v1/forgotPassword`,
@@ -24,6 +25,7 @@ export const api ={
 
 export const mockApi = {
     login: () => './data/login.json',
+    logout: () => '/data/logout.json',
     signup: () => './data/signup.json',
     profile: () => './data/profile.json',
     getOtp: () => './data/forgotPassword.json',

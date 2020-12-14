@@ -12,7 +12,7 @@ import { mockEnabled } from '../../../../utils/api'
 const useStyles = makeStyles({
   root: {
     maxWidth: '100%',
-    minWidth: 100
+    minWidth: 100,
   },
 });
 
@@ -23,7 +23,7 @@ export default function MovieCard(props) {
   return (
       (movie !== undefined &&
         <Paper style={{width:'100%'}} onClick={()=> handleSelectedMovie(movie)} >
-    <Card className={classes.root}>
+    <Card variant="outlined" className={classes.root}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -47,14 +47,6 @@ export default function MovieCard(props) {
             </Typography>
         </CardContent>
       </CardActionArea>
-      {/* <CardActions>
-        <IconButton aria-label="rating">
-            <StarIcon />
-            </IconButton>
-            <Typography gutterBottom variant="body1" component="h5">
-                {movie.rating}
-            </Typography>
-      </CardActions> */}
     </Card>
     </Paper>
       )

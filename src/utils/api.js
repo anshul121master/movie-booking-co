@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = true;
+export const mockEnabled = false;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -18,6 +18,16 @@ export const login = (userCredentials) => {
   const url = endpoints.login();
   return fetch(url, reqObj).then(resp => resp.json());
 };
+
+export const logout = () => {
+  let reqObj = {
+    method: "POST",
+    credentials: "same-origin",
+  };
+  const url = endpoints.logout();
+  return fetch(url, reqObj).then(resp => resp.json());
+};
+
 
 //signup
 export const signup = (userInfo) => {

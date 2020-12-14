@@ -3,8 +3,6 @@ import { getAllMovies, setSelectedMovie } from './movie';
 import { getMovies, getTheaters, getSeatPlan, lockSeats } from '../../utils/api';
 import { getAllTheaters, setSeatPlan, setSelectedTheater, setShowTimings } from './theater';
 import { setSelectedScreen } from './screen';
-import { useForkRef } from '@material-ui/core';
-
 
 export const SET_SEATS_AND_PRICE = 'SET_SEATS_AND_PRICE'
 
@@ -54,5 +52,3 @@ export function setSeatsAndPrice(selectedSeats, seatPlanId, price) {
             dispatch(lockSeatsAndPrice(selectedSeats, price)) : console.error('error'))
     }
 }
-
-

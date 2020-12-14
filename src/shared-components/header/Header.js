@@ -20,8 +20,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import '../../../src/index.css'
+import { handleLogoutUser }  from "../../store/actions/authedUser"
+import Loader from "../Loader"
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -101,7 +103,11 @@ const styles = (theme) => ({
 
 class Header extends Component {
     state = {
-        open: false
+        open: false,
+    }
+    handleLogout = () =>{
+        const { dispatch } = this.props;
+        dispatch(handleLogoutUser());
     }
 
     handleDrawerOpen = () => {
@@ -131,8 +137,9 @@ class Header extends Component {
     }
 
     render() {
-        const { classes, listOfCities, selectedCity, authedUser } = this.props;
+        const { classes, listOfCities, selectedCity, authedUser, loading } = this.props;
         const { open } = this.state;
+        if(loading) return <Loader />
         return (
             <header>
                 <AppBar position="static" className={clsx([classes.appBar, classes.color], {
@@ -219,7 +226,7 @@ class Header extends Component {
                             <ListItemIcon><ConfirmationNumberIcon /></ListItemIcon>
                             <ListItemText primary='My Bookings' />
                         </ListItem>
-                        <ListItem button key='signout' component={Link} to="/signout"
+                        <ListItem button key='signout' onClick={this.handleLogout}
                             style={{ backgroundColor: header, color: headerText, textAlign: 'center' }}>
                             <ListItemText primary='Sign Out' />
                         </ListItem>
@@ -230,14 +237,15 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ authedUser, selectedCity, selectedMovie }, ownProps) {
+function mapStateToProps({ authedUser, selectedCity, selectedMovie, loading }, ownProps) {
     const { listOfCities } = ownProps;
 
     return {
         listOfCities,
         selectedCity,
         authedUser,
-        selectedMovie
+        selectedMovie,
+        loading
     }
 }
 
