@@ -7,14 +7,29 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducer from '../src/store/reducers'
 import middleware from '../src/store/middlewares'
+import { header, footer } from './theme'
+import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: header,
+    },
+    secondary: {
+      main: footer,
+    },
+  },
+});
 
 const store = createStore(reducer, middleware)
 
 ReactDOM.render(
   <React.StrictMode>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
         <App />
       </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
