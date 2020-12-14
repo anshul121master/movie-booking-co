@@ -1,6 +1,6 @@
 import React from 'react';
 import { GitHub, Instagram, LinkedIn, Twitter, Facebook } from '@material-ui/icons';
-import { footerText, footer } from '../../theme'
+import { footerText, footer, headerText, header } from '../../theme'
 
 export default function Footer() {
 
@@ -15,6 +15,15 @@ export default function Footer() {
         top: 'auto',
         marginTop: '50px',
     }
+
+    const copyRightStyle = {
+        backgroundColor: header,
+        color: headerText,
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: "space-around"
+    }
+
 
     return (
         <div className="main-footer" style={footerStyle}>
@@ -58,7 +67,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <hr />
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+                <div style={copyRightStyle}>
                     <p className="col-sm">
                         &copy;{new Date().getFullYear()} MovieBooking.co | All rights reserved |
           Terms Of Service | Privacy

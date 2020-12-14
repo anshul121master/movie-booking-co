@@ -25,12 +25,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = (theme) => ({
-    root: {
-        width: '700px',
-        height: '10%',
-        margin: '15px',
-        fontSize: '0.75em'
-    },
     expand: {
         transform: 'rotate(0deg)',
         transition: theme.transitions.create('transform', {
@@ -143,7 +137,7 @@ class TheaterCard extends Component {
             (error === null ) ?
             (this.state.redirect ? (<Redirect to={{ pathname: '/screen' }} />) :
                 (
-                    <div><Card className={classes.root}>
+                    <div><Card className="theater-card">
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe" className={classes.avatar}>

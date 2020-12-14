@@ -110,7 +110,7 @@ class SignIn extends Component {
     }
     return (
         <Container
-          style={{ backgroundColor: "white", marginTop: 50}}
+          style={{ backgroundColor: "white"}}
           component="main"
           maxWidth="xs"
         >

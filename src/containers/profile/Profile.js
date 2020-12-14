@@ -13,6 +13,7 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { getProfile } from "../../utils/api";
 import { uploadImage } from "../../utils/api";
 import { updateProfile } from "../../utils/api";
+import { userProfilePhoto } from '../../config/apiConfig'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../shared-components/Loader";
@@ -45,7 +46,7 @@ const styles = (theme) => ({
   button: {
     margin: theme.spacing(3, 0, 2),
     height: 45,
-    borderRadius:0
+    borderRadius: 0
   },
 
   imageContainer: {
@@ -103,7 +104,7 @@ class Profile extends Component {
     phone: "",
     email: "",
     birthday: "",
-    imageUrl: "",
+    imageUrl: null,
     infoMessage: "",
     loadProfileMessage: "",
     imageUploadErrorMessage: "",
@@ -289,7 +290,7 @@ class Profile extends Component {
               type="file"
               onChange={this.onImageUpload}
             />
-            {imageUrl === "" ? (
+            {imageUrl === null ? (
               <div
                 style={{ position: "relative", width: 100, marginBottom: 20 }}
               >
@@ -310,24 +311,24 @@ class Profile extends Component {
                 </label>
               </div>
             ) : (
-              <div style={{ position: "relative", width: 110, height: 110, marginBottom: 10 }}>
-                <img
-                  src="gorilla.jpg"
-                  alt="profile image"
-                  className={classes.profileImg}
-                />
+                <div style={{ position: "relative", width: 110, height: 110, marginBottom: 10 }}>
+                  <img
+                    src={userProfilePhoto + imageUrl}
+                    alt="profile image"
+                    className={classes.profileImg}
+                  />
 
-                <label htmlFor="icon-button-file">
-                  <IconButton
-                    color="primary"
-                    className={classes.cameraIcon}
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
-              </div>
-            )}
+                  <label htmlFor="icon-button-file">
+                    <IconButton
+                      color="primary"
+                      className={classes.cameraIcon}
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                </div>
+              )}
           </div>
 
           <Typography variant="h5" style={{ color: "white", marginRight: 20 }}>
