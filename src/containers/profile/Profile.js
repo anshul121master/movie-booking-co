@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../shared-components/Loader";
 import Footer from "../../shared-components/footer/Footer"
+import { userProfilePhoto } from "../../config/apiConfig"
 
 
 const styles = (theme) => ({
@@ -103,7 +104,7 @@ class Profile extends Component {
     phone: "",
     email: "",
     birthday: "",
-    imageUrl: "",
+    imageUrl: null,
     infoMessage: "",
     loadProfileMessage: "",
     imageUploadErrorMessage: "",
@@ -289,7 +290,7 @@ class Profile extends Component {
               type="file"
               onChange={this.onImageUpload}
             />
-            {imageUrl === "" ? (
+            {imageUrl === null ? (
               <div
                 style={{ position: "relative", width: 100, marginBottom: 20 }}
               >
@@ -312,7 +313,7 @@ class Profile extends Component {
             ) : (
               <div style={{ position: "relative", width: 110, height: 110, marginBottom: 10 }}>
                 <img
-                  src="gorilla.jpg"
+                  src={userProfilePhoto+imageUrl}
                   alt="profile image"
                   className={classes.profileImg}
                 />
