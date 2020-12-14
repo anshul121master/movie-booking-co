@@ -19,20 +19,11 @@ import Loader from "../../shared-components/Loader";
 import { header } from "../../theme";
 
 const styles = (theme) => ({
-  containerStyle: {
-    backgroundColor: "#F5F4F2",
-    width: "100vw",
-    height: "100vh",
-    margin: 0,
-    padding: 0,
-    position: "absolute",
-    top: 0,
-  },
   textInput: {
     borderColor: "red",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -48,6 +39,8 @@ const styles = (theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     backgroundColor: header,
+    height: 45,
+    borderRadius: 0
   },
   errorColor: {
     color: "red",
@@ -116,9 +109,8 @@ class SignIn extends Component {
       }
     }
     return (
-      <div className={classes.containerStyle}>
         <Container
-          style={{ backgroundColor: "white" }}
+          style={{ backgroundColor: "white", marginTop: 50}}
           component="main"
           maxWidth="xs"
         >
@@ -214,7 +206,6 @@ class SignIn extends Component {
             <Copyright />
           </Box>
         </Container>
-      </div>
     );
   }
 }

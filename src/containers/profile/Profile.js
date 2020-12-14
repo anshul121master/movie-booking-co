@@ -4,7 +4,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -15,39 +14,29 @@ import { getProfile } from "../../utils/api";
 import { uploadImage } from "../../utils/api";
 import { updateProfile } from "../../utils/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Copyright from '../../shared-components/Copyright'
-import { userProfilePhoto } from '../../config/apiConfig'
-//import Loader from "../../shared-components/Loader"
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../../shared-components/Loader";
+import Footer from "../../shared-components/footer/Footer"
+
 
 const styles = (theme) => ({
-  containerStyle:{
-    backgroundColor:"#F5F4F2",
-     width: "100%",
-     height: "100%",
-     margin: 0,
-     padding: 0,
-     position: "absolute",
-     top:0
-   },
   profileInfoDiv: {
     width: "100vw",
     height: "30vh",
     backgroundColor: "grey",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     margin: "50px",
   },
   cardStyle: {
+    marginTop: 30,
     minWidth: "70vw",
-    boxShadow: "5px 10px 18px #888888",
+    margin: 0,
+    backgroundColor: "#ECEFF1"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -55,22 +44,38 @@ const styles = (theme) => ({
   },
   button: {
     margin: theme.spacing(3, 0, 2),
+    height: 45,
+    borderRadius:0
   },
+
+  imageContainer: {
+    minWidth: "100%",
+    backgroundColor: "#0A3D62",
+    minHeight: "30vh",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  cameraIcon: {
+    position: "absolute",
+    top: "75%",
+    right: "-20px",
+    size: 20,
+    backgroundColor: "#d81b60",
+    padding: "9px",
+  },
+
   input: {
     display: "none",
   },
   profileImg: {
-    width: "126px",
-    height: "126px",
-    border: "4px solid #0A79DF",
-    borderRadius: "100px",
+    width: "100%",
+    height: "100%",
     padding: "2px",
     marginBottom: "5px",
   },
   userIcon: {
     color: "grey",
-    border: "4px solid #0A79DF",
-    borderRadius: "100px",
     marginBottom: "5px",
   },
   successMessageColor: {
@@ -110,13 +115,14 @@ class Profile extends Component {
       if (res.status === 200) {
         let userProfile = res.response;
         const birthday = this.formatDate(userProfile.dateOfBirth);
+        console.log("birthday", birthday)
         this.setState({
           loadProfileMessage: "",
           firstName: userProfile.fullName.split(" ")[0],
           lastName: userProfile.fullName.split(" ")[1],
           email: userProfile.email,
           phone: userProfile.phoneNumber,
-          birthday,
+          birthday: birthday,
           imageUrl: userProfile.imageUrl,
         });
       } else {
@@ -264,186 +270,203 @@ class Profile extends Component {
       loading,
     } = this.state;
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        {/*loading && (
-          <Loader />
-        )*/}
-        <Grid container justify="center">
-          <Card className={classes.cardStyle} variant="outlined">
-            <CardContent>
-              <div className={classes.paper}>
-                {loadProfileMessage !== "" && (
-                  <Typography className={classes.failedMessageColor}>
-                    {loadProfileMessage}
-                  </Typography>
-                )}
-                {imageUrl === "" ? (
-                  <FontAwesomeIcon
-                    icon={faUserCircle}
-                    size="9x"
-                    className={classes.userIcon}
-                  />
-                ) : (
-                  <img
-                    src={userProfilePhoto+imageUrl}
-                    alt="profile image"
-                    className={classes.profileImg}
-                  />
-                )}
-                {imageUploadErrorMessage !== "" && (
-                  <Typography className={classes.failedMessageColor}>
-                    {imageUploadErrorMessage}
-                  </Typography>
-                )}
-                <input
-                  accept="image/*"
-                  className={classes.input}
-                  id="icon-button-file"
-                  type="file"
-                  onChange={this.onImageUpload}
+      <div>
+        <Container className={classes.imageContainer}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {imageUploadErrorMessage !== "" && (
+              <Typography
+                style={{ marginTop: 5, marginBottom: 5 }}
+                className={classes.failedMessageColor}
+              >
+                {imageUploadErrorMessage}
+              </Typography>
+            )}
+
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="icon-button-file"
+              type="file"
+              onChange={this.onImageUpload}
+            />
+            {imageUrl === "" ? (
+              <div
+                style={{ position: "relative", width: 100, marginBottom: 20 }}
+              >
+                <FontAwesomeIcon
+                  icon={faUser}
+                  size="7x"
+                  className={classes.userIcon}
                 />
+
                 <label htmlFor="icon-button-file">
                   <IconButton
                     color="primary"
-                    className={classes.button}
+                    className={classes.cameraIcon}
                     component="span"
                   >
                     <PhotoCamera />
                   </IconButton>
                 </label>
-                <Typography component="h1" variant="h5">
-                  My Profile
-                </Typography>
-                <form className={classes.form} onSubmit={this.handleSubmit}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        autoComplete="fname"
-                        name="firstName"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="firstName"
-                        label="First Name"
-                        value={firstName}
-                        error={fnameIsValid ? false : true}
-                        helperText={
-                          fnameIsValid ? "" : "Should contain only alphabets"
-                        }
-                        onChange={this.validateName}
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        value={lastName}
-                        autoComplete="lname"
-                        error={lnameIsValid ? false : true}
-                        helperText={
-                          lnameIsValid ? "" : "Should contain only alphabets"
-                        }
-                        onChange={this.validateName}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        variant="outlined"
-                        disabled
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        value={email}
-                        type="email"
-                        autoComplete="email"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <MuiPhoneNumber
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="phone"
-                        label="Mobile Number"
-                        name="phone"
-                        value={phone}
-                        defaultCountry={"in"}
-                        autoComplete="phone"
-                        onBlur={this.setPhone}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="date"
-                        label="Birthday"
-                        name="date"
-                        defaultValue={birthday}
-                        type="date"
-                        autoComplete="date"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        onBlur={this.setBirthday}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Update Changes
-                  </Button>
-
-                  {loading && (
-                    <Grid container spacing={5} justify="center">
-                      <Grid item>
-                        <CircularProgress />
-                      </Grid>
-                    </Grid>
-                  )}
-                  
-                  <Grid container justify="flex-start">
-                    <Grid item>
-                      <Typography
-                        className={
-                          infoMessage.includes("Successfully")
-                            ? classes.successMessageColor
-                            : classes.failedMessageColor
-                        }
-                      >
-                        {infoMessage}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid container justify="flex-end">
-                    <Grid item>
-                      <Link to="/">
-                        Proceed to home
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </form>
               </div>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
+            ) : (
+              <div style={{ position: "relative", width: 110, height: 110, marginBottom: 10 }}>
+                <img
+                  src="gorilla.jpg"
+                  alt="profile image"
+                  className={classes.profileImg}
+                />
+
+                <label htmlFor="icon-button-file">
+                  <IconButton
+                    color="primary"
+                    className={classes.cameraIcon}
+                    component="span"
+                  >
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
+              </div>
+            )}
+          </div>
+
+          <Typography variant="h5" style={{ color: "white", marginRight: 20 }}>
+            Welcome {firstName}! 😊
+          </Typography>
+        </Container>
+        <Container
+          className={classes.cardStyle}
+          component="main"
+          maxWidth="xs"
+        >
+          <CssBaseline />
+          {loading && <Loader />}
+          <Grid container justify="center">
+            <div className={classes.paper}>
+              {loadProfileMessage !== "" && (
+                <Typography className={classes.failedMessageColor}>
+                  {loadProfileMessage}
+                </Typography>
+              )}
+              <Typography component="h1" variant="h5">
+                My Profile
+              </Typography>
+              <form className={classes.form} onSubmit={this.handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      autoComplete="fname"
+                      name="firstName"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label="First Name"
+                      value={firstName}
+                      error={fnameIsValid ? false : true}
+                      helperText={
+                        fnameIsValid ? "" : "Should contain only alphabets"
+                      }
+                      onChange={this.validateName}
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="lastName"
+                      label="Last Name"
+                      name="lastName"
+                      value={lastName}
+                      autoComplete="lname"
+                      error={lnameIsValid ? false : true}
+                      helperText={
+                        lnameIsValid ? "" : "Should contain only alphabets"
+                      }
+                      onChange={this.validateName}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      disabled
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      value={email}
+                      type="email"
+                      autoComplete="email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MuiPhoneNumber
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="phone"
+                      label="Mobile Number"
+                      name="phone"
+                      value={phone}
+                      defaultCountry={"in"}
+                      autoComplete="phone"
+                      onBlur={this.setPhone}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="date"
+                      label="Birthday"
+                      name="date"
+                      defaultValue={birthday}
+                      type="date"
+                      autoComplete="date"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onBlur={this.setBirthday}
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Update Changes
+                </Button>
+
+                <Grid container justify="flex-start">
+                  <Grid item>
+                    <Typography
+                      className={
+                        infoMessage.includes("Successfully")
+                          ? classes.successMessageColor
+                          : classes.failedMessageColor
+                      }
+                    >
+                      {infoMessage}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link to="/">Proceed to home</Link>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Grid>
+        </Container>
+        <Footer />
+      </div>
     );
   }
 }

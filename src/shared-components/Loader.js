@@ -6,9 +6,7 @@ import { header } from '../theme'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: "100vh", 
     flexGrow: 1,
-    minWidth: "100%",
     transform: 'translateZ(0)',
     position: 'absolute',
     top: 0,

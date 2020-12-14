@@ -16,7 +16,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url).then(resp => resp.json());
+  return fetch(url, reqObj).then(resp => resp.json());
 };
 
 //signup
@@ -207,7 +207,7 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     body: JSON.stringify(selectedSeats),
   }
   const url = endpoints.lockSeats(seatPlanId);
-  return fetch(url).then((response) => {
+  return fetch(url, reqObj).then((response) => {
     if (response.ok) return true
     else
       return false
@@ -233,7 +233,7 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
     }),
   }
   const url = endpoints.booking();
-  return fetch(url).then((response) => {
+  return fetch(url, reqObj).then((response) => {
     if (response.ok) return response.json()
     else
       return console.error("Error")
