@@ -25,7 +25,7 @@ class TheaterContainer extends Component {
     filterTheatres = (date, theaterList, selectedMovie) => {
         theaterList = theaterList.filter(theater => {
             const movie = theater.movies.filter(movie => movie.id === selectedMovie.movieId)[0]
-            return (movie.startDate === date || movie.endDate === date || (movie.startDate < date && movie.endDate > date))
+            return (movie.startDate.split('T')[0] === date || movie.endDate.split('T')[0] === date || (movie.startDate.split('T')[0] < date && movie.endDate.split('T')[0] > date))
         })
 
         return theaterList
@@ -48,6 +48,7 @@ class TheaterContainer extends Component {
                         </div>
                     ) :
                         (<div>
+                            {console.log("state: " + selectedDate + " props:  " + this.props.selectedDate)}
                             <div className='date-container'>
                                 {Array.from(Array(7).keys()).map((value) =>
                                     selectedDate === this.getDateValue(value).date
@@ -123,7 +124,8 @@ function mapStateToProps({ theatersList, selectedMovie }) {
                 const theaterBstartDate = theaterB.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
                 return (theaterBstartDate - theaterAstartDate)
             })
-            selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+
+            selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate.split('T')[0]
         }
     }
 

@@ -46,7 +46,7 @@ export default class App extends Component {
               <Route
                 exact
                 path="/"
-                component={() => <Home listOfCities={listOfCities} />}
+                render={() => <Home listOfCities={listOfCities} />}
               />
               <ProtectedRoute
                 exact
@@ -56,7 +56,7 @@ export default class App extends Component {
               <Route
                 exact
                 path="/movie"
-                component={() => <Movie listOfCities={listOfCities} />}
+                render={() => <Movie listOfCities={listOfCities} />}
               />
               <Route exact path="/screen" component={Screen} />
               <ProtectedRoute exact path="/purchase" component={Purchase} />

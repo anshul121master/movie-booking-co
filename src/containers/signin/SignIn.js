@@ -58,6 +58,7 @@ class SignIn extends Component {
   state = {
     email: "",
     password: "",
+    showErrorMessage: false
   };
 
   handleChange = (event) => {
@@ -83,6 +84,9 @@ class SignIn extends Component {
       password,
     };
     dispatch(handleAuthedUser(userCredentials));
+    this.setState({
+      showErrorMessage: true
+    })
   };
 
   render() {
@@ -93,7 +97,7 @@ class SignIn extends Component {
       location,
       selectedMovie,
     } = this.props;
-    const { email, password } = this.state;
+    const { email, password, showErrorMessage } = this.state;
 
     if (authedUser !== null && authedUser.exception === null) {
       if (location.state === undefined) return <Redirect to="/" />;
@@ -124,7 +128,7 @@ class SignIn extends Component {
               Sign in
             </Typography>
 
-            {authedUser !== null && authedUser.exception !== null && (
+            {(authedUser !== null && authedUser.exception !== null && showErrorMessage) && (
               <Typography className={classes.errorColor}>
                 {authedUser.exception.errorMsg}
               </Typography>

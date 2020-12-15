@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = true;
+export const mockEnabled = false;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -16,7 +16,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url).then(resp => resp.json());
+  return fetch(url, reqObj).then(resp => resp.json());
 };
 
 export const logout = () => {

@@ -13,7 +13,6 @@ import Container from "@material-ui/core/Container";
 import MuiPhoneNumber from "material-ui-phone-number";
 import { signup } from "../../utils/api";
 import Password from "./Password";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from "react-router-dom";
 import Copyright from '../../shared-components/Copyright'
 import Loader from "../../shared-components/Loader"

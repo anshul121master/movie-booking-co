@@ -1,4 +1,3 @@
-import { getShowTimings } from '../../utils/api'
 
 //add selected city action creator
 export const SET_SELECTED_CITY = 'SET_SELECTED_CITY'
