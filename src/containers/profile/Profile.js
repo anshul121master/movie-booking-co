@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../shared-components/Loader";
 import Footer from "../../shared-components/footer/Footer"
-import { userProfilePhoto } from "../../config/apiConfig"
+
 
 
 const styles = (theme) => ({
@@ -117,7 +117,6 @@ class Profile extends Component {
       if (res.status === 200) {
         let userProfile = res.response;
         const birthday = this.formatDate(userProfile.dateOfBirth);
-        console.log("birthday", birthday)
         this.setState({
           loadProfileMessage: "",
           firstName: userProfile.fullName.split(" ")[0],
@@ -425,13 +424,13 @@ class Profile extends Component {
                       id="date"
                       label="Birthday"
                       name="date"
-                      defaultValue={birthday}
+                      value={birthday}
                       type="date"
                       autoComplete="date"
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      onBlur={this.setBirthday}
+                      onChange={this.setBirthday}
                     />
                   </Grid>
                 </Grid>
