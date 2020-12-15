@@ -524,3 +524,7 @@ div.login-label {
         font-size: 0.55em;
     }
 }
+button.timebutton{
+        color: #3C5B41;
+        background-color: #E2FDE6;
+}
