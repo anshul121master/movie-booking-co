@@ -47,11 +47,6 @@ const styles = (theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    button: {
-        color: buttonAvailableText,
-        backgroundColor: buttonAvailable,
-        margin: 7
     }
 });
 
@@ -147,7 +142,7 @@ class TheaterCard extends Component {
     };
 
     render() {
-        const { theater, classes } = this.props;
+        const { theater, classes, selectedDate } = this.props;
         const { screenTimesArray, error } = this.state;
         return (
             (error === null) ?
@@ -181,7 +176,8 @@ class TheaterCard extends Component {
                                 <CardContent className={classes.content}>
                                     <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
                                     {screenTimesArray.map(time =>
-                                        <Button className={classes.button} onClick={() => this.handleClickOpen(time)}>
+                                        <Button className='timebutton' style={{ margin: 7 }} onClick={() => this.handleClickOpen(time)}
+                                            disabled={selectedDate <= new Date().toISOString().split('T')[0] && new Date().getHours() > time.split('S')[1]}>
                                             {time.split('S')[1]}:00
                                 </Button>
                                     )}

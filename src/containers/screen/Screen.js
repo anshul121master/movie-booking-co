@@ -167,10 +167,7 @@ class Screen extends Component {
                                         </CardContent>
                                     ))}
                                     <div style={{ margin: 10, display: 'flex', alignItems: "center", justifyContent: "center" }}>
-                                        <Button style={{
-                                            color: buttonAvailableText,
-                                            backgroundColor: buttonAvailable,
-                                        }} disabled={this.state.selectedSeats.length === 0}
+                                        <Button className='timebutton' disabled={this.state.selectedSeats.length === 0}
                                             onClick={this.purchaseSeats}
                                             variant='outlined'
                                         >
