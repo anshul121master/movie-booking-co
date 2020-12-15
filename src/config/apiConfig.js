@@ -4,12 +4,12 @@ export const userProfilePhoto = "https://moviebooking.co/user-profile-photos/"
 export const moviePosters = "https://moviebooking.co/movie-posters/"
 
 export const api ={
-    login: () => `${url}/login`,
-    logout: () => `${url}/logoutUser`,
-    signup: () => `${url}/signUp`,
+    login: () => `${url}/v1/login`,
+    logout: () => `${url}/v1/logout`,
+    signup: () => `${url}/v1/signUp`,
     profile: () => `${url}/v1/users`,
-    getOtp: () => `${url}/forgotPassword`,
-    reset: () => `${url}/reset`,
+    getOtp: () => `${url}/v1/forgotPassword`,
+    reset: () => `${url}/v1/resetPassword`,
     imageUpload: () => `${url}/v1/users/profilePhoto`,
     profileUpdate: () =>`${url}/v1/users`,
     cities: () => `${url}/v1/cities`,

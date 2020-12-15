@@ -12,9 +12,10 @@ import Loader from '../../shared-components/Loader'
 
 const styles = (theme) => ({
     root: {
-        width: '70%',
+        width: '98%',
         borderBottom: 'none',
         borderTop: 'none',
+        overFlow: 'auto',
     },
 
 })
@@ -171,6 +172,7 @@ class Screen extends Component {
                                             backgroundColor: buttonAvailable,
                                         }} disabled={this.state.selectedSeats.length === 0}
                                             onClick={this.purchaseSeats}
+                                            variant='outlined'
                                         >
                                             Purchase - Rs {this.state.price}</Button>
                                     </div>

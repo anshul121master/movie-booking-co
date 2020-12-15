@@ -64,34 +64,43 @@ class TheaterCard extends Component {
         open: false,
         time: '',
         redirect: false,
-        error:null
-        
+        error: null
+
     }
 
     //when show timing btn is clicked
     getScreenObject = (theater) => {
         const { selectedMovie } = this.props;
-        getScreens(selectedMovie.movieId, theater.theaterId)
-            .then((screens) => {
-                if(screens.exception === null) {
-                let screenTimeArray = []
-                screens.response.forEach(screen => {
-                    screenTimeArray = screenTimeArray.concat(screen.screenTimes.map(time => time.showTiming))
-                })
+        if (this.state.screens === null && this.state.screenTimesArray.length === 0) {
+            getScreens(selectedMovie.movieId, theater.theaterId)
+                .then((screens) => {
+                    if (screens.exception === null) {
+                        let screenTimeArray = []
+                        screens.response.forEach(screen => {
+                            screenTimeArray = screenTimeArray.concat(screen.screenTimes.map(time => time.showTiming))
+                        })
 
-                this.setState(currentState => {
-                    return {
-                        screens: screens.response,
-                        screenTimesArray: screenTimeArray,
-                        expanded: !currentState.expanded,
+                        this.setState(currentState => {
+                            return {
+                                screens: screens.response,
+                                screenTimesArray: screenTimeArray,
+                                expanded: !currentState.expanded,
+                            }
+                        })
+                    } else {
+                        this.setState({
+                            error: screens.exception
+                        })
                     }
                 })
-            } else {
-                this.setState({
-                    error: screens.exception
-                })
-            }
+        }
+        else {
+            this.setState(currentState => {
+                return {
+                    expanded: !currentState.expanded,
+                }
             })
+        }
     }
 
     //when clicked on any show time
@@ -110,7 +119,14 @@ class TheaterCard extends Component {
     }
 
     handleExpandClick = () => {
-        this.getScreenObject(this.props.theater)
+        if (!this.state.expanded) {
+            this.getScreenObject(this.props.theater)
+        }
+        else {
+            this.setState({
+                expanded: false
+            })
+        }
     }
 
     handleClickOpen = (time) => {
@@ -134,70 +150,72 @@ class TheaterCard extends Component {
         const { theater, classes } = this.props;
         const { screenTimesArray, error } = this.state;
         return (
-            (error === null ) ?
-            (this.state.redirect ? (<Redirect to={{ pathname: '/screen' }} />) :
-                (
-                    <div><Card className="theater-card">
-                        <CardHeader
-                            avatar={
-                                <Avatar aria-label="recipe" className={classes.avatar}>
-                                    {theater.rating}
-                                </Avatar>
-                            }
-                            title={theater.theaterName}
-                            subheader={theater.address.area + ", " + theater.address.city + ", " + theater.address.pincode + ", " + theater.address.state}
-                        />
-                        <CardActions className={classes.action}>
-                            <Tooltip title="Expand to check on movie screening times" aria-label="add">
-                                <IconButton
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: this.state.expanded,
-                                    })}
-                                    onClick={this.handleExpandClick}
-                                    aria-expanded={this.state.expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </CardActions>
-                        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                            <CardContent className={classes.content}>
-                                <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
-                                {screenTimesArray.map(time =>
-                                    <Button className={classes.button} onClick={() => this.handleClickOpen(time)}>
-                                        {time.split('S')[1]}:00
+            (error === null) ?
+                (this.state.redirect ? (<Redirect to={{ pathname: '/screen' }} />) :
+                    (
+                        <div><Card className="theater-card">
+                            <CardHeader
+                                avatar={
+                                    <Avatar aria-label="recipe" className={classes.avatar}>
+                                        {theater.rating}
+                                    </Avatar>
+                                }
+                                title={theater.theaterName}
+                                subheader={theater.address.area + ", " + theater.address.city + ", " + theater.address.pincode + ", " + theater.address.state}
+                            />
+                            <CardActions className={classes.action}>
+                                <Tooltip title="Expand to check on movie screening times" aria-label="add">
+                                    <IconButton
+                                        className={clsx(classes.expand, {
+                                            [classes.expandOpen]: this.state.expanded,
+                                        })}
+                                        aria-expanded={this.state.expanded}
+                                        aria-label="show more"
+                                        onClick={this.handleExpandClick}
+                                    >
+                                        <ExpandMoreIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </CardActions>
+                            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                                <CardContent className={classes.content}>
+                                    <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
+                                    {screenTimesArray.map(time =>
+                                        <Button className={classes.button} onClick={() => this.handleClickOpen(time)}>
+                                            {time.split('S')[1]}:00
                                 </Button>
-                                )}
-                            </CardContent>
-                        </Collapse>
-                    </Card>
-                        <Dialog
-                            open={this.state.open}
-                            onClose={this.handleClose}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
-                        >
-                            <DialogTitle id="alert-dialog-title">{"Do you want to navigate to seat selection page?"}</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    Do you want to navigate to seat selection page for the selected show-time tickets?
+                                    )}
+                                </CardContent>
+                            </Collapse>
+                        </Card>
+                            <Dialog
+                                open={this.state.open}
+                                onClose={this.handleClose}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">{"Do you want to navigate to seat selection page?"}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                        Do you want to navigate to seat selection page for the selected show-time tickets?
                               </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => this.handleClose(false)}>
-                                    No
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={() => this.handleClose(false)}>
+                                        No
                                         </Button>
-                                <Button onClick={() => this.handleClose(true, theater, this.state.time, this.props.selectedDate)} autoFocus>
-                                    Yes
+                                    <Button onClick={() => this.handleClose(true, theater, this.state.time, this.props.selectedDate)} autoFocus>
+                                        Yes
                                         </Button>
-                            </DialogActions>
-                        </Dialog>
-                    </div>)
-        ) : <Redirect to={{pathname:'/error',
-                    state:{
-                        exception:error
-                    }}} />  )
+                                </DialogActions>
+                            </Dialog>
+                        </div>)
+                ) : <Redirect to={{
+                    pathname: '/error',
+                    state: {
+                        exception: error
+                    }
+                }} />)
     }
 }
 

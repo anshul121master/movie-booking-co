@@ -424,12 +424,13 @@ class Profile extends Component {
                       id="date"
                       label="Birthday"
                       name="date"
-                      defaultValue={birthday}
+                      value={birthday}
                       type="date"
                       autoComplete="date"
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      onChange={this.setBirthday}
                       onBlur={this.setBirthday}
                     />
                   </Grid>
