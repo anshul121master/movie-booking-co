@@ -13,13 +13,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Loader from "../../shared-components/Loader"
 
 class Purchase extends Component {
 
     state = {
         bookingStatus: '',
         exception: null,
-        open: false
+        open: false,
+        loading: false
     }
 
     handleClose = () => {
@@ -33,6 +35,10 @@ class Purchase extends Component {
         event.preventDefault()
 
         const { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan } = this.props
+        const { loading } = this.state
+        this.setState({
+            loading: true
+        })
         purchaseTickets({
             theaterDetails: selectedTheater.theaterName + " " + selectedTheater.address.city,
             screenName: selectedScreen.screenName,
@@ -54,6 +60,9 @@ class Purchase extends Component {
                         open:true
                     })
                 }
+                this.setState({
+                    loading: false
+                })
             }
         )
     }
@@ -76,14 +85,15 @@ class Purchase extends Component {
 
     render() {
         const { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan } = this.props
-        const {exception} = this.state;
+        const {exception, loading} = this.state;
         return (
             <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
+            {loading && <Loader />}
                 <div className='screen-header'>
                     <IconButton >
-                        <Link style={{ textDecoration: 'none' }} to={{
+                      { this.state.bookingStatus === "" &&<Link style={{ textDecoration: 'none' }} to={{
                             pathname: "/screen",
-                        }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>
+                        }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>}
                     </IconButton>
                     <span>{selectedMovie.name}</span>
                     <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>

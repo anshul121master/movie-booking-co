@@ -38,7 +38,7 @@ class Home extends Component {
         const { listOfCities } = this.props; // from app component
         const { citySelected } = this.state;
         return (
-            <div>
+            <div style={{minHeight: "100vh"}}>
                 {(listOfCities.exception === null) ?
                     ((citySelected === true) ? (
                         <React.Fragment>

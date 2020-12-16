@@ -11,9 +11,9 @@ import Purchase from "./purchase/Purchase";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyBookings from "./myBookings/MyBookings";
 import Error from "../shared-components/error/Error";
-import ProtectedRoute from "./ProtectedRoute"
+import ProtectedRoute from "./ProtectedRoute";
 import Loader from "../shared-components/Loader";
-
+import PageNotFound from "../shared-components/pageNotFound/PageNotFound";
 
 export default class App extends Component {
   state = {
@@ -35,37 +35,41 @@ export default class App extends Component {
         {Object.keys(listOfCities).length !== 0 ? (
           <Router>
             <Switch>
-              <Route path="/login" render={(props) => <SignIn {...props} />} />
+              <Route
+                exact
+                path="/"
+                render={() => <Home listOfCities={listOfCities} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={(props) => <SignIn {...props} />}
+              />
 
               <Route exact path="/signup" component={SignUp} />
 
               <ProtectedRoute exact path="/profile" component={Profile} />
 
               <Route exact path="/forgotPassword" component={ForgotPassword} />
-
-              <Route
-                exact
-                path="/"
-                render={() => <Home listOfCities={listOfCities} />}
-              />
               <ProtectedRoute
                 exact
                 path="/upcoming"
                 component={() => <MyBookings listOfCities={listOfCities} />}
               />
               <Route
-                exact
                 path="/movie"
+                exact
                 render={() => <Movie listOfCities={listOfCities} />}
               />
               <Route exact path="/screen" component={Screen} />
               <ProtectedRoute exact path="/purchase" component={Purchase} />
               <Route exact path="/error" component={Error} />
+              <Route component={PageNotFound} />
             </Switch>
           </Router>
         ) : (
-            <Loader />
-          )}
+          <Loader />
+        )}
       </div>
     );
   }

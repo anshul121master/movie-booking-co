@@ -113,11 +113,15 @@ class Profile extends Component {
   };
 
   componentDidMount() {
+    this.setState({
+      loading: true
+    })
     getProfile().then((res) => {
       if (res.status === 200) {
         let userProfile = res.response;
         const birthday = this.formatDate(userProfile.dateOfBirth);
         this.setState({
+          loading: false,
           loadProfileMessage: "",
           firstName: userProfile.fullName.split(" ")[0],
           lastName: userProfile.fullName.split(" ")[1],
@@ -128,6 +132,7 @@ class Profile extends Component {
         });
       } else {
         this.setState({
+          loading: false,
           loadProfileMessage: res.exception.errorMsg,
         });
       }
@@ -272,6 +277,7 @@ class Profile extends Component {
     } = this.state;
     return (
       <div>
+      {loading && <Loader />}
         <Container className={classes.imageContainer}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {imageUploadErrorMessage !== "" && (
@@ -341,7 +347,6 @@ class Profile extends Component {
           maxWidth="xs"
         >
           <CssBaseline />
-          {loading && <Loader />}
           <Grid container justify="center">
             <div className={classes.paper}>
               {loadProfileMessage !== "" && (
