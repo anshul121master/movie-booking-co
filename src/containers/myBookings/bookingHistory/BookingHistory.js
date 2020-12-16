@@ -21,7 +21,7 @@ export default class BookingHistory extends Component {
                             name: ticket.movieName,
                             genre: ''
                         };
-                        const date=ticket.dateOfShow.split('T')[0];
+                        const date=ticket.dateOfShow;
                         const bookingStatus=ticket.bookingStatus;
                         const time = ticket.showTiming;
                         return <Ticket key={ticket.bookingId}

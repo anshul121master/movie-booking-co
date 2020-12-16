@@ -1,4 +1,3 @@
-import { faBullseye } from "@fortawesome/free-solid-svg-icons";
 import { api, mockApi } from "../config/apiConfig";
 
 export const mockEnabled = false;

@@ -3,8 +3,8 @@
         {
             "bookingId": "123456",
             "theaterDetails": "Address1 ",
-            "dateOfShow": "2021-02-20T00:00:00.000+00:00",
-            "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
+            "dateOfShow": "2021-02-20",
+            "dateOfBooking": "2020-11-23 11:46:21",
             "showTiming": "S11",
             "screenName": " 1-C ",
             "movieName": " Dolby ",
@@ -20,8 +20,8 @@
         {
             "bookingId": "3184de0e-0289-47be-88a2-d08071380d47",
             "theaterDetails": "Address1 ",
-            "dateOfShow": "2021-02-20T00:00:00.000+00:00",
-            "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
+            "dateOfShow": "2021-02-20",
+            "dateOfBooking": "2020-11-23 10:15:49",
             "showTiming": "S14",
             "screenName": " 1-C ",
             "movieName": " Dolby ",
@@ -37,8 +37,8 @@
         {
             "bookingId": "7a7f8b36-aba4-4374-b7b9",
             "theaterDetails": "Address1",
-            "dateOfShow": "2020-02-20T00:00:00.000+00:00",
-            "dateOfBooking": "2020-11-23T11:46:21.524+00:00",
+            "dateOfShow": "2020-02-20",
+            "dateOfBooking": "2020-11-23 11:46:21",
             "showTiming": "S20",
             "screenName": " 1-C ",
             "movieName": " Dolby3",
@@ -54,8 +54,8 @@
         {
             "bookingId": "3184de0e-0289-47be-d08071380d47",
             "theaterDetails": "Address1 ",
-            "dateOfShow": "2020-02-20T00:00:00.000+00:00",
-            "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
+            "dateOfShow": "2020-02-20",
+            "dateOfBooking": "2020-11-23 10:15:49",
             "showTiming": "S18",
             "screenName": " 1-C ",
             "movieName": " Dolby4",

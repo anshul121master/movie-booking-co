@@ -2,8 +2,8 @@
     "response": {
         "bookingId": "123456",
         "theaterDetails": "Address1 ",
-        "dateOfShow": "2021-02-20T00:00:00.000+00:00",
-        "dateOfBooking": "2020-11-23T10:15:49.792+00:00",
+        "dateOfShow": "2021-02-20",
+        "dateOfBooking": "2020-11-23 10:15:49",
         "showTiming": "2:30Pm ",
         "screenName": " 1-C ",
         "movieName": " Dolby ",
