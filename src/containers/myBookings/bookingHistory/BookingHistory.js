@@ -36,7 +36,8 @@ export default class BookingHistory extends Component {
                                     bookingId= {ticket.bookingId}
                                     />
                     })}
-        </div>) : <p>You don't seem to have any bookings</p>
+        </div>
+        ) : <p>You don't seem to have any bookings</p>
         )}
         </React.Fragment>
         );

@@ -55,7 +55,7 @@ export default function Ticket(props) {
                 <CardContent>
                     <Typography variant="h6" component="h3">
                         {selectedSeats.map(seat => seat + ', ')}
-                        <span style={{ fontSize: '12px' }}>({selectedSeats.length} Tickets)</span>
+                        <span style={{ fontSize: '12px' }}>({selectedSeats.length} Seats)</span>
                     </Typography>
                 </CardContent>
                 <CardContent>

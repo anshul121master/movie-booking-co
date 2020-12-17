@@ -27,6 +27,16 @@ class Screen extends Component {
         redirect: false
     }
 
+    componentDidMount() {
+        const {seatsAndPrice} = this.props;
+        if(seatsAndPrice.selectedSeats !== undefined && seatsAndPrice.price !==undefined) {
+            this.setState({
+                selectedSeats: seatsAndPrice.selectedSeats,
+                price: seatsAndPrice.price
+            })
+        }
+    }
+
     calculatePrice(theater, selectedSeats) {
         let price = 0;
         selectedSeats.forEach(seat => {
@@ -186,8 +196,8 @@ class Screen extends Component {
     }
 }
 
-const mapStateToProps = ({ selectedScreen, selectedTheater, seatPlan, selectedMovie }) => {
-    return { selectedScreen, seatPlan, selectedTheater, selectedMovie }
+const mapStateToProps = ({ selectedScreen, selectedTheater, seatPlan, selectedMovie, seatsAndPrice }) => {
+    return { selectedScreen, seatPlan, selectedTheater, selectedMovie, seatsAndPrice }
 }
 
 export default compose(withStyles(styles), connect(mapStateToProps))(Screen)

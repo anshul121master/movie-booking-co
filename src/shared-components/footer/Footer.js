@@ -9,12 +9,20 @@ export default function Footer() {
         backgroundColor: footer,
         paddingTop: '1em',
         paddingBottom: '1em',
-        position: 'relative',
+        position: 'absolute',
         bottom: '0',
         width: '100%',
         top: 'auto',
         marginTop: '50px',
+        height: '185px'
     }
+
+    const phantom = {
+        display: 'block',
+        padding: '20px',
+        height: '185px',
+      }
+      
 
     const copyRightStyle = {
         backgroundColor: header,
@@ -26,7 +34,9 @@ export default function Footer() {
 
 
     return (
-        <div className="main-footer" style={footerStyle}>
+        <div>
+            <div style={phantom}></div>
+            <div className="main-footer" style={footerStyle}>
             <div className="container">
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
                     {/* Column1 */}
@@ -74,5 +84,6 @@ export default function Footer() {
         </p>
                 </div>
             </div>
+        </div>
         </div>);
 }

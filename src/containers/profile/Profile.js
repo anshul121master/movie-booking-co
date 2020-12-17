@@ -35,9 +35,8 @@ const styles = (theme) => ({
     margin: "50px",
   },
   cardStyle: {
-    marginTop: 30,
     minWidth: "70vw",
-    margin: 0,
+    margin: '30px 0',
     backgroundColor: "#ECEFF1"
   },
   form: {
