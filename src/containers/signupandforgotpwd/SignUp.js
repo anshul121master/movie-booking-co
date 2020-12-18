@@ -219,7 +219,7 @@ class SignUp extends Component {
       );
 
     return (
-      <div style={{backgroundColor:"#f1f2f6"}}>
+      <div>
       <Header />
       <Container style={{backgroundColor:"white", marginTop:30, marginBottom:30}} component="main" maxWidth="xs">
         <CssBaseline />

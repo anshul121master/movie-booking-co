@@ -1,5 +1,4 @@
 html,
-body,
 div,
 span,
 applet,
@@ -53,104 +52,659 @@ form,
 label,
 legend,
 caption {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    background: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: #F5F4F2;
-    position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #eefbfb;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #f3f3f3 10px, transparent 10px),
+    linear-gradient(
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 50%,
+      transparent 50%,
+      transparent 75%,
+      #e6f6ff 75%,
+      #e6f6ff
+    );
+  background-color: #f3f3f3;
+  background-size: 20px 20px;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 div.date-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-    margin: 5px;
-    margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin: 5px;
+  margin-top: 15px;
 }
 
 div.date {
-    background-color: #FFFFFF;
-    width: 60px;
-    height: 50px;
-    margin: 4px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  background-color: #ffffff;
+  width: 60px;
+  height: 60px;
+  margin: 4px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 div.date:hover {
-    background-color: #0F222D;
-    color: #FFF5D0;
+  background-color: #0f222d;
+  color: #fff5d0;
 }
 
 div.date.active {
-    background-color: #0F222D;
-    color: #FFF5D0;
+  background-color: #0f222d;
+  color: #fff5d0;
 }
 
 div.theatre-container {
-    width: 100%;
-    min-height: 50%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  min-height: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 span.span-date {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 span.span-name {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 div.seat-container {
-    display: flex;
-    min-height: 80vh;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  min-height: 80vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 div.seat-map {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
 }
 
 div.seat-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
 }
 
 div.seat {
-    border: 1px solid #3C5B41;
-    color: #3C5B41;
+  border: 1px solid #3c5b41;
+  color: #3c5b41;
+  border-radius: 3px;
+  padding: 1px;
+  margin: 2px;
+  min-height: 15px;
+  min-width: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: small;
+}
+
+div.seat.booked {
+  color: lightgrey;
+  background-color: rgb(112, 112, 112);
+  border: 1px solid darkgray;
+  cursor: default;
+}
+
+div.seat.locked {
+  color: lightgrey;
+  background-color: rgb(255, 128, 44);
+  border: 1px solid darkgray;
+  cursor: default;
+}
+
+div.seat.chosen {
+  background-color: #e2fde6;
+}
+
+div.screen-header {
+  width: 100%;
+  background-color: #0f222d;
+  color: #fff5d0;
+  margin: 0;
+  padding: 0;
+}
+
+div.screen-info {
+  width: 100%;
+  background-color: #fff5d0;
+  color: #0f222d;
+}
+
+div.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ticket-container {
+  position: relative;
+  background: #ffffff;
+  float: left;
+  padding: 15px 10px;
+  margin: 40px;
+  max-height: 490px;
+  max-width: 420px;
+}
+
+.ticket-container:after,
+.ticket-container:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 15px;
+  height: 15px;
+  background: linear-gradient(#f3f3f3, #f3f3f3) padding-box, #f3f3f3;
+}
+
+.ticket-container:after {
+  top: -1px;
+  left: -1px;
+  border-radius: 0 0 50px 0;
+}
+
+.ticket-container:before {
+  top: -1px;
+  right: -1px;
+  border-radius: 0 0 0 50px;
+}
+
+div.payment-form {
+  max-width: 700px;
+  min-width: 320px;
+  margin: 40px;
+}
+
+div.purchase-container {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #f3f3f3 10px, transparent 10px),
+    linear-gradient(
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 50%,
+      transparent 50%,
+      transparent 75%,
+      #e6f6ff 75%,
+      #e6f6ff
+    );
+  background-color: #f3f3f3;
+  background-size: 20px 20px;
+}
+
+.no-gutters {
+  padding-left: 0;
+}
+
+.heading-3 {
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+.app-container {
+  margin: 5% auto;
+  max-width: 635px;
+  min-width: 300px;
+  max-height: 430px;
+  min-height: 320px;
+  background: white;
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
+}
+
+.checkout {
+  max-height: 470px;
+  min-height: 320px;
+  background: #0f222d;
+  color: white;
+}
+
+.booking-checkout-container {
+  padding: 35px 25px;
+  max-height: 430px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-container {
+  padding: 35px 25px;
+}
+
+.input {
+  padding: 5px 0;
+}
+
+.input label {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #78757c;
+}
+
+.input input {
+  width: 100%;
+  padding: 5px 10px;
+  color: white;
+  letter-spacing: 0px;
+  font-size: 14px;
+  background: 0;
+  border: 0;
+}
+
+.input input:focus {
+  outline: 0;
+}
+
+.input-field {
+  border: 1px solid #78757c;
+  border-radius: 5px;
+  position: relative;
+}
+
+.input-field img {
+  width: 25px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  margin-right: 5px;
+}
+
+.errorMsg {
+  color: red;
+  font-size: 12px;
+}
+
+/* Removes form Controls  */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input[type="month"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input[type="month"]::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.checkout-btn {
+  background: linear-gradient(0deg, #019875, #029875);
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  margin-top: 50px;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+div.theater-card {
+  width: 600px;
+  height: 10%;
+  margin: 15px;
+  font-size: 0.5em;
+}
+
+.rootstyle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 275px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background: no-repeat center center;
+  background-size: cover;
+  background-position: right top;
+  overflow: hidden;
+}
+
+.content {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-left: 5px;
+  box-shadow: 0 0 5px 0 #141414;
+}
+
+.nestedcontent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.5em;
+  height: 80%;
+}
+
+.contenttext {
+  font-size: 12px;
+  color: white;
+  list-style: none;
+}
+.contenttextheader {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.priceinfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+}
+
+div.login {
+  height: 100vh;
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.login-container {
+  height: 50%;
+  width: 50%;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+}
+
+div.login-label {
+  font-size: 2em;
+}
+
+.toolBar {
+  justify-content: space-between;
+}
+
+.leftDiv {
+  justify-content: space-around;
+  width: 40%;
+  align-items: center;
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.carousel {
+  width: 60%;
+  margin: auto;
+  padding: 15px;
+}
+
+button.timebutton {
+  color: #3c5b41;
+  background-color: #e2fde6;
+  font-size: x-small;
+  width: 20px;
+}
+
+button.expandbutton {
+  color: #ffffff;
+  background-color: #0f222d;
+  padding: 0;
+  padding-left: 0.75em;
+  font-size: 0.6em;
+  width: 30%;
+}
+
+button.expandbutton:hover {
+  color: #ffffff;
+  background-color: #132f3f;
+}
+
+@media (max-width: 900px) {
+  .toolBar {
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+  }
+  .leftDiv {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .carousel {
+    width: 90%;
+    margin: auto;
+    padding: 5px;
+  }
+  div.theater-card {
+    width: 425px;
+    height: 10%;
+    margin: 15px;
+    font-size: 0.75em;
+  }
+  div.date {
+    width: 40px;
+    height: 40px;
+  }
+  span.span-name {
+    font-size: 0.6em;
+  }
+  span.span-date {
+    font-size: 1.2em;
+  }
+  .content {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-left: 7px;
+    box-shadow: 0 0 7px 0 #141414;
+  }
+  .contenttext {
+    font-size: 13px;
+    color: white;
+    list-style: none;
+  }
+  .contenttextheader {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .pricecalculator {
+    position: fixed;
+    margin: auto;
+    bottom: 3%;
+    border-radius: 5px;
+    min-height: 10vh;
+    width: 70%;
+    background-color: #f5f4f2;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0;
+    font-size: 0.6em;
+    z-index: 100 !important;
+  }
+
+  .priceinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 80%;
+    align-items: center;
+  }
+
+  .priceheader {
+    background-color: #0f222d;
+    color: #fff5d0;
+    padding: 4px;
+    border-radius: 5px 5px 0 0;
+    font-size: 1.2em;
+  }
+
+  button.timebutton {
+    color: #3c5b41;
+    background-color: #e2fde6;
+    font-size: x-small;
+  }
+
+  button.bookbutton {
+    color: white;
+    background-color: #019875;
+    font-size: x-small;
+  }
+
+  .timebuttoncontainer {
+    margin: 1px;
+  }
+
+  .screen {
+    border-bottom: 10px solid rgb(153, 221, 253);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 20vw;
+    height: 5px;
+  }
+
+  .cardcontent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 901px) {
+  div.purchase-container {
+    display: flex;
+    flex-direction: row;
+  }
+  div.payment-form {
+    width: 700px;
+    min-width: 320px;
+    margin: 40px;
+  }
+  div.theater-card {
+    width: 850px;
+    height: 10%;
+    margin: 15px;
+    font-size: 0.75em;
+  }
+  .content {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-left: 10px;
+    box-shadow: 0 0 15px 0 #141414;
+  }
+  .contenttext {
+    font-size: 14px;
+    color: white;
+    list-style: none;
+    padding: 1.5%;
+    margin: 1%;
+  }
+  .contenttextheader {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .pricecalculator {
+    position: fixed;
+    margin: auto;
+    bottom: 30%;
+    right: 3vh;
+    border-radius: 5px;
+    height: 40vh;
+    width: 25vw;
+    background-color: #f5f4f2;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0;
+    font-size: smaller;
+    z-index: 100 !important;
+  }
+  div.seat {
+    border: 1px solid #3c5b41;
+    color: #3c5b41;
     border-radius: 5px;
     padding: 2px;
     margin: 4px;
@@ -160,372 +714,73 @@ div.seat {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-}
+    font-size: 1em;
+  }
 
-div.seat.booked {
-    color: lightgrey;
-    background-color: rgb(112, 112, 112);
-    border: 1px solid darkgray;
-    cursor: default;
-}
-
-div.seat.locked {
-    color: lightgrey;
-    background-color: rgb(255, 128, 44);
-    border: 1px solid darkgray;
-    cursor: default;
-}
-
-div.seat.chosen {
-    background-color: #E2FDE6;
-}
-
-div.screen-header {
-    width: 100%;
-    background-color: #0F222D;
-    color: #FFF5D0;
-    margin: 0;
-    padding: 0;
-   
-}
-
-div.screen-info {
-    width: 100%;
-    background-color: #FFF5D0;
-    color: #0F222D;
-}
-
-div.info {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.ticket-container {
-    position: relative;
-    background: #FFFFFF;
-    float: left;
-    padding: 15px 10px;
-    margin: 40px;
-    max-height: 450px;
-    max-width: 420px;
-}
-
-.ticket-container:after,
-.ticket-container:before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    width: 15px;
-    height: 15px;
-    background: linear-gradient(#F5F4F2, #F5F4F2) padding-box, #FFF5D0;
-}
-
-.ticket-container:after {
-    top: -1px;
-    left: -1px;
-    border-radius: 0 0 50px 0;
-}
-
-.ticket-container:before {
-    top: -1px;
-    right: -1px;
-    border-radius: 0 0 0 50px;
-}
-
-div.payment-form {
-    max-width: 700px;
-    min-width: 320px;
-    margin: 40px;
-}
-
-div.purchase-container {
+  .priceinfo {
     display: flex;
     flex-direction: column;
-}
-
-.no-gutters {
-    padding-left: 0;
-}
-
-.heading-3 {
-    text-transform: uppercase;
-    font-size: 10px;
-    font-weight: 700;
-    padding-bottom: 20px;
-}
-
-.app-container {
-    margin: 5% auto;
-    max-width: 635px;
-    min-width: 300px;
-    max-height: 430px;
-    min-height: 320px;
-    background: white;
-    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
-}
-
-.checkout {
-    max-height: 470px;
-    min-height: 320px;
-    background: #0F222D;
-    color: white;
-}
-
-.booking-checkout-container {
-    padding: 35px 25px;
-    max-height: 430px;
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.checkout-container {
-    padding: 35px 25px;
-}
-
-.input {
-    padding: 5px 0;
-}
-
-.input label {
-    font-size: 8px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #78757c;
-}
-
-.input input {
-    width: 100%;
-    padding: 5px 10px;
-    color: white;
-    letter-spacing: 0px;
-    font-size: 14px;
-    background: 0;
-    border: 0;
-}
-
-.input input:focus {
-    outline: 0;
-}
-
-.input-field {
-    border: 1px solid #78757c;
-    border-radius: 5px;
-    position: relative;
-}
-
-.input-field img {
-    width: 25px;
-    height: auto;
-    position: absolute;
-    right: 0;
-    top: 5px;
-    margin-right: 5px;
-}
-
-.errorMsg {
-    color: red;
-    font-size: 12px;
-}
-
-
-/* Removes form Controls  */
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0;
-}
-
-input[type=month]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    display: none;
-}
-
-input[type=month]::-webkit-calendar-picker-indicator {
-    -webkit-appearance: none;
-    display: none;
-}
-
-.checkout-btn {
-    background: linear-gradient(0deg, #019875, #029875);
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
-    border: 0;
-    border-radius: 5px;
-    width: 100%;
-    height: 40px;
-    margin-top: 50px;
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
-    letter-spacing: 1.5px;
-    cursor: pointer;
-}
-
-div.theater-card {
-    width: 500px;
-    height: 10%;
-    margin: 15px;
-    font-size: 0.75em;
-}
-
-.rootstyle {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 100%;
-    height: 275px;
-    border: none;
-    box-shadow: none;
-    border-radius: 0px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    background: no-repeat center center;
-    background-size: cover;
-    background-position: right top;
-}
-
-.content {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color:rgba(0, 0, 0, 0.5);
-}
-
-.nestedcontent {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-size: 0.5em;
-}
-
-.contexttext {
-    font-size: 0.5em;
-}
-
-@media(min-width: 901px) {
-    div.purchase-container {
-        display: flex;
-        flex-direction: row;
-    }
-    div.payment-form {
-        width: 700px;
-        min-width: 320px;
-        margin: 40px;
-    }
-    div.theater-card {
-        width: 700px;
-        height: 10%;
-        margin: 15px;
-        font-size: 0.75em;
-    }
-    .content {
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    .contexttext {
-        font-size: 0.6em;
-    }
-}
-
-div.login {
-    height: 100vh;
-    display: flex;
-    position: absolute;
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-div.login-container {
-    height: 50%;
-    width: 50%;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 10px;
-}
-
-div.login-label {
-    font-size: 2em;
-}
-
-.toolBar {
     justify-content: space-between;
-}
+    height: 80%;
+  }
 
-.leftDiv {
-    justify-content: space-around;
-    width: 40%;
-    align-items: center;
+  .priceheader {
+    background-color: #0f222d;
+    color: #fff5d0;
+    padding: 4px;
+    border-radius: 5px 5px 0 0;
+    font-size: 1.2em;
+    border: 1px solid #0f222d;
+  }
+  .timebuttoncontainer {
     margin: 10px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .screen {
+    border-bottom: 10px solid rgb(153, 221, 253);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 20vw;
+    height: 5px;
+  }
+
+  button.expandbutton {
+    color: #ffffff;
+    background-color: #0f222d;
+    padding: 0;
+    padding-left: 1em;
+    font-size: 0.9em;
+    width: 20%;
+  }
+
+  .nestedcontent {
+    display: flex;
     flex-direction: row;
-}
+    justify-content: space-around;
+    font-size: 0.5em;
+    height: 40%;
+    align-items: flex-start;
+    padding: 1%;
+    margin: 1%;
+  }
 
-.carousel {
-    width: 60%;
-    margin: auto;
-    padding: 15px;
-}
+  button.bookbutton {
+    color: white;
+    background-color: #019875;
+    font-size: small;
+  }
 
-@media (max-width: 767px) {
-    .toolBar {
-        justify-content: center;
-        flex-direction: column;
-        display: flex;
-    }
-    .leftDiv {
-        width: 100%;
-        justify-content: space-around;
-    }
-    .carousel {
-        width: 90%;
-        margin: auto;
-        padding: 5px;
-    }
-    div.theater-card {
-        width: 300px;
-        height: 10%;
-        margin: 15px;
-        font-size: 0.75em;
-    }
-    div.date {
-        width: 40px;
-        height: 40px;
-    }
-    span.span-name {
-        font-size: 0.6em;
-    }
-    span.span-date {
-        font-size: 1.2em;
-    }
-    .content {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background-color:rgba(0, 0, 0, 0.5);;
-    }
-    .contexttext {
-        font-size: 0.55em;
-    }
-}
-button.timebutton{
-        color: #3C5B41;
-        background-color: #E2FDE6;
+  button.timebutton {
+    color: #3c5b41;
+    background-color: #e2fde6;
+    font-size: small;
+  }
+  .cardcontent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

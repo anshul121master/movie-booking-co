@@ -79,19 +79,27 @@ class TheaterContainer extends Component {
                                 {
                                     this.state.initialCalendar ?
                                         this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).length === 0 ?
-                                            <div>No theaters available on this day</div> :
-                                            this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).map(
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                                No theaters available on this day</div> :
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                                Available Theatres:
+                                            {this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).map(
                                                 theater =>
                                                     <TheaterCard key={theater.theaterId} theater={theater} selectedDate={this.props.selectedDate} />
-                                            )
+                                            )}
+                                            </div>
                                         :
                                         this.state.filteredtheatersList.length === 0 ?
-                                            <div style={{ fontSize: '1.2em', paddingTop: '1.5em', paddingBottom: '1.5em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
                                                 No theaters available on this day for {selectedMovie.name}</div> :
-                                            this.state.filteredtheatersList.map(
-                                                theater =>
-                                                    <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate} />
-                                            )
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                                Available Theatres:
+                                                {
+                                                    this.state.filteredtheatersList.map(
+                                                        theater =>
+                                                            <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate} />
+                                                    )}
+                                            </div>
                                 }
                             </div>
                         </div>))

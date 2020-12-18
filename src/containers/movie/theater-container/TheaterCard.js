@@ -16,13 +16,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { header, headerText, buttonAvailable, buttonAvailableText } from '../../../theme'
+import { header, headerText } from '../../../theme'
 import { Redirect } from 'react-router-dom';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const styles = (theme) => ({
     expand: {
@@ -36,18 +33,15 @@ const styles = (theme) => ({
     },
     avatar: {
         backgroundColor: header,
-        color: headerText
+        color: headerText,
+        fontSize: '1.1em'
     },
     action: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection: 'column'
     },
-    content: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
 });
 
 
@@ -56,7 +50,6 @@ class TheaterCard extends Component {
         expanded: false,
         screens: null,
         screenTimesArray: [],
-        open: false,
         time: '',
         redirect: false,
         error: null
@@ -124,20 +117,11 @@ class TheaterCard extends Component {
         }
     }
 
-    handleClickOpen = (time) => {
+    handleClickOpen = (theater, time, selectedDate) => {
+        this.handleSelectedShowTime(theater, time, selectedDate)
         this.setState({
-            open: true,
-            time: time
-        })
-    };
-
-    handleClose = (redirect, theater, time, selectedDate) => {
-        if (redirect) {
-            this.handleSelectedShowTime(theater, time, selectedDate)
-        }
-        this.setState({
-            open: false,
-            redirect
+            time: time,
+            redirect: true
         })
     };
 
@@ -151,60 +135,43 @@ class TheaterCard extends Component {
                         <div><Card className="theater-card">
                             <CardHeader
                                 avatar={
-                                    <Avatar aria-label="recipe" className={classes.avatar}>
-                                        {theater.rating}
+                                    <Avatar className={classes.avatar}>
+                                        {theater.rating + " "} <FontAwesomeIcon color='gold' size="xs" icon={faStar} />
                                     </Avatar>
                                 }
                                 title={theater.theaterName}
                                 subheader={theater.address.area + ", " + theater.address.city + ", " + theater.address.pincode + ", " + theater.address.state}
                             />
                             <CardActions className={classes.action}>
-                                <Tooltip title="Expand to check on movie screening times" aria-label="add">
-                                    <IconButton
-                                        className={clsx(classes.expand, {
-                                            [classes.expandOpen]: this.state.expanded,
-                                        })}
-                                        aria-expanded={this.state.expanded}
-                                        aria-label="show more"
-                                        onClick={this.handleExpandClick}
-                                    >
-                                        <ExpandMoreIcon />
-                                    </IconButton>
+                                <Tooltip title="Click on arrow to check on movie screening times" aria-label="add">
+                                    <Button onClick={this.handleExpandClick} className='expandbutton'>
+                                        {!this.state.expanded ? 'Check Timings' : 'Hide Timings'}
+                                        <IconButton
+                                            className={clsx(classes.expand, {
+                                                [classes.expandOpen]: this.state.expanded,
+                                            })}
+                                            aria-expanded={this.state.expanded}
+                                            disabled
+                                            disableRipple
+                                            style={{ color: 'white' }}
+                                        >
+                                            <ExpandMoreIcon style={{ fontSize: 15 }} />
+                                        </IconButton>
+                                    </Button>
                                 </Tooltip>
                             </CardActions>
                             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                                <CardContent className={classes.content}>
+                                <CardContent className='cardcontent'>
                                     <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
-                                    {screenTimesArray.sort().map(time =>
-                                        <Button className='timebutton' style={{ margin: 7 }} onClick={() => this.handleClickOpen(time)}
-                                            disabled={selectedDate < new Date().toISOString().split('T')[0] || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() > time.split('S')[1])}>
+                                    <div>{screenTimesArray.sort().map(time =>
+                                        <Button className='timebutton' size='small' style={{ margin: 7 }} onClick={() => this.handleClickOpen(theater, time, selectedDate)}
+                                            disabled={selectedDate < new Date().toISOString().split('T')[0] || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() >= time.split('S')[1])}>
                                             {time.split('S')[1]}:00
                                 </Button>
-                                    )}
+                                    )}</div>
                                 </CardContent>
                             </Collapse>
                         </Card>
-                            <Dialog
-                                open={this.state.open}
-                                onClose={this.handleClose}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                            >
-                                <DialogTitle id="alert-dialog-title">{"Do you want to navigate to seat selection page?"}</DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
-                                        Do you want to navigate to seat selection page for the selected show-time tickets?
-                              </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={() => this.handleClose(false)}>
-                                        No
-                                        </Button>
-                                    <Button onClick={() => this.handleClose(true, theater, this.state.time, this.props.selectedDate)} autoFocus>
-                                        Yes
-                                        </Button>
-                                </DialogActions>
-                            </Dialog>
                         </div>)
                 ) : <Redirect to={{
                     pathname: '/error',

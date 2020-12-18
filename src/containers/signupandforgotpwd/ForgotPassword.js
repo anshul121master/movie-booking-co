@@ -198,7 +198,7 @@ class ForgotPassword extends Component {
     } = this.state;
 
     return (
-      <div style={{backgroundColor:"#f1f2f6"}}>
+      <div>
       <Header />
       <Container component="main" maxWidth="xs" style={{ backgroundColor: "white", marginTop:30, marginBottom:30}}>
         <CssBaseline />

@@ -37,7 +37,7 @@ const styles = (theme) => ({
   cardStyle: {
     minWidth: "70vw",
     margin: '30px 0',
-    backgroundColor: "#ECEFF1"
+    backgroundColor: "white"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
