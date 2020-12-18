@@ -53,9 +53,9 @@
       ],
       "columns": 12,
       "noOfRowsPerSeatType": {
-        "PLATINUM": 2,
-        "GOLD": 4,
-        "DIAMOND": 2
+        "PLATINUM": 10,
+        "GOLD": 10,
+        "DIAMOND": 10
       },
       "priceOfDifferentSeatType": {
         "PLATINUM": 250,

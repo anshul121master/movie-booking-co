@@ -110,7 +110,7 @@ class PaymentForm extends Component {
                                             <div className="errorMsg">{cvvErrorMsg ? cvvErrorMsg : ""}</div>
                                         </div>
                                     </div>
-                                    <Button disabled={this.disableButton()} text="Purchase" />
+                                    <Button disabled={this.disableButton()} text="Pay Now" />
                                 </form>
                             </div>
                         </div>
@@ -136,7 +136,11 @@ const Input = (props) => (
     <div className="input">
         <label>{props.label}</label>
         <div className="input-field">
-            <input type={props.type} name={props.name} required onChange={props.onChange} value={props.value} />
+            {props.type === 'month' ?
+                <input type={props.type} name={props.name} required onChange={props.onChange} value={props.value}
+                    defaultValue={`${new Date().getFullYear()}-${new Date().getMonth() + 1}`}
+                    min={`${new Date().getFullYear()}-${new Date().getMonth() + 1}`} /> :
+                <input type={props.type} name={props.name} required onChange={props.onChange} value={props.value} />}
         </div>
     </div>
 );

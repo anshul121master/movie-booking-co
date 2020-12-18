@@ -9,13 +9,15 @@ import { headerText, buttonAvailable, buttonAvailableText } from '../../theme'
 import { setSeatsAndPrice } from '../../store/actions/shared'
 import { Redirect, Link } from 'react-router-dom'
 import Loader from '../../shared-components/Loader'
+import Footer from '../../shared-components/footer/Footer'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const styles = (theme) => ({
     root: {
         width: '98%',
         borderBottom: 'none',
         borderTop: 'none',
-        overFlow: 'auto',
+        overflow: 'auto',
     },
 
 })
@@ -24,12 +26,15 @@ class Screen extends Component {
     state = {
         selectedSeats: [],
         price: 0,
-        redirect: false
+        redirect: false,
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
     }
 
     componentDidMount() {
-        const {seatsAndPrice} = this.props;
-        if(seatsAndPrice.selectedSeats !== undefined && seatsAndPrice.price !==undefined) {
+        const { seatsAndPrice } = this.props;
+        if (seatsAndPrice.selectedSeats !== undefined && seatsAndPrice.price !== undefined) {
             this.setState({
                 selectedSeats: seatsAndPrice.selectedSeats,
                 price: seatsAndPrice.price
@@ -101,14 +106,29 @@ class Screen extends Component {
         return seatMap;
     }
 
+    handleClose = () => {
+        this.setState({ open: false })
+    }
+
     render() {
         const { seatPlan, selectedScreen, selectedTheater, selectedMovie, classes } = this.props
+        const { vertical, horizontal, open } = this.state
 
         const seatMap = Object.keys(selectedMovie).length === 0 ? [] : this.createSeatMap(selectedScreen)
         return (
             Object.keys(selectedMovie).length === 0 ? <Redirect to="/" /> :
                 this.state.redirect ? (<Redirect to={{ pathname: '/purchase' }} />) : (
                     <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
+                        <Snackbar
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={open}
+                            onClose={this.handleClose}
+                            message="Please click on any seats to choose that seat"
+                            key={vertical + horizontal}
+                            autoHideDuration={5000}
+                            enter='0.5s'
+                            exit='0.5s'
+                        />
                         <div className='screen-header'>
                             <IconButton >
                                 <Link style={{ textDecoration: 'none' }} to={{
@@ -121,13 +141,13 @@ class Screen extends Component {
                                 {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
                             <div className='screen-info'>
                                 <div className='info'>
-                                    <div className='seat' style={{ fontSize: '0.7em', backgroundColor: 'white', cursor: 'default' }}>Available Seats</div>
-                                    <div className='seat chosen' style={{ fontSize: '0.7em', cursor: 'default' }}>Selected Seats</div>
+                                    <div className='seat' style={{ fontSize: '0.8em', backgroundColor: 'white', cursor: 'default', fontWeight: 500 }}>Available Seats</div>
+                                    <div className='seat chosen' style={{ fontSize: '0.8em', cursor: 'default', fontWeight: 500 }}>Selected Seats</div>
                                     <Tooltip title="Other users have booked this seat" aria-label="add">
-                                        <div className='seat booked' style={{ fontSize: '0.7em' }}>Booked Seats</div>
+                                        <div className='seat booked' style={{ fontSize: '0.8em', fontWeight: 500 }}>Booked Seats</div>
                                     </Tooltip>
                                     <Tooltip title="Other users have locked these seats but payment is yet to be made" aria-label="add">
-                                        <div className='seat locked' style={{ fontSize: '0.7em' }}>Locked Seats</div>
+                                        <div className='seat locked' style={{ fontSize: '0.8em', fontWeight: 500 }}>Locked Seats</div>
                                     </Tooltip>
                                 </div>
                             </div>
@@ -176,12 +196,9 @@ class Screen extends Component {
                                             </div>
                                         </CardContent>
                                     ))}
-                                    <div style={{ margin: 10, display: 'flex', alignItems: "center", justifyContent: "center" }}>
-                                        <Button className='timebutton' disabled={this.state.selectedSeats.length === 0}
-                                            onClick={this.purchaseSeats}
-                                            variant='outlined'
-                                        >
-                                            Purchase - Rs {this.state.price}</Button>
+                                    <div style={{ margin: '15px 0', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                                        Screen
+                                                <div className='screen'></div>
                                     </div>
                                 </Card>
                                 ) : <Redirect to={{
@@ -190,7 +207,23 @@ class Screen extends Component {
                                         exception: seatPlan.exception
                                     }
                                 }} />)}
+                            {(this.state.selectedSeats.length > 0) && (<div className='pricecalculator'>
+                                <div style={{ paddingLeft: '15px' }} className='priceheader'>Summary</div>
+                                <div className='priceinfo'>
+                                    <div style={{ paddingLeft: '15px' }}>Selected Seats : {this.state.selectedSeats.map(seat => seat + ', ')}</div>
+                                    <div style={{ paddingLeft: '15px' }}>Total Price : Rs. {this.state.price}.00</div>
+                                    <div style={{ paddingLeft: '15px' }}>Number of seats : {this.state.selectedSeats.length}</div>
+                                    <div className='timebuttoncontainer'>
+                                        <Button className='bookbutton' disabled={this.state.selectedSeats.length === 0}
+                                            onClick={this.purchaseSeats}
+                                            variant='outlined'
+                                        >
+                                            Book Now</Button>
+                                    </div>
+                                </div>
+                            </div>)}
                         </div >
+                        <Footer />
                     </div>)
         )
     }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Ticket from '../../shared-components/ticket/Ticket'
 import PaymentForm from './payment-form/PaymentForm'
 import { ArrowBackIosRounded } from '@material-ui/icons'
-import { headerText, } from '../../theme'
+import { headerText, header } from '../../theme'
 import { IconButton } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { purchaseTickets } from '../../utils/api'
@@ -14,6 +14,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Loader from "../../shared-components/Loader"
+import Footer from '../../shared-components/footer/Footer'
 
 class Purchase extends Component {
 
@@ -54,10 +55,10 @@ class Purchase extends Component {
                     this.setState({
                         bookingStatus: 'BOOKED'
                     })
-                }else {
+                } else {
                     this.setState({
                         exception: response.exception,
-                        open:true
+                        open: true
                     })
                 }
                 this.setState({
@@ -85,21 +86,20 @@ class Purchase extends Component {
 
     render() {
         const { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan } = this.props
-        const {exception, loading} = this.state;
+        const { exception, loading } = this.state;
         return (
             <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
-            {loading && <Loader />}
+                {loading && <Loader />}
                 <div className='screen-header'>
-                    <IconButton >
-                      { this.state.bookingStatus === "" &&<Link style={{ textDecoration: 'none' }} to={{
-                            pathname: "/screen",
-                        }}><ArrowBackIosRounded style={{ color: headerText }} /></Link>}
+                    <IconButton ><Link style={{ textDecoration: 'none' }} to={{
+                        pathname: "/screen",
+                    }}><ArrowBackIosRounded style={{ color: this.state.bookingStatus === "" ? headerText : header }} /></Link>
                     </IconButton>
                     <span>{selectedMovie.name}</span>
                     <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
                         {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
                     <div className='screen-info'>
-                        <div className='info'>
+                        <div className='info' style={{ fontSize: '1.2em', fontWeight: 500 }}>
                             Purchase tickets
                         </div>
                     </div>
@@ -122,25 +122,28 @@ class Purchase extends Component {
                         bookingStatus={this.state.bookingStatus}
                     />
                 </div>
-                {(exception !== null && <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                            <DialogTitle id="alert-dialog-title">{`Payment failed`}</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    {`Payment Failed with the message ${exception.errorMsg} and code ${exception.code}. Please try again.`}
-                              </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => this.handleClose()} autoFocus>
-                                    OK
+                {
+                    (exception !== null && <Dialog
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{`Payment failed`}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                {`Payment Failed with the message ${exception.errorMsg} and code ${exception.code}. Please try again.`}
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => this.handleClose()} autoFocus>
+                                OK
                                 </Button>
-                            </DialogActions>
-                        </Dialog> )}
-                        </div>
+                        </DialogActions>
+                    </Dialog>)
+                }
+                <Footer />
+            </div >
         )
     }
 }
