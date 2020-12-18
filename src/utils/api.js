@@ -263,7 +263,7 @@ export const cancelBooking = (bookingId) => {
     credentials: "same-origin"
   };
   const url = endpoints.cancelBooking(bookingId);
-  return fetch(url, reqObj).then((response) => {
+  return fetch(url,reqObj).then((response) => {
     if (response.ok) return response.json()
   })
 }

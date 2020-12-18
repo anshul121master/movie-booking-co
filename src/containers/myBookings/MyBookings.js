@@ -2,18 +2,20 @@ import React, { Component } from 'react'
 import BookingHistory from './bookingHistory/BookingHistory'
 import Header from '../../shared-components/header/Header'
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { Link, Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
+import {Tabs, Tab, Typography} from '@material-ui/core';
+import { Redirect } from "react-router-dom";
 import {getAllBookings, cancelBooking} from '../../utils/api'
 import { header, headerText} from '../../theme'
+import Footer from '../../shared-components/footer/Footer'
 
 export default class MyBookings extends Component {
     state = {
         value: 0,
         upcomingBookings: [],
         previousBookings: [],
-        exception: null
+        exception: null,
+        cancel: false,
+        open: false
     }
     cancelTicket = (bookingId) => {
         cancelBooking(bookingId).then((response) => {
@@ -33,6 +35,23 @@ export default class MyBookings extends Component {
         })
         
     }
+
+    handleClose = (cancel, bookingId) => {
+        if (cancel) {
+            this.cancelTicket(bookingId)
+        }
+        this.setState({
+            open: false,
+            cancel
+        })
+    };
+
+
+    handleClickOpen = () => {
+        this.setState({
+            open: true,
+        })
+    };
 
     componentDidMount() {
         getAllBookings()
@@ -58,13 +77,13 @@ export default class MyBookings extends Component {
     };
 
     
+    
     render() {
         const {value, exception} = this.state;
         return (
             (exception === null ?
         (<React.Fragment>
             <Header/>
-            <BrowserRouter>
                 <AppBar position="static" style={{backgroundColor: headerText, color: header}}>
                     <Tabs value={value} onChange={this.handleChange} 
                             TabIndicatorProps={{
@@ -74,23 +93,16 @@ export default class MyBookings extends Component {
                             fullwidth="true"
                             aria-label="simple tabs example">
                         <Tab label="Upcoming Bookings" id="upcomingBookingsTabPanel"
-                                aria-controls="upcomingBookingsTabPanel"
-                                component={Link} to="/upcoming"/>
+                                aria-controls="upcomingBookingsTabPanel"/>
                         <Tab label="Previous Bookings" id="bookingHistoryTabPanel"
-                                aria-controls="bookingHistoryTabPanel"
-                                component={Link} to="/previous"/>
+                                aria-controls="bookingHistoryTabPanel"/>
                     </Tabs>
                 </AppBar>
-
-                <Switch>
-                    <Route exact path="/upcoming">
-                        <BookingHistory bookings={this.state.upcomingBookings} cancelTicket={this.cancelTicket}/>
-                    </Route>
-                    <Route exact path="/previous">
-                        <BookingHistory bookings={this.state.previousBookings}/>
-                    </Route>
-                </Switch>
-            </BrowserRouter>
+                    {value===0 && <BookingHistory bookings={this.state.upcomingBookings} 
+                                                open={this.state.open} handleClose={this.handleClose}
+                                                handleClickOpen={this.handleClickOpen}/>}
+                    {value===1 && <BookingHistory bookings={this.state.previousBookings}/>}
+                <Footer />
         </React.Fragment>) 
         : <Redirect to={{pathname:'/error',
 								state:{
@@ -99,3 +111,4 @@ export default class MyBookings extends Component {
         );
     }
 }
+

@@ -53,7 +53,7 @@ export default class App extends Component {
               <Route exact path="/forgotPassword" component={ForgotPassword} />
               <ProtectedRoute
                 exact
-                path="/upcoming"
+                path="/bookings"
                 component={() => <MyBookings listOfCities={listOfCities} />}
               />
               <Route

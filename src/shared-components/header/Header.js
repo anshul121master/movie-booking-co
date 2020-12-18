@@ -223,7 +223,7 @@ class Header extends Component {
                             <ListItemIcon><AccountCircleIcon /></ListItemIcon>
                             <ListItemText primary='My Profile' />
                         </ListItem>
-                        <ListItem button key='bookingsHistory' component={Link} to="/upcoming">
+                        <ListItem button key='bookingsHistory' component={Link} to="/bookings">
                             <ListItemIcon><ConfirmationNumberIcon /></ListItemIcon>
                             <ListItemText primary='My Bookings' />
                         </ListItem>
