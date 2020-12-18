@@ -14,9 +14,10 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { handleAuthedUser } from "../../store/actions/authedUser";
 import { Redirect } from "react-router-dom";
-import Copyright from "../../shared-components/Copyright";
 import Loader from "../../shared-components/Loader";
 import { header } from "../../theme";
+import Footer from "../../shared-components/footer/Footer"
+import Header from "../../shared-components/header/Header"
 
 const styles = (theme) => ({
   textInput: {
@@ -113,8 +114,10 @@ class SignIn extends Component {
       }
     }
     return (
+      <div style={{backgroundColor:"#f1f2f6"}}>
+      <Header />
         <Container
-          style={{ backgroundColor: "white"}}
+          style={{ backgroundColor: "white", marginTop:30, marginBottom:30}}
           component="main"
           maxWidth="xs"
         >
@@ -127,12 +130,6 @@ class SignIn extends Component {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-
-            {(authedUser !== null && authedUser.exception !== null && showErrorMessage) && (
-              <Typography className={classes.errorColor}>
-                {authedUser.exception.errorMsg}
-              </Typography>
-            )}
 
             {location.state !== undefined &&
               location.state.responseOnSuccess !== undefined && (
@@ -176,6 +173,13 @@ class SignIn extends Component {
                 autoComplete="current-password"
                 onChange={this.handleChange}
               />
+
+              {(authedUser !== null && authedUser.exception !== null && showErrorMessage) && (
+                <Typography className={classes.errorColor}>
+                  {authedUser.exception.errorMsg}
+                </Typography>
+              )}
+
               <Button
                 type="submit"
                 fullWidth
@@ -186,7 +190,7 @@ class SignIn extends Component {
                 Sign In
               </Button>
 
-              <Grid container>
+              <Grid container style={{marginBottom:30}}>
                 <Grid item xs>
                   <Link
                     to="/forgotPassword"
@@ -206,10 +210,9 @@ class SignIn extends Component {
               </Grid>
             </form>
           </div>
-          <Box mt={8}>
-            <Copyright />
-          </Box>
         </Container>
+        <Footer />
+        </div>
     );
   }
 }

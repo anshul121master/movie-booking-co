@@ -1,4 +1,4 @@
-import { login, logout } from "../../utils/api";
+import { login, logout, getUserData } from "../../utils/api";
 import { setLoading } from "./loading";
 
 export const SET_AUTHED_USER = "SET_AUTHED_USER";
@@ -10,14 +10,23 @@ function setAuthedUser(authedUser) {
   };
 }
 
-export function handleAuthedUser(userCredentials) {
+export function handleAuthedUser(userCredentials = null) {
   return (dispatch) => {
     dispatch(setLoading(true));
-    return login(userCredentials).then(authedUser => {
+    if(userCredentials === null){
+      return getUserData().then(authedUser => {
       //dispatch loading false
       dispatch(setLoading(false));
       dispatch(setAuthedUser(authedUser))
     });
+    }else{
+      return login(userCredentials).then(authedUser => {
+      //dispatch loading false
+      dispatch(setLoading(false));
+      dispatch(setAuthedUser(authedUser))
+    });
+    }
+   
   };
 }
 

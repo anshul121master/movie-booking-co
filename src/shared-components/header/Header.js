@@ -21,7 +21,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../../../src/index.css'
 import { handleLogoutUser } from "../../store/actions/authedUser"
 import Loader from "../Loader"
@@ -168,7 +168,7 @@ class Header extends Component {
                                     <MenuItem key={city.id} value={city.id}><em>{city.cityName}</em></MenuItem>
                                 )}
                             </Select>)}
-                            {(authedUser === null || authedUser === undefined) && (
+                            {(authedUser === null || authedUser.response === null) && (
                                 <Link to='/login' style={{ textDecoration: 'none' }}>
                                     <ButtonGroup>
                                         <Button style={{ backgroundColor: header, color: headerText, border: `1px solid ${headerText}` }}>
@@ -178,7 +178,7 @@ class Header extends Component {
                                 </Link>
                             )}
 
-                            {authedUser !== null && authedUser !== undefined
+                            {authedUser !== null && authedUser.response !== null
                                 ? <React.Fragment>
                                     <Typography variant="body1">Welcome {authedUser.response.fullName}</Typography>
                                     {(authedUser.response.imageUrl !== null

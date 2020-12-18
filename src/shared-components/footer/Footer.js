@@ -43,7 +43,7 @@ export default function Footer() {
                     <div style={{
                         fontSize: '1em'
                     }}>
-                        <h4 style={{ fontSize: '1.2em', paddingLeft: '1.2em', textAlign: 'center' }}>MovieBooking.co</h4>
+                        <h4 style={{ fontSize: '1.2em', textAlign: 'center' }}>MovieBooking.co</h4>
                         <ul style={{ fontSize: '1em', listStyleType: 'none' }}>
                             <li style={{}}>033 6621 5000</li>
                             <li>Pune, India</li>
@@ -54,7 +54,7 @@ export default function Footer() {
                     <div style={{
                         fontSize: '1em',
                     }}>
-                        <h4 style={{ fontSize: '1.2em', paddingLeft: '0.5em' }}>Follow Us</h4>
+                        <h4 style={{ fontSize: '1.2em' }}>Follow Us</h4>
                         <ul style={{
                             fontSize: '1em', listStyleType: 'none',
                         }}>

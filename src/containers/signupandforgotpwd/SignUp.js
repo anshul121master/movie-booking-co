@@ -5,7 +5,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,9 +13,10 @@ import MuiPhoneNumber from "material-ui-phone-number";
 import { signup } from "../../utils/api";
 import Password from "./Password";
 import { Redirect } from "react-router-dom";
-import Copyright from '../../shared-components/Copyright'
 import Loader from "../../shared-components/Loader"
-
+import Header from "../../shared-components/header/Header"
+import Footer from "../../shared-components/footer/Footer"
+import { header } from "../../theme";
 
 const styles = (theme) => ({
   paper: {
@@ -27,7 +27,7 @@ const styles = (theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "red",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -37,6 +37,7 @@ const styles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   errorColor: {
+    marginTop:20,
     color: "red",
   },
 });
@@ -47,10 +48,11 @@ class SignUp extends Component {
     firstName: "",
     lastName: "",
     phone: "",
+    phoneErrorMsg: false,
     fnameIsValid: true,
     lnameIsValid: true,
     email: "",
-    // phoneIsValid:false,
+    phoneIsValid:true,
     birthday: "",
     password: "",
     passwordIsValid: true,
@@ -96,10 +98,21 @@ class SignUp extends Component {
     }
   };
 
-  //   validatePhone = (event) => {
-  //     const phone = event.target.value;
-  //     console.log(phone.length)  //15 for india
-  //   };
+    validatePhone = (phone) => {
+      console.log(phone)
+      if(phone.substring(1,3) === '91' && phone.length === 15)
+        this.setState({
+          phone,
+          phoneIsValid:true,
+          phoneErrorMsg:false
+        })
+        else
+          this.setState({
+            phone,
+             phoneIsValid:false,
+             phoneErrorMsg:false
+          })
+    };
 
   setBirthday = (event) => {
     const birthday = event.target.value;
@@ -115,12 +128,13 @@ class SignUp extends Component {
     });
   };
 
-  setPhone = (event) => {
-    const phone = event.target.value;
-    this.setState({
-      phone,
-    });
-  };
+  // setPhone = (event) => {
+  //   const phone = event.target.value;
+  //   console.log(phone)
+  //   this.setState({
+  //     phone,
+  //   });
+  // };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -130,8 +144,10 @@ class SignUp extends Component {
       lastName,
       fnameIsValid,
       lnameIsValid,
+      phoneIsValid,
       email,
       phone,
+      phoneErrorMsg,
       birthday,
       password,
       passwordIsValid,
@@ -140,6 +156,8 @@ class SignUp extends Component {
     if (
       fnameIsValid === true &&
       lnameIsValid === true &&
+      phoneIsValid === true &&
+      phone !== "" &&
       passwordIsValid === true &&
       confirmPasswordIsValid === true
     ) {
@@ -169,6 +187,11 @@ class SignUp extends Component {
             responseOnError: res.exception.errorMsg,
           });
       });
+    }else{
+      if(phone === "")
+        this.setState({
+          phoneErrorMsg: true
+        })
     }
   };
 
@@ -177,10 +200,12 @@ class SignUp extends Component {
     const {
       fnameIsValid,
       lnameIsValid,
+      phoneIsValid,
       loading,
       redirectToLogin,
       responseOnSuccess,
       responseOnError,
+      phoneErrorMsg
     } = this.state;
 
     if (redirectToLogin)
@@ -194,7 +219,9 @@ class SignUp extends Component {
       );
 
     return (
-      <Container component="main" maxWidth="xs">
+      <div style={{backgroundColor:"#f1f2f6"}}>
+      <Header />
+      <Container style={{backgroundColor:"white", marginTop:30, marginBottom:30}} component="main" maxWidth="xs">
         <CssBaseline />
         {loading && <Loader />}
         <div className={classes.paper}>
@@ -204,12 +231,6 @@ class SignUp extends Component {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-
-          {responseOnError !== "" && (
-            <Typography className={classes.errorColor}>
-              {responseOnError}
-            </Typography>
-          )}
 
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container spacing={2}>
@@ -269,9 +290,17 @@ class SignUp extends Component {
                   name="phone"
                   defaultCountry={"in"}
                   autoComplete="phone"
-                  onBlur={this.setPhone}
+                 // onBlur={this.setPhone}
+                  onlyCountries={['in']}
+                  error={phoneIsValid ? false : true}
+                  helperText={
+                    phoneIsValid ? "" : "Must begin with +91 and should be 10 digits in length."
+                  }
+                  onChange={this.validatePhone}
+
                 />
               </Grid>
+              {phoneErrorMsg && <Typography style={{color:"red", fontSize:"0.8rem"}}>Please enter a valid Phone number.</Typography>}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -291,6 +320,12 @@ class SignUp extends Component {
             </Grid>
             <Password passwordsAreValid={this.passwordsAreValid} />
 
+            {responseOnError !== "" && (
+              <Typography className={classes.errorColor}>
+                {responseOnError}
+              </Typography>
+            )}
+
             <Button
               type="submit"
               fullWidth
@@ -301,27 +336,18 @@ class SignUp extends Component {
               Sign Up
             </Button>
 
-            <Grid container justify="flex-end">
+            <Grid container justify="flex-end" style={{marginBottom:20}}>
               <Grid item>
-                <Link to="/login">
+                <Link to="/login" style={{ textDecoration: "none", color: header }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
-
-            {/*loading && (
-              <Grid container spacing={5} justify="center">
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              </Grid>
-            )*/}
           </form>
         </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
       </Container>
+      <Footer />
+      </div>
     );
   }
 }
