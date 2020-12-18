@@ -10,10 +10,10 @@ import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 375,
+        minWidth: 300,
         maxWidth: 420,
-        maxHeight: 450,
-        minHeight: 420,
+        maxHeight: 470,
+        minHeight: 450,
     },
     bullet: {
         display: 'inline-block',
@@ -85,7 +85,7 @@ export default function Ticket(props) {
                         Total Amount:
                     </Typography>
                     <Typography variant="h5" component="h2">
-                        Rs. {price}
+                        Rs. {price}.00
                     </Typography>
                 </CardActions>
             </Card>
