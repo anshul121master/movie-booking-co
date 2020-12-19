@@ -8,14 +8,16 @@ import ForgotPassword from "./signupandforgotpwd/ForgotPassword";
 import Screen from "./screen/Screen";
 import Movie from "./movie/Movie";
 import Purchase from "./purchase/Purchase";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import MyBookings from "./myBookings/MyBookings";
 import Error from "../shared-components/error/Error";
 import ProtectedRoute from "./ProtectedRoute";
 import Loader from "../shared-components/Loader";
 import PageNotFound from "../shared-components/pageNotFound/PageNotFound";
+import { handleAuthedUser } from "../store/actions/authedUser"
+import { connect } from "react-redux";
 
-export default class App extends Component {
+class App extends Component {
   state = {
     listOfCities: {},
   };
@@ -26,6 +28,10 @@ export default class App extends Component {
         listOfCities: res,
       });
     });
+
+    const { dispatch } = this.props
+    dispatch(handleAuthedUser());
+
   }
 
   render() {
@@ -53,7 +59,7 @@ export default class App extends Component {
               <Route exact path="/forgotPassword" component={ForgotPassword} />
               <ProtectedRoute
                 exact
-                path="/upcoming"
+                path="/bookings"
                 component={() => <MyBookings listOfCities={listOfCities} />}
               />
               <Route
@@ -74,3 +80,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect()(App);

@@ -7,6 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import { footer } from '../../theme'
 import { DoneRounded } from '@material-ui/icons'
 import { Button } from '@material-ui/core'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 const useStyles = makeStyles({
     root: {
@@ -73,9 +79,9 @@ export default function Ticket(props) {
                         (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
                             {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{ color: 'green' }} fontSize='small' />)}</Typography>) :
                         <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
-                    {(props.cancelTicket !== undefined  && props.bookingStatus.toUpperCase()==='BOOKED')&& 
+                    {(props.handleClose !== undefined  && props.bookingStatus.toUpperCase()==='BOOKED')&& 
                         <Button variant="contained" color="secondary" style={{display:'inline-block', alignSelf:'flex-end'}}
-                            onClick={()=>props.cancelTicket(props.bookingId)}>
+                            onClick={()=>props.handleClickOpen()}>
                             Cancel Ticket
                         </Button>}
                     </div>
@@ -89,7 +95,26 @@ export default function Ticket(props) {
                     </Typography>
                 </CardActions>
             </Card>
-            
+            <Dialog
+                open={props.open}
+                onClose={props.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description">
+                <DialogTitle id="alert-dialog-title">{"Do you want to cancel the ticket?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Do you really want to cancel the ticket for {movie.name}({selectedSeats.map(seat => seat + ' ')})?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => props.handleClose(false)}>
+                        No
+                        </Button>
+                    <Button onClick={() => props.handleClose(true,props.bookingId)} autoFocus>
+                        Yes
+                        </Button>
+                </DialogActions>
+            </Dialog>
         </div >
     )
 }

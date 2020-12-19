@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = false;
+export const mockEnabled = true;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -44,7 +44,7 @@ export const signup = (userInfo) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
-        response: "!Verification link has been sent to your registered email id. Please verify your account before login."
+        response: "Verification link has been sent to your registered email id. Please verify your account before login."
       }))
     } else {
       return resp.json().then(({ exception }) => ({
@@ -71,6 +71,25 @@ export const getProfile = () => {
       }))
     }
   });
+};
+
+export const getUserData = () => {
+  const url = endpoints.profile();
+  return fetch(url).then(resp => {
+    return resp.json().then(res => {
+      if (res.status !== undefined && res.status === 403) {
+        return {
+          response: null,
+          exception: {
+            errorMsg: res.error,
+            cause: "",
+            code: res.status
+          }
+        }
+      } else return res
+    })
+
+  })
 };
 
 //uploadImage
@@ -217,10 +236,10 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     body: JSON.stringify(selectedSeats),
   }
   const url = endpoints.lockSeats(seatPlanId);
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return true
-    else
-      return false
+  return fetch(url, reqObj).then((resp) => {
+    return resp.json().then(({ response }) => (
+      response
+    ))
   })
 }
 

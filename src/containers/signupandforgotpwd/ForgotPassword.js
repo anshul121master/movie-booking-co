@@ -18,12 +18,14 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Copyright from '../../shared-components/Copyright'
+import { header } from "../../theme";
+import Header from "../../shared-components/header/Header"
+import Footer from "../../shared-components/footer/Footer"
 
 
 const styles = (theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -196,7 +198,9 @@ class ForgotPassword extends Component {
     } = this.state;
 
     return (
-      <Container component="main" maxWidth="xs">
+      <div>
+      <Header />
+      <Container component="main" maxWidth="xs" style={{ backgroundColor: "white", marginTop:30, marginBottom:30}}>
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -248,7 +252,7 @@ class ForgotPassword extends Component {
                         Please enter OTP sent to your registered email id.
                       </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid style={{display:'flex', justifyContent:'center'}} item xs={12}>
                       <OtpInput
                         value={otp}
                         onChange={this.handleOtp}
@@ -264,6 +268,17 @@ class ForgotPassword extends Component {
                     </Grid>
                   </Grid>
                 </div>
+              )}
+
+              {otpErrorMsg !== "" && (
+                <Typography className={classes.errorColor}>
+                  {otpErrorMsg}
+                </Typography>
+              )}
+              {passwordChangeFailed !== "" && (
+                <Typography className={classes.errorColor}>
+                  {passwordChangeFailed}
+                </Typography>
               )}
 
               <Button
@@ -284,20 +299,9 @@ class ForgotPassword extends Component {
                 </Grid>
               )}
 
-              {otpErrorMsg !== "" && (
-                <Typography className={classes.errorColor}>
-                  {otpErrorMsg}
-                </Typography>
-              )}
-              {passwordChangeFailed !== "" && (
-                <Typography className={classes.errorColor}>
-                  {passwordChangeFailed}
-                </Typography>
-              )}
-
-              <Grid container>
+              <Grid container style={{marginBottom:30}}>
                 <Grid item xs>
-                  <Link to="/login">
+                  <Link to="/login" style={{ textDecoration: "none", color: header }}>
                     Proceed to login
                   </Link>
                 </Grid>
@@ -305,10 +309,9 @@ class ForgotPassword extends Component {
             </form>
           )}
         </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
       </Container>
+      <Footer />
+      </div>
     );
   }
 }

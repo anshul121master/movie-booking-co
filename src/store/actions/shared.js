@@ -3,6 +3,7 @@ import { getAllMovies, setSelectedMovie } from './movie';
 import { getMovies, getTheaters, getSeatPlan, lockSeats } from '../../utils/api';
 import { getAllTheaters, setSeatPlan, setSelectedTheater, setShowTimings } from './theater';
 import { setSelectedScreen } from './screen';
+import { setLoading } from './loading'
 
 export const SET_SEATS_AND_PRICE = 'SET_SEATS_AND_PRICE'
 
@@ -38,17 +39,28 @@ export function setTheaterAndSeatPlan(theater, seatPlanId, screen) {
     }
 }
 
-function lockSeatsAndPrice(selectedSeats, price) {
+function lockSeatsAndPrice(selectedSeats, price, response) {
     return {
         type: SET_SEATS_AND_PRICE,
         selectedSeats,
-        price
+        price,
+        response
     }
 }
 
-export function setSeatsAndPrice(selectedSeats, seatPlanId, price) {
-    return (dispatch) => {
-        lockSeats(seatPlanId, selectedSeats).then(response => response ?
-            dispatch(lockSeatsAndPrice(selectedSeats, price)) : console.error('error'))
+export function setSeatsAndPrice(selectedSeats, seatPlanId, price, callAPI) {
+    if (callAPI) {
+        return (dispatch) => {
+            dispatch(setLoading(true));
+            return lockSeats(seatPlanId, selectedSeats).then(response => {
+                dispatch(lockSeatsAndPrice(selectedSeats, price, response))
+                dispatch(setLoading(false));
+            })         
+        }
+    }
+    else {
+        return (dispatch) => {
+            dispatch(lockSeatsAndPrice(selectedSeats, price, null))
+        }
     }
 }

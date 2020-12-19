@@ -121,7 +121,9 @@ class PaymentForm extends Component {
                                 <div></div>
                                 <Link style={{ textDecoration: 'none' }} to={{
                                     pathname: "/",
-                                }}>Click to go to Home Page</Link>
+                                }}
+                                onClick={() => this.props.setSeatPlanUndefined()}
+                                >Click to go to Home Page</Link>
                             </div>
                             )
                         }

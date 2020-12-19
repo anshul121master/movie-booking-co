@@ -5,10 +5,10 @@ import Ticket from '../../../shared-components/ticket/Ticket'
 export default class BookingHistory extends Component {
 
     render() {
-        const { bookings, cancelTicket } = this.props;
+        const { bookings, handleClose, handleClickOpen, open } = this.props;
         return (
             <React.Fragment>
-            {(bookings.length > 0 ? (<div>
+            {(bookings.length > 0 ? (<div style={{contain: 'content'}}>
             {bookings.map(ticket => {
                         const theater = {
                             screenName: ticket.screenName,
@@ -32,7 +32,9 @@ export default class BookingHistory extends Component {
                                     date={date}
                                     time={time}
                                     bookingStatus ={bookingStatus} 
-                                    cancelTicket= {cancelTicket}
+                                    handleClickOpen ={handleClickOpen}
+                                    handleClose= {handleClose}
+                                    open={open}
                                     bookingId= {ticket.bookingId}
                                     />
                     })}

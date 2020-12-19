@@ -1,9 +1,29 @@
 import React, {Component} from 'react';
-import { Dialog, ListItemText, DialogContent, DialogTitle } from '@material-ui/core';
+import { Dialog, ListItemText, DialogContent, DialogTitle, Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { withStyles } from '@material-ui/core/styles';
+import { header, headerText } from '../../theme'
 
-export default class City extends Component {
+
+const styles = (theme) => ({
+    container: {
+        width:'60%', 
+        margin: 'auto'
+    },
+    list: {
+        cursor: 'pointer',
+        '&:hover': {
+            background: headerText,
+         },
+    },
+    title: {
+        backgroundColor: header,
+        color: headerText
+    }
+})
+
+class City extends Component {
     state = {
         open: false
     }
@@ -14,15 +34,16 @@ export default class City extends Component {
 
 
   render() {
-    const {listOfCities, setCityInStorage} = this.props;
+    const {listOfCities, setCityInStorage, classes} = this.props;
     return (
-      <Dialog disableBackdropClick={true} disableEscapeKeyDown={true}  aria-labelledby="city-dialog" 
-                open={this.state.open} style={{width:'60%', margin: 'auto'}}>
-      <DialogTitle id="city-select-dialog">Select a city</DialogTitle>
+      <Dialog className = {classes.container}disableBackdropClick={true} disableEscapeKeyDown={true}  aria-labelledby="city-dialog" 
+                open={this.state.open} >
+      <DialogTitle className = {classes.title} id="city-select-dialog">Please select a city</DialogTitle>
+      <Divider />
       <DialogContent>
             <List style={{display:'grid'}}>
                 {listOfCities.map(city => 
-                <ListItem key= {city.id} onClick={(event) => {
+                <ListItem className ={classes.list} key= {city.id} onClick={(event) => {
                     if(event.target.nodeName === 'SPAN'){
                         setCityInStorage(city)
                         this.setState({
@@ -41,3 +62,6 @@ export default class City extends Component {
   )
 }
 }
+
+
+export default withStyles(styles)(City)

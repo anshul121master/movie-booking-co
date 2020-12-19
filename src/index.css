@@ -75,12 +75,22 @@ body {
   outline: 0;
   font-size: 100%;
   vertical-align: baseline;
-  background: radial-gradient(#d1eeff 15%, transparent 16%) 0 0,
-    radial-gradient(#d1eeff 15%, transparent 16%) 8px 8px,
-    radial-gradient(rgba(245, 245, 245, 0.973) 15%, transparent 20%) 0 1px,
-    radial-gradient(rgba(245, 245, 245, 0.973) 15%, transparent 20%) 8px 9px;
+  background: linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #f3f3f3 10px, transparent 10px),
+    linear-gradient(
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 50%,
+      transparent 50%,
+      transparent 75%,
+      #e6f6ff 75%,
+      #e6f6ff
+    );
   background-color: #f3f3f3;
-  background-size: 16px 16px;
+  background-size: 20px 20px;
 }
 
 code {
@@ -258,12 +268,22 @@ div.payment-form {
 div.purchase-container {
   display: flex;
   flex-direction: column;
-  background: radial-gradient(#d1eeff 15%, transparent 16%) 0 0,
-    radial-gradient(#d1eeff 15%, transparent 16%) 8px 8px,
-    radial-gradient(rgba(245, 245, 245, 0.973) 15%, transparent 20%) 0 1px,
-    radial-gradient(rgba(245, 245, 245, 0.973) 15%, transparent 20%) 8px 9px;
+  background: linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #f3f3f3 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #f3f3f3 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #f3f3f3 10px, transparent 10px),
+    linear-gradient(
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 25%,
+      rgba(245, 245, 245, 0.973) 50%,
+      transparent 50%,
+      transparent 75%,
+      #e6f6ff 75%,
+      #e6f6ff
+    );
   background-color: #f3f3f3;
-  background-size: 16px 16px;
+  background-size: 20px 20px;
 }
 
 .no-gutters {

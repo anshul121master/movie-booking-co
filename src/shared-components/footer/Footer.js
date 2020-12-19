@@ -37,7 +37,7 @@ export default function Footer() {
         <div>
             <div style={phantom}></div>
             <div className="main-footer" style={footerStyle}>
-                <div className="container">
+        <div className="container">
                     <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
                         {/* Column1 */}
                         <div style={{

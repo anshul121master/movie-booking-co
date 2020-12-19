@@ -18,8 +18,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../shared-components/Loader";
 import Footer from "../../shared-components/footer/Footer"
-
-
+import Header from "../../shared-components/header/Header"
+import { header, footer } from "../../theme";
 
 const styles = (theme) => ({
   profileInfoDiv: {
@@ -37,7 +37,7 @@ const styles = (theme) => ({
   cardStyle: {
     minWidth: "70vw",
     margin: '30px 0',
-    backgroundColor: "#ECEFF1"
+    backgroundColor: "white"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -277,6 +277,7 @@ class Profile extends Component {
     return (
       <div>
       {loading && <Loader />}
+      <Header />
         <Container className={classes.imageContainer}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {imageUploadErrorMessage !== "" && (
@@ -336,8 +337,8 @@ class Profile extends Component {
               )}
           </div>
 
-          <Typography variant="h5" style={{ color: "white", marginRight: 20 }}>
-            Welcome {firstName}! 😊
+          <Typography variant="h5" style={{ color: footer, marginRight: 20 }}>
+           {phone}
           </Typography>
         </Container>
         <Container
@@ -463,7 +464,7 @@ class Profile extends Component {
                 </Grid>
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <Link to="/">Proceed to home</Link>
+                    <Link to="/" style={{ textDecoration: "none", color: header }}>Proceed to home</Link>
                   </Grid>
                 </Grid>
               </form>

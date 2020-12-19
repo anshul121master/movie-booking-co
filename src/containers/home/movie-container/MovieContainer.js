@@ -9,12 +9,39 @@ import { GridListTile } from '@material-ui/core';
 import MovieCarousel from './components/MovieCarousel'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Loader from "../../../shared-components/Loader";
+import { withStyles } from '@material-ui/core/styles';
+import { header } from '../../../theme'
+import { Divider } from '@material-ui/core';
+
+const styles = (theme) => ({
+	title: {
+		fontWeight: 'bold'
+	}, 
+	tile : {
+		margin: 25, 
+		padding: 10
+	},
+	listContainer: {
+		flexWrap: 'wrap',
+		overflowY: 'inherit',
+		justifyContent: 'center'
+	},
+	cardListItem: {
+		margin: '0.5em', 
+		boxShadow: '0 4px 8px 0 rgba(0,0,0,0.4)', 
+		padding: 0 ,
+		height: 'auto !important',
+		borderRadius: '15px'
+	}
+})
+
 
 class MovieContainer extends Component {
 	state = {
 		redirect: false
 	}
 
+	
 	handleSelectedMovie = (movie) => {
 		const { dispatch } = this.props;
 		dispatch(setMovieAndTheaterList(movie, true));
@@ -39,11 +66,15 @@ class MovieContainer extends Component {
 			return 3;
 		}
 
+		if (isWidthUp('sm', this.props.width)) {
+			return 2;
+		}
+
 		return 1;
 	}
 
 	render() {
-		const { moviesList } = this.props;
+		const { moviesList, classes } = this.props;
 		const { response, exception } = moviesList;
 
 		return (
@@ -54,34 +85,36 @@ class MovieContainer extends Component {
 							<React.Fragment>
 								<MovieCarousel moviesList={moviesList.response} handleSelectedMovie={this.handleSelectedMovie} />
 							</React.Fragment>
-							<div style={{ margin: 25, padding: 10 }}>
-								<Typography gutterBottom variant="h5" component="h2" style={{ fontWeight: 'bold' }}>
+							<div style={{width:'75%', margin:'auto'}}><Divider variant="middle"/></div>
+							
+							<div className={classes.tile}>
+								<Typography gutterBottom variant="h5" component="h2" className={classes.title} >
 									Currently Running
-					</Typography>
+								</Typography>
 								{(response.filter(movie => new Date(movie.dateReleased) < new Date()).length > 0 ?
-									<GridList style={{ flexWrap: 'wrap' }} cols={this.getGridListCols()} spacing={15}>
+									<GridList className={classes.listContainer} cols={this.getGridListCols()} spacing={0}>
 										{response.filter(movie => new Date(movie.dateReleased) < new Date()).map(movie =>
-											<GridListTile key={movie.movieId} style={{ height: '100%' }}>
-												<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
+											<GridListTile key={movie.movieId} className={classes.cardListItem}>
+												<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} style={{height:'auto'}}/>
 											</GridListTile>
 										)}
 									</GridList>
-									: <p>No movies available at this time</p>)}
+									: <Typography variant="h6" style={{margin:'15px'}}>No movies available at this time</Typography>)}
 							</div>
-
-							<div style={{ margin: 25, padding: 10 }}>
-								<Typography gutterBottom variant="h6" component="h2" style={{ fontWeight: 'bold' }}>
+							<div style={{width:'75%', margin:'auto'}}><Divider variant="middle"/></div>
+							<div className={classes.tile}>
+								<Typography gutterBottom variant="h5" component="h2" className={classes.title} >
 									Upcoming Movies
 					</Typography>
 								{(response.filter(movie => new Date(movie.dateReleased) > new Date()).length > 0 ?
-									<GridList style={{ flexWrap: 'nowrap' }} cols={this.getGridListCols()} spacing={15}>
+									<GridList className={classes.listContainer} cols={this.getGridListCols()} spacing={0}>
 										{response.filter(movie => new Date(movie.dateReleased) > new Date()).map(movie =>
-											<GridListTile key={movie.movieId} style={{ height: '100%' }}>
+											<GridListTile key={movie.movieId} className={classes.cardListItem}>
 												<MovieCard movie={movie} handleSelectedMovie={this.handleSelectedMovie} />
 											</GridListTile>
 										)}
 									</GridList>
-									: <p>No movies available at this time</p>)}
+									: <Typography variant="h6" style={{margin:'15px'}}>No movies available at this time</Typography>)}
 							</div>
 						</div>))
 					: <Redirect to={{
@@ -101,4 +134,4 @@ function mapStateToProps({ moviesList }) {
 	}
 }
 
-export default withWidth()(connect(mapStateToProps)(MovieContainer))
+export default withStyles(styles)(withWidth()(connect(mapStateToProps)(MovieContainer)))
