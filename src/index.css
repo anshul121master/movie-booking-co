@@ -215,6 +215,8 @@ div.info {
   justify-content: center;
 }
 
+
+
 .ticket-container {
   position: relative;
   background: #ffffff;
@@ -232,7 +234,7 @@ div.info {
   z-index: 1;
   width: 15px;
   height: 15px;
-  background: linear-gradient(#f3f3f3, #f3f3f3) padding-box, #f3f3f3;
+  background: linear-gradient(#eefbfb, #eefbfb) padding-box, #eefbfb;
 }
 
 .ticket-container:after {
