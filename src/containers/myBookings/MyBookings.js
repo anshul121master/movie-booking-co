@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BookingHistory from './bookingHistory/BookingHistory'
 import Header from '../../shared-components/header/Header'
 import AppBar from '@material-ui/core/AppBar';
-import {Tabs, Tab, Typography} from '@material-ui/core';
+import {Tabs, Tab} from '@material-ui/core';
 import { Redirect } from "react-router-dom";
 import {getAllBookings, cancelBooking} from '../../utils/api'
 import { header, headerText} from '../../theme'

@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import compose from 'recompose/compose';
 import { CardContent, Typography, IconButton, Button, Tooltip } from '@material-ui/core';
 import { ArrowBackIosRounded } from '@material-ui/icons'
-import { headerText, buttonAvailable, buttonAvailableText } from '../../theme'
+import { headerText, } from '../../theme'
 import { setSeatsAndPrice } from '../../store/actions/shared'
 import { Redirect, Link } from 'react-router-dom'
 import Loader from '../../shared-components/Loader'
@@ -33,11 +33,11 @@ class Screen extends Component {
     }
 
     componentDidMount() {
-        const { seatsAndPrice } = this.props;
+        const { seatsAndPrice } = this.props
         if (seatsAndPrice.selectedSeats !== undefined && seatsAndPrice.price !== undefined) {
             this.setState({
                 selectedSeats: seatsAndPrice.selectedSeats,
-                price: seatsAndPrice.price
+                price: seatsAndPrice.price,
             })
         }
     }
@@ -78,11 +78,19 @@ class Screen extends Component {
     }
 
     purchaseSeats = () => {
+        // const {authedUser} = this.props
+        // if(authedUser === null || authedUser.response === null)
+        // {
         /*Redirect to payment page and store state information in redux store*/
-        this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price))
+        this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price, false))
         this.setState({
             redirect: true
         })
+        // }
+        // this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price, true))
+        // this.setState({
+        //     redirect: true
+        // })
     }
 
     createSeatMap = (selectedScreen) => {
@@ -111,7 +119,7 @@ class Screen extends Component {
     }
 
     render() {
-        const { seatPlan, selectedScreen, selectedTheater, selectedMovie, classes } = this.props
+        const { selectedScreen, selectedTheater, selectedMovie, classes, seatPlan } = this.props
         const { vertical, horizontal, open } = this.state
 
         const seatMap = Object.keys(selectedMovie).length === 0 ? [] : this.createSeatMap(selectedScreen)
@@ -156,7 +164,7 @@ class Screen extends Component {
                             {Object.keys(seatPlan).length === 0 ?
                                 <Loader />
                                 : (seatPlan.exception === null ? (<Card className={classes.root} variant="outlined">
-                                    {Object.keys(selectedScreen.noOfRowsPerSeatType).map((seatType, index) => (
+                                    {['PLATINUM', 'DIAMOND', 'GOLD'].map((seatType, index) => (
                                         <CardContent key={seatType}>
                                             <Typography variant="body2" color="textSecondary">
                                                 {seatType + ' - Rs. ' + selectedScreen.priceOfDifferentSeatType[seatType]}
@@ -172,18 +180,18 @@ class Screen extends Component {
                                                                             {seatMap[index][rowindex][colIndex].split('C')[1]}
                                                                         </div>
                                                                     </Tooltip>
-                                                                    : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                        <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
-                                                                            onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
-                                                                        >
-                                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                        </div>
-                                                                        : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                            <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
-                                                                                <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
-                                                                                >
-                                                                                    {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                                </div></Tooltip>
+                                                                    : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                        <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
+                                                                            <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
+                                                                            >
+                                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                            </div></Tooltip>
+                                                                        : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                            <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
+                                                                                onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
+                                                                            >
+                                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                            </div>
                                                                             : <Tooltip title="Click to select this seat" aria-label="add">
                                                                                 <div className='seat' key={seatMap[index][rowindex][colIndex]}
                                                                                     onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
@@ -224,6 +232,7 @@ class Screen extends Component {
                             </div>)}
                         </div >
                         <Footer />
+
                     </div>)
         )
     }

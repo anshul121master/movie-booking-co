@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = true;
+export const mockEnabled = false;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -16,7 +16,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url).then(resp => resp.json());
+  return fetch(url, reqObj).then(resp => resp.json());
 };
 
 export const logout = () => {
@@ -25,7 +25,7 @@ export const logout = () => {
     credentials: "same-origin",
   };
   const url = endpoints.logout();
-  return fetch(url).then(resp => resp.json());
+  return fetch(url, reqObj).then(resp => resp.json());
 };
 
 
@@ -87,10 +87,9 @@ export const getUserData = () => {
             }
           }
         }else return res
-      })
-    
-})
-};
+    })
+  })
+}
 
 //uploadImage
 export const uploadImage = (userInfo) => {
@@ -236,10 +235,10 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     body: JSON.stringify(selectedSeats),
   }
   const url = endpoints.lockSeats(seatPlanId);
-  return fetch(url, reqObj).then((response) => {
-    if (response.ok) return true
-    else
-      return false
+  return fetch(url, reqObj).then((resp) => {
+    return resp.json().then(({ response }) => (
+      response
+    ))
   })
 }
 
@@ -282,7 +281,7 @@ export const cancelBooking = (bookingId) => {
     credentials: "same-origin"
   };
   const url = endpoints.cancelBooking(bookingId);
-  return fetch(url,reqObj).then((response) => {
+  return fetch(url, reqObj).then((response) => {
     if (response.ok) return response.json()
   })
 }

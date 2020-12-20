@@ -5,7 +5,7 @@ import PaymentForm from './payment-form/PaymentForm'
 import { ArrowBackIosRounded } from '@material-ui/icons'
 import { headerText, header } from '../../theme'
 import { IconButton } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { purchaseTickets } from '../../utils/api'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -15,6 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Loader from "../../shared-components/Loader"
 import Footer from '../../shared-components/footer/Footer'
+import { setSeatsAndPrice } from '../../store/actions/shared'
+import { setTheaterAndSeatPlan } from '../../store/actions/shared'
 
 class Purchase extends Component {
 
@@ -22,7 +24,15 @@ class Purchase extends Component {
         bookingStatus: '',
         exception: null,
         open: false,
-        loading: false
+        loading: false,
+        redirect: false,
+    }
+
+    componentDidMount() {
+        const { seatPlan, seatsAndPrice, dispatch } = this.props
+        if (Object.keys(seatsAndPrice).length > 0 && Object.keys(seatPlan).length > 0) {
+            dispatch(setSeatsAndPrice(seatsAndPrice.selectedSeats, seatPlan.response.seatPlanId, seatsAndPrice.price, true));
+        }
     }
 
     handleClose = () => {
@@ -36,7 +46,6 @@ class Purchase extends Component {
         event.preventDefault()
 
         const { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan } = this.props
-        const { loading } = this.state
         this.setState({
             loading: true
         })
@@ -84,16 +93,71 @@ class Purchase extends Component {
 
     }
 
+    reloadSeatPlan = () => {
+        const { selectedTheater, seatPlan, selectedScreen, dispatch, } = this.props
+        dispatch(setTheaterAndSeatPlan(selectedTheater, seatPlan.response.seatPlanId, selectedScreen))
+        this.setState({
+            redirect: true
+        })
+    }
+
+    setSeatPlanUndefined = () => {
+        this.props.dispatch(setSeatsAndPrice(undefined, undefined, undefined, false));
+    }
+
     render() {
         const { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan } = this.props
-        const { exception, loading } = this.state;
+        const { exception, loading, redirect } = this.state;
+        if (redirect) {
+            return (<Redirect to={{ pathname: '/screen' }} />)
+        }
+        if (!seatsAndPrice.response) {
+            return (
+                <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
+                    <div className='screen-header'>
+                        <IconButton onClick={this.reloadSeatPlan}>
+                            <ArrowBackIosRounded style={{ color: this.state.bookingStatus === "" ? headerText : header }} />
+                        </IconButton>
+                        <span>{selectedMovie.name}</span>
+                        <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
+                            {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+                        <div className='screen-info'>
+                            <div className='info' style={{ fontSize: '1.2em', fontWeight: 500 }}>
+                                Purchase tickets
+                        </div>
+                        </div>
+                    </div>
+                    <div style={{minHeight: '60vh', minwidth: '100%'}}>
+                    </div>
+                    <Dialog
+                        open={true}
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{`Seat Locking Failed`}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                {`Locking of the choosen seats failed can you please try again with some other seat options `}
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => this.reloadSeatPlan()} autoFocus>
+                                OK
+                                </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Footer />
+                </div>
+            )
+        }
         return (
             <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
                 {loading && <Loader />}
+                {this.props.loading && <Loader />}
                 <div className='screen-header'>
-                    <IconButton ><Link style={{ textDecoration: 'none' }} to={{
-                        pathname: "/screen",
-                    }}><ArrowBackIosRounded style={{ color: this.state.bookingStatus === "" ? headerText : header }} /></Link>
+                    <IconButton onClick={this.reloadSeatPlan}>
+                        <ArrowBackIosRounded style={{ color: this.state.bookingStatus === "" ? headerText : header }} />
                     </IconButton>
                     <span>{selectedMovie.name}</span>
                     <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
@@ -105,7 +169,7 @@ class Purchase extends Component {
                     </div>
                 </div>
                 <div className='purchase-container'>
-                    <PaymentForm purchaseTicket={this.purchaseTicket} bookingStatus={this.state.bookingStatus} />
+                    <PaymentForm purchaseTicket={this.purchaseTicket} bookingStatus={this.state.bookingStatus} setSeatPlanUndefined={this.setSeatPlanUndefined} />
                     <Ticket
                         theater={{
                             "screenName": selectedScreen.screenName,
@@ -148,8 +212,8 @@ class Purchase extends Component {
     }
 }
 
-const mapStateToProps = ({ selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan }) => {
-    return { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan }
+const mapStateToProps = ({ selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan, loading }) => {
+    return { selectedTheater, seatsAndPrice, selectedMovie, selectedScreen, seatPlan, loading }
 }
 
 export default connect(mapStateToProps)(Purchase)
