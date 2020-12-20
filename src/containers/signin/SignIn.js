@@ -16,8 +16,8 @@ import { handleAuthedUser } from "../../store/actions/authedUser";
 import { Redirect } from "react-router-dom";
 import Loader from "../../shared-components/Loader";
 import { header } from "../../theme";
-import Footer from "../../shared-components/footer/Footer"
-import Header from "../../shared-components/header/Header"
+import Footer from "../../shared-components/footer/Footer";
+import Header from "../../shared-components/header/Header";
 
 const styles = (theme) => ({
   textInput: {
@@ -41,25 +41,25 @@ const styles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
     backgroundColor: header,
     height: 45,
-    borderRadius: 0
+    borderRadius: 0,
   },
   errorColor: {
     color: "red",
   },
-  infoMsg:{
-    backgroundColor:"#BDE5F8",
+  infoMsg: {
+    backgroundColor: "#BDE5F8",
     color: "#00529B",
     padding: 6,
-    borderLeft:"5px solid blue",
-    marginTop: 10
-  }
+    borderLeft: "5px solid blue",
+    marginTop: 10,
+  },
 });
 
 class SignIn extends Component {
   state = {
     email: "",
     password: "",
-    showErrorMessage: false
+    showErrorMessage: false,
   };
 
   handleChange = (event) => {
@@ -86,8 +86,8 @@ class SignIn extends Component {
     };
     dispatch(handleAuthedUser(userCredentials));
     this.setState({
-      showErrorMessage: true
-    })
+      showErrorMessage: true,
+    });
   };
 
   render() {
@@ -101,8 +101,8 @@ class SignIn extends Component {
     const { email, password, showErrorMessage } = this.state;
 
     if (authedUser !== null && authedUser.exception === null) {
-      if (location.state === undefined) return <Redirect to="/" />;
-      else if (location.state.from === undefined) return <Redirect to="/" />;
+      if (location.state === undefined || location.state.from === undefined)
+        return <Redirect to="/" />;
       else {
         const { from } = location.state;
         if (
@@ -115,9 +115,9 @@ class SignIn extends Component {
     }
     return (
       <div>
-      <Header />
+        <Header />
         <Container
-          style={{ backgroundColor: "white", marginTop:30, marginBottom:30}}
+          style={{ backgroundColor: "white", marginTop: 30, marginBottom: 30 }}
           component="main"
           maxWidth="xs"
         >
@@ -133,14 +133,16 @@ class SignIn extends Component {
 
             {location.state !== undefined &&
               location.state.responseOnSuccess !== undefined && (
-                <Typography className={classes.infoMsg}>{location.state.responseOnSuccess}</Typography>
+                <Typography className={classes.infoMsg}>
+                  {location.state.responseOnSuccess}
+                </Typography>
               )}
 
             {location.state !== undefined &&
               location.state.from !== undefined &&
               location.state.from.pathname === "/purchase" && (
                 <Typography className={classes.infoMsg}>
-                  !Please Signin before proceeding to purchase.
+                  Please Signin before proceeding to purchase.
                 </Typography>
               )}
 
@@ -174,11 +176,13 @@ class SignIn extends Component {
                 onChange={this.handleChange}
               />
 
-              {(authedUser !== null && authedUser.exception !== null && showErrorMessage) && (
-                <Typography className={classes.errorColor}>
-                  {authedUser.exception.errorMsg}
-                </Typography>
-              )}
+              {authedUser !== null &&
+                authedUser.exception !== null &&
+                showErrorMessage && (
+                  <Typography className={classes.errorColor}>
+                    {authedUser.exception.errorMsg}
+                  </Typography>
+                )}
 
               <Button
                 type="submit"
@@ -190,7 +194,7 @@ class SignIn extends Component {
                 Sign In
               </Button>
 
-              <Grid container style={{marginBottom:30}}>
+              <Grid container style={{ marginBottom: 30 }}>
                 <Grid item xs>
                   <Link
                     to="/forgotPassword"
@@ -212,7 +216,7 @@ class SignIn extends Component {
           </div>
         </Container>
         <Footer />
-        </div>
+      </div>
     );
   }
 }

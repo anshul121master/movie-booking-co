@@ -5,7 +5,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
@@ -21,7 +20,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { header } from "../../theme";
 import Header from "../../shared-components/header/Header"
 import Footer from "../../shared-components/footer/Footer"
-
+import { connect } from "react-redux";
+import compose from "recompose/compose";
+import { Redirect } from "react-router-dom";
 
 const styles = (theme) => ({
   paper: {
@@ -185,7 +186,7 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, authedUser } = this.props;
     const {
       email,
       showNewPasswordPanel,
@@ -197,6 +198,8 @@ class ForgotPassword extends Component {
       loading,
     } = this.state;
 
+    if (authedUser !== null && authedUser.response !== null)
+      return <Redirect to="/" />;
     return (
       <div>
       <Header />
@@ -245,7 +248,7 @@ class ForgotPassword extends Component {
 
               {showNewPasswordPanel && (
                 <div>
-                  <Password passwordsAreValid={this.passwordsAreValid} />
+                  <Password label="New Password" passwordsAreValid={this.passwordsAreValid} />
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <Typography>
@@ -316,4 +319,8 @@ class ForgotPassword extends Component {
   }
 }
 
-export default withStyles(styles)(ForgotPassword);
+function mapStateToProps({ authedUser }) {
+  return { authedUser };
+}
+
+export default compose(withStyles(styles), connect(mapStateToProps))(ForgotPassword);
