@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = false;
+export const mockEnabled = true;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -235,7 +235,7 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     body: JSON.stringify(selectedSeats),
   }
   const url = endpoints.lockSeats(seatPlanId);
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     return resp.json().then(({ response }) => (
       response
     ))
@@ -261,7 +261,7 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
     }),
   }
   const url = endpoints.booking();
-  return fetch(url, reqObj).then((response) => {
+  return fetch(url).then((response) => {
     if (response.ok) return response.json()
     else
       return console.error("Error")
