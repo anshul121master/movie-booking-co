@@ -47,7 +47,7 @@ const styles = (theme) => ({
 
 class TheaterCard extends Component {
     state = {
-        expanded: false,
+        expanded: this.props.expanded,
         screens: null,
         screenTimesArray: [],
         time: '',
@@ -183,11 +183,12 @@ class TheaterCard extends Component {
 }
 
 function mapStateToProps({ selectedMovie }, ownProps) {
-    const { theater, selectedDate } = ownProps;
+    const { theater, selectedDate, expanded } = ownProps;
     return {
         theater,
         selectedMovie,
-        selectedDate
+        selectedDate,
+        expanded
     }
 }
 

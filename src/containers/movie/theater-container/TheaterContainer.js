@@ -39,7 +39,7 @@ class TheaterContainer extends Component {
             (exception === null || exception === undefined ?
                 (this.props.selectedDate === '' ? <Loader /> :
                     this.props.selectedDate === 'No Theatres' ? (
-                        <div>
+                        <div style={{ overflow: 'auto' }}>
                             <div className='date-container'>
                             </div>
                             <div className='theatre-container' style={{ fontSize: '1.2em', paddingTop: '1.5em', paddingBottom: '1.5em' }}>
@@ -47,7 +47,7 @@ class TheaterContainer extends Component {
                 </div>
                         </div>
                     ) :
-                        (<div>
+                        (<div style={{ overflow: 'auto' }}>
                             {console.log("state: " + selectedDate + " props:  " + this.props.selectedDate)}
                             <div className='date-container'>
                                 {Array.from(Array(7).keys()).map((value) =>
@@ -97,7 +97,7 @@ class TheaterContainer extends Component {
                                                 {
                                                     this.state.filteredtheatersList.map(
                                                         theater =>
-                                                            <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate} />
+                                                            <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate} expanded={false} />
                                                     )}
                                             </div>
                                 }
