@@ -15,7 +15,9 @@ export default class MyBookings extends Component {
         previousBookings: [],
         exception: null,
         cancel: false,
-        open: false
+        open: false,
+        cancelTicketSeats: [],
+        cancelTicketMovie: ''
     }
     cancelTicket = (bookingId) => {
         cancelBooking(bookingId).then((response) => {
@@ -47,9 +49,11 @@ export default class MyBookings extends Component {
     };
 
 
-    handleClickOpen = () => {
+    handleClickOpen = (cancelTicketSeats, cancelTicketMovie) => {
         this.setState({
             open: true,
+            cancelTicketSeats,
+            cancelTicketMovie
         })
     };
 
@@ -57,8 +61,10 @@ export default class MyBookings extends Component {
         getAllBookings()
         .then(response => {
             if(response.exception === null) {
-                const previous = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] < new Date().toISOString().split('T')[0]);
-                const upcoming = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] > new Date().toISOString().split('T')[0]);
+                const previous = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] < new Date().toISOString().split('T')[0]
+                || (ticket.dateOfShow.split('T')[0] === new Date().toISOString().split('T')[0] && new Date().getHours() > ticket.showTiming.split('S')[1]));
+                const upcoming = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] > new Date().toISOString().split('T')[0]
+                || (ticket.dateOfShow.split('T')[0] === new Date().toISOString().split('T')[0] && new Date().getHours() <= ticket.showTiming.split('S')[1]));
                 this.setState({
                     previousBookings: previous,
                     upcomingBookings: upcoming
@@ -100,7 +106,9 @@ export default class MyBookings extends Component {
                 </AppBar>
                     {value===0 && <BookingHistory bookings={this.state.upcomingBookings} 
                                                 open={this.state.open} handleClose={this.handleClose}
-                                                handleClickOpen={this.handleClickOpen}/>}
+                                                handleClickOpen={this.handleClickOpen} 
+                                                cancelTicketMovie={this.state.cancelTicketMovie}
+                                                cancelTicketSeats={this.state.cancelTicketSeats}/>}
                     {value===1 && <BookingHistory bookings={this.state.previousBookings}/>}
                 <Footer />
         </React.Fragment>) 
