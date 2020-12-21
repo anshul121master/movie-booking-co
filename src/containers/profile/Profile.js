@@ -20,6 +20,8 @@ import Loader from "../../shared-components/Loader";
 import Footer from "../../shared-components/footer/Footer"
 import Header from "../../shared-components/header/Header"
 import { header, footer } from "../../theme";
+import { setAuthedUser } from "../../store/actions/authedUser"
+import { connect } from "react-redux"
 
 const styles = (theme) => ({
   profileInfoDiv: {
@@ -81,9 +83,11 @@ const styles = (theme) => ({
   },
   successMessageColor: {
     color: "green",
+    marginTop: 10
   },
   failedMessageColor: {
     color: "red",
+    marginTop: 10
   },
   loadingPanel: {
     minHeight: "100vh",
@@ -243,12 +247,18 @@ class Profile extends Component {
         dateOfBirth: birthday,
         imageUrl,
       };
-      updateProfile(userInfo).then((res) => {
-        if (res.status === 200)
+      updateProfile(userInfo).then(res => {
+        if (res.status === 200){
           this.setState({
             infoMessage: "Profile Updated Successfully",
             loading: false,
           });
+          let authedUser = {
+            response:userInfo,
+            exception:null
+          }
+          this.props.dispatch(setAuthedUser(authedUser))
+        }
         else
           this.setState({
             infoMessage: res.exception.errorMsg,
@@ -445,17 +455,6 @@ class Profile extends Component {
                     />
                   </Grid>
                 </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Update Changes
-                </Button>
-
-                <Grid container justify="flex-start">
                   <Grid item>
                     <Typography
                       className={
@@ -467,7 +466,18 @@ class Profile extends Component {
                       {infoMessage}
                     </Typography>
                   </Grid>
-                </Grid>
+            
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Update Changes
+                </Button>
+
                 <Grid container justify="flex-end">
                   <Grid item>
                     <Link to="/" style={{ textDecoration: "none", color: header }}>Proceed to home</Link>
@@ -483,4 +493,5 @@ class Profile extends Component {
   }
 }
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(connect()(Profile));
+

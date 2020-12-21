@@ -204,8 +204,13 @@ class SignIn extends Component {
                 </Grid>
                 <Grid item>
                   <Link
-                    to="/signup"
                     style={{ textDecoration: "none", color: header }}
+                    to={{
+                      pathname: "/signup",
+                      state: { 
+                        from: location.state === undefined ? "/" : location.state.from
+                      },
+                    }}
                   >
                     {"Don't have an account? Sign Up"}
                   </Link>

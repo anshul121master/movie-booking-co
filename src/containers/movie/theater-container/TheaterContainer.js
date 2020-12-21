@@ -79,9 +79,9 @@ class TheaterContainer extends Component {
                                 {
                                     this.state.initialCalendar ?
                                         this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).length === 0 ?
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 No theaters available on this day</div> :
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 Available Theatres:
                                             {this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).map(
                                                 theater =>
@@ -90,9 +90,9 @@ class TheaterContainer extends Component {
                                             </div>
                                         :
                                         this.state.filteredtheatersList.length === 0 ?
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 No theaters available on this day for {selectedMovie.name}</div> :
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 Available Theatres:
                                                 {
                                                     this.state.filteredtheatersList.map(

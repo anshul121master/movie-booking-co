@@ -3,7 +3,7 @@ import { setLoading } from "./loading";
 
 export const SET_AUTHED_USER = "SET_AUTHED_USER";
 
-function setAuthedUser(authedUser) {
+export function setAuthedUser(authedUser) {
   return {
     type: SET_AUTHED_USER,
     authedUser,
