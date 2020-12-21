@@ -17,6 +17,7 @@ const useStyles = makeStyles({
   root: {
     maxwidth: '100%',
     minWidth: 100,
+    height: '100%'
   },
   media: {
     height: 140,
@@ -57,7 +58,7 @@ export default function MovieCard(props) {
   return (
       (movie !== undefined &&
     <Card variant="outlined" className={classes.root} raised={true}>
-      <CardActionArea disableRipple>
+      <CardActionArea disableRipple style={{height: '80%'}}>
         <CardMedia
           className={classes.media}
           component="img"
@@ -65,7 +66,7 @@ export default function MovieCard(props) {
           image={mockEnabled ? "moviePoster.jpg" : `${moviePosters}${movie.moviePoster}`}
           title="Movie"
         />
-        <CardContent>
+        <CardContent style={{height: 'inherit'}}>
           <Typography className={classes.movieTitle} gutterBottom variant="h5" component="h2">
             {titleCase(movie.name)}
           </Typography>

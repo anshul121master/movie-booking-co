@@ -11,6 +11,8 @@ import { Redirect, Link } from 'react-router-dom'
 import Loader from '../../shared-components/Loader'
 import Footer from '../../shared-components/footer/Footer'
 import Snackbar from '@material-ui/core/Snackbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 
 const styles = (theme) => ({
     root: {
@@ -30,16 +32,6 @@ class Screen extends Component {
         open: true,
         vertical: 'top',
         horizontal: 'center',
-    }
-
-    componentDidMount() {
-        const { seatsAndPrice } = this.props
-        if (seatsAndPrice.selectedSeats !== undefined && seatsAndPrice.price !== undefined) {
-            this.setState({
-                selectedSeats: seatsAndPrice.selectedSeats,
-                price: seatsAndPrice.price,
-            })
-        }
     }
 
     calculatePrice(theater, selectedSeats) {
@@ -77,6 +69,22 @@ class Screen extends Component {
         })
     }
 
+    getDateAndTime = (seatPlan, selectedScreen) => {
+
+        let time, date
+
+        selectedScreen.screenTimes.forEach(screenTime => {
+            const selectedDate = screenTime.showDateList.filter(showDate => showDate.seatPlanId === seatPlan.response.seatPlanId)
+            if (selectedDate.length !== 0) {
+                time = screenTime.showTiming
+                date = selectedDate[0].moviePlayingDate.split('T')[0]
+            }
+        })
+
+        return { time, date }
+
+    }
+
     purchaseSeats = () => {
         // const {authedUser} = this.props
         // if(authedUser === null || authedUser.response === null)
@@ -95,7 +103,7 @@ class Screen extends Component {
 
     createSeatMap = (selectedScreen) => {
         let seatMap = [];
-        Object.keys(selectedScreen.noOfRowsPerSeatType).forEach(seatType => {
+        ['PLATINUM', 'DIAMOND', 'GOLD'].forEach(seatType => {
             let seatTypeMap = [];
             Array.from(Array(selectedScreen.noOfRowsPerSeatType[seatType]).keys()).forEach(
                 (row) => {
@@ -146,7 +154,10 @@ class Screen extends Component {
                             <span>{selectedMovie.name}</span>
 
                             <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                                {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+                                {(Object.keys(seatPlan).length > 0 ?
+                                    (this.getDateAndTime(seatPlan, selectedScreen).date + ", " + this.getDateAndTime(seatPlan, selectedScreen).time.split('S')[1] + ":00, ") : " ")
+                                    + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+
                             <div className='screen-info'>
                                 <div className='info'>
                                     <div className='seat' style={{ fontSize: '0.8em', backgroundColor: 'white', cursor: 'default', fontWeight: 500 }}>Available Seats</div>
@@ -172,8 +183,8 @@ class Screen extends Component {
                                             <div className='seat-map'>
                                                 {seatMap[index].map((row, rowindex) => (
                                                     <div className='seat-row' key={row}>
-                                                        <Typography variant="body2" color="textSecondary" style={{marginRight : '10px'}}>
-                                                            {rowindex + 1}  
+                                                        <Typography variant="body2" color="textSecondary" style={{ marginRight: '10px0' }}>
+                                                            {rowindex + 1}
                                                         </Typography>
                                                         {seatMap[index][rowindex].map(
                                                             (col, colIndex) => (
@@ -183,18 +194,18 @@ class Screen extends Component {
                                                                             {seatMap[index][rowindex][colIndex].split('C')[1]}
                                                                         </div>
                                                                     </Tooltip>
-                                                                    : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                        <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
-                                                                            <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
-                                                                            >
-                                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                            </div></Tooltip>
-                                                                        : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                            <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
-                                                                                onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
-                                                                            >
-                                                                                {seatMap[index][rowindex][colIndex].split('C')[1]}
-                                                                            </div>
+                                                                    : (this.state.selectedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                        <div className='seat chosen' key={seatMap[index][rowindex][colIndex]}
+                                                                            onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
+                                                                        >
+                                                                            {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                        </div>
+                                                                        : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
+                                                                            <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
+                                                                                <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
+                                                                                >
+                                                                                    {seatMap[index][rowindex][colIndex].split('C')[1]}
+                                                                                </div></Tooltip>
                                                                             : <Tooltip title="Click to select this seat" aria-label="add">
                                                                                 <div className='seat' key={seatMap[index][rowindex][colIndex]}
                                                                                     onClick={() => this.selectSeat(seatMap[index][rowindex][colIndex])}
@@ -220,16 +231,19 @@ class Screen extends Component {
                                 }} />)}
                             {(this.state.selectedSeats.length > 0) && (<div className='pricecalculator'>
                                 <div style={{ paddingLeft: '15px' }} className='priceheader'>Summary</div>
+                                <div style={{ paddingLeft: '15px' }} className='pricewarning'> <FontAwesomeIcon color='red' size="s" icon={faExclamationTriangle} />Once you click on book now button the selected seats will be locked for 10 mins</div>
                                 <div className='priceinfo'>
                                     <div style={{ paddingLeft: '15px' }}>Selected Seats : {this.state.selectedSeats.map(seat => seat + ', ')}</div>
                                     <div style={{ paddingLeft: '15px' }}>Total Price : Rs. {this.state.price}.00</div>
                                     <div style={{ paddingLeft: '15px' }}>Number of seats : {this.state.selectedSeats.length}</div>
                                     <div className='timebuttoncontainer'>
-                                        <Button className='bookbutton' disabled={this.state.selectedSeats.length === 0}
-                                            onClick={this.purchaseSeats}
-                                            variant='outlined'
-                                        >
-                                            Book Now</Button>
+                                        <Tooltip title="Once you click on this button the selected seats will be locked for 10 mins" aria-label="add">
+                                            <Button className='bookbutton' disabled={this.state.selectedSeats.length === 0}
+                                                onClick={this.purchaseSeats}
+                                                variant='outlined'
+                                            >
+                                                Book Now</Button>
+                                        </Tooltip>
                                     </div>
                                 </div>
                             </div>)}

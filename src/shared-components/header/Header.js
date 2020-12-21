@@ -183,7 +183,7 @@ class Header extends Component {
 
                             {authedUser !== null && authedUser.response !== null
                                 ? <React.Fragment>
-                                    <Typography variant="body1">Welcome {authedUser.response.fullName}</Typography>
+                                    <Typography variant="body1">Hi {authedUser.response.fullName.split(' ')[0]}</Typography>
                                     {(authedUser.response.imageUrl !== null
                                         ? <Avatar alt="user" src={userProfilePhoto + authedUser.response.imageUrl} style={{ backgroundColor: '#F5F4F2', color: headerText }} />
                                         : <AccountCircleIcon style={{ fontSize: '2.5em' }} />)}
@@ -198,13 +198,14 @@ class Header extends Component {
                                     </IconButton>
                                 </React.Fragment>
                                 : <React.Fragment>
-                                    <Typography variant="body1">Welcome Guest</Typography>
+                                    <Typography variant="body1">Hi Guest</Typography>
                                     <AccountCircleIcon style={{ fontSize: '2.5em' }} />
                                 </React.Fragment>
                             }
                         </div>
                     </Toolbar>
                 </AppBar>
+                {authedUser !== null && authedUser.response !== null && (
                 <Drawer
                     className={classes.drawer}
                     variant="persistent"
@@ -217,7 +218,7 @@ class Header extends Component {
                     <div className={classes.drawerHeader}>
                         <IconButton onClick={this.handleDrawerClose} style={{ color: headerText }}>
                             <ChevronRightIcon />
-                            <Typography variant="subtitle1" component="h5">Hi!</Typography>
+                            <Typography variant="subtitle1" component="h5">{`Welcome ${authedUser.response.fullName.split(' ')[0]}!`}</Typography>
                         </IconButton>
                     </div>
                     <Divider />
@@ -235,7 +236,7 @@ class Header extends Component {
                             <ListItemText primary='Sign Out' />
                         </ListItem>
                     </List>
-                </Drawer>
+                </Drawer>)}
             </header>
         )
     }

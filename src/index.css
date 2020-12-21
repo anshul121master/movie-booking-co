@@ -528,6 +528,12 @@ button.expandbutton:hover {
   background-color: #132f3f;
 }
 
+.pricewarning{
+  text-align: center;
+  background-color: lightyellow;
+  margin-bottom: 5px;
+}
+
 @media (max-width: 900px) {
   .toolBar {
     justify-content: center;
@@ -786,5 +792,11 @@ button.expandbutton:hover {
     height: 10%;
     margin: 10px;
     font-size: 0.5em;
+  }
+
+  .pricewarning{
+    text-align: center;
+    background-color: lightyellow;
+    margin-bottom: 2px;
   }
 }
