@@ -99,6 +99,11 @@ const styles = (theme) => ({
     icon: {
         fill: headerText,
     },
+    authedContainer: {
+        display: 'flex', 
+        justifyContent: 'flex-end', 
+        alignItems: 'center'
+    }
 })
 
 
@@ -182,37 +187,39 @@ class Header extends Component {
                             )}
 
                             {authedUser !== null && authedUser.response !== null
-                                ? <React.Fragment>
-                                    <Typography variant="body1">Hi {authedUser.response.fullName.split(' ')[0]}</Typography>
+                                ? <div className={classes.authedContainer}>
                                     {(authedUser.response.imageUrl !== null
-                                        ? <Avatar alt="user" src={userProfilePhoto + authedUser.response.imageUrl} style={{ backgroundColor: '#F5F4F2', color: headerText }} />
-                                        : <AccountCircleIcon style={{ fontSize: '2.5em' }} />)}
-                                    <IconButton
+                                        ? <Avatar alt="user" src={userProfilePhoto + authedUser.response.imageUrl} 
+                                            style={{ backgroundColor: '#F5F4F2', color: headerText }} 
+                                            className="margin15"/>
+                                        : <AccountCircleIcon  className="margin15" style={{ fontSize: '2.5em' }} />)}
+                                    <Typography className="margin15" variant="body1">Hi {authedUser.response.fullName.split(' ')[0]}</Typography>
+                                    <IconButton style={{margin: '0 30px'}}
                                         color="inherit"
                                         aria-label="open drawer"
                                         onClick={this.handleDrawerOpen}
-                                        className={clsx(open && classes.hide)}
+                                        className={[clsx(open && classes.hide),"menuIcon"]}
                                         edge="start"
                                     >
                                         <MenuIcon />
                                     </IconButton>
-                                </React.Fragment>
-                                : <React.Fragment>
-                                    <Typography variant="body1">Hi Guest</Typography>
-                                    <AccountCircleIcon style={{ fontSize: '2.5em' }} />
-                                </React.Fragment>
+                                </div>
+                                : <div className={classes.authedContainer}>
+                                    <AccountCircleIcon className="margin15" style={{ fontSize: '2.5em' }} />
+                                    <Typography className="margin15" variant="body1">Hi Guest</Typography>
+                                </div>
                             }
                         </div>
                     </Toolbar>
                 </AppBar>
                 {authedUser !== null && authedUser.response !== null && (
                 <Drawer
-                    className={classes.drawer}
+                    className="drawer"
                     variant="persistent"
                     anchor="right"
                     open={open}
                     classes={{
-                        paper: classes.drawerPaper,
+                        paper: "drawerPaper"
                     }}
                 >
                     <div className={classes.drawerHeader}>
