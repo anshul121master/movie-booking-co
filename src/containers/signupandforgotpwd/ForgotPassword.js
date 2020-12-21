@@ -18,8 +18,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { header } from "../../theme";
-import Header from "../../shared-components/header/Header"
-import Footer from "../../shared-components/footer/Footer"
+import Header from "../../shared-components/header/Header";
+import Footer from "../../shared-components/footer/Footer";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { Redirect } from "react-router-dom";
@@ -186,7 +186,7 @@ class ForgotPassword extends Component {
   };
 
   render() {
-    const { classes, authedUser } = this.props;
+    const { classes, authedUser, location } = this.props;
     const {
       email,
       showNewPasswordPanel,
@@ -202,118 +202,150 @@ class ForgotPassword extends Component {
       return <Redirect to="/" />;
     return (
       <div>
-      <Header />
-      <Container component="main" maxWidth="xs" style={{ backgroundColor: "white", marginTop:30, marginBottom:30}}>
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Forgot Password
-          </Typography>
-          {passwordChangeSuccess !== "" ? (
-            <Card className={classes.cardStyle} variant="outlined">
-              <CheckBoxIcon className={classes.checkBoxIcon} />
-              <CardContent>
-                <Typography className={classes.successColor}>
-                  Password Changed Successfully
-                </Typography>
-                <CardActions>
-                  <Link to="/login">
-                    <Button size="medium" className={classes.loginButton}>
+        <Header />
+        <Container
+          component="main"
+          maxWidth="xs"
+          style={{ backgroundColor: "white", marginTop: 30, marginBottom: 30 }}
+        >
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Forgot Password
+            </Typography>
+            {passwordChangeSuccess !== "" ? (
+              <Card className={classes.cardStyle} variant="outlined">
+                <CheckBoxIcon className={classes.checkBoxIcon} />
+                <CardContent>
+                  <Typography className={classes.successColor}>
+                    Password Changed Successfully
+                  </Typography>
+                  <CardActions>
+                    <Link
+                      to={{
+                        pathname: "/login",
+                        state: {
+                          from:
+                            location.state === undefined
+                              ? "/"
+                              : location.state.from
+                        },
+                      }}
+                    >
+                      <Button size="medium" className={classes.loginButton}>
+                        Proceed to login
+                      </Button>
+                    </Link>
+                  </CardActions>
+                </CardContent>
+              </Card>
+            ) : (
+              <form className={classes.form} onSubmit={this.handleSubmit}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  type="email"
+                  value={email}
+                  autoFocus
+                  onChange={this.handleChange}
+                  disabled={emailDisabled ? true : false}
+                />
+
+                {showNewPasswordPanel && (
+                  <div>
+                    <Password
+                      label="New Password"
+                      passwordsAreValid={this.passwordsAreValid}
+                    />
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Typography>
+                          Please enter OTP sent to your registered email id.
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        style={{ display: "flex", justifyContent: "center" }}
+                        item
+                        xs={12}
+                      >
+                        <OtpInput
+                          value={otp}
+                          onChange={this.handleOtp}
+                          numInputs={6}
+                          separator={
+                            <span className={classes.spacebetweenBoxes}>
+                              <hr />
+                            </span>
+                          }
+                          inputStyle={classes.otpBox}
+                          isInputNum={true}
+                        />
+                      </Grid>
+                    </Grid>
+                  </div>
+                )}
+
+                {otpErrorMsg !== "" && (
+                  <Typography className={classes.errorColor}>
+                    {otpErrorMsg}
+                  </Typography>
+                )}
+                {passwordChangeFailed !== "" && (
+                  <Typography className={classes.errorColor}>
+                    {passwordChangeFailed}
+                  </Typography>
+                )}
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  {showNewPasswordPanel ? "Change Password" : "Send OTP"}
+                </Button>
+
+                {loading && (
+                  <Grid container spacing={5} justify="center">
+                    <Grid item>
+                      <CircularProgress />
+                    </Grid>
+                  </Grid>
+                )}
+
+                <Grid container style={{ marginBottom: 30 }}>
+                  <Grid item xs>
+                    <Link
+                      style={{ textDecoration: "none", color: header }}
+                      to={{
+                        pathname: "/login",
+                        state: {
+                          from:
+                            location.state === undefined
+                              ? "/"
+                              : location.state.from,
+                        },
+                      }}
+                    >
                       Proceed to login
-                    </Button>
-                  </Link>
-                </CardActions>
-              </CardContent>
-            </Card>
-          ) : (
-            <form className={classes.form} onSubmit={this.handleSubmit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                type="email"
-                value={email}
-                autoFocus
-                onChange={this.handleChange}
-                disabled={emailDisabled ? true : false}
-              />
-
-              {showNewPasswordPanel && (
-                <div>
-                  <Password label="New Password" passwordsAreValid={this.passwordsAreValid} />
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Typography>
-                        Please enter OTP sent to your registered email id.
-                      </Typography>
-                    </Grid>
-                    <Grid style={{display:'flex', justifyContent:'center'}} item xs={12}>
-                      <OtpInput
-                        value={otp}
-                        onChange={this.handleOtp}
-                        numInputs={6}
-                        separator={
-                          <span className={classes.spacebetweenBoxes}>
-                            <hr />
-                          </span>
-                        }
-                        inputStyle={classes.otpBox}
-                        isInputNum={true}
-                      />
-                    </Grid>
-                  </Grid>
-                </div>
-              )}
-
-              {otpErrorMsg !== "" && (
-                <Typography className={classes.errorColor}>
-                  {otpErrorMsg}
-                </Typography>
-              )}
-              {passwordChangeFailed !== "" && (
-                <Typography className={classes.errorColor}>
-                  {passwordChangeFailed}
-                </Typography>
-              )}
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                {showNewPasswordPanel ? "Change Password" : "Send OTP"}
-              </Button>
-
-              {loading && (
-                <Grid container spacing={5} justify="center">
-                  <Grid item>
-                    <CircularProgress />
+                    </Link>
                   </Grid>
                 </Grid>
-              )}
-
-              <Grid container style={{marginBottom:30}}>
-                <Grid item xs>
-                  <Link to="/login" style={{ textDecoration: "none", color: header }}>
-                    Proceed to login
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
-          )}
-        </div>
-      </Container>
-      <Footer />
+              </form>
+            )}
+          </div>
+        </Container>
+        <Footer />
       </div>
     );
   }
@@ -323,4 +355,7 @@ function mapStateToProps({ authedUser }) {
   return { authedUser };
 }
 
-export default compose(withStyles(styles), connect(mapStateToProps))(ForgotPassword);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(ForgotPassword);

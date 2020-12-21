@@ -81,7 +81,7 @@ export default function Ticket(props) {
                             {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{ color: 'green' }} fontSize='small' />)}</Typography>) :
                         <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
                     {(props.handleClose !== undefined  && props.bookingStatus.toUpperCase()==='BOOKED' 
-                    && (!(date === new Date().toISOString().split('T')[0] && new Date().getHours() == time.split('S')[1]))
+                    && (!(date === new Date().toISOString().split('T')[0] && new Date().getHours() === time.split('S')[1]))
                     ) && 
                         <Button variant="contained" color="secondary" style={{display:'inline-block', alignSelf:'flex-end'}}
                             onClick={()=>props.handleClickOpen(selectedSeats, movie.name)}>
