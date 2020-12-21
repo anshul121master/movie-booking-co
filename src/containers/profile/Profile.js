@@ -274,6 +274,10 @@ class Profile extends Component {
       loadProfileMessage,
       loading,
     } = this.state;
+
+    let today = new Date();
+    let date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+    
     return (
       <div>
       {loading && <Loader />}
@@ -435,7 +439,9 @@ class Profile extends Component {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      inputProps={{ max:date}}
                       onChange={this.setBirthday}
+                      onKeyPress={(event) => event.preventDefault()}
                     />
                   </Grid>
                 </Grid>

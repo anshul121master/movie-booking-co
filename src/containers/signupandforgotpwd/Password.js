@@ -79,7 +79,7 @@ export default class Password extends Component {
             required
             fullWidth
             name="password"
-            label="Password"
+            label={this.props.label}
             type="password"
             id="password"
             autoComplete="current-password"

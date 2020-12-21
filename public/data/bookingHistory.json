@@ -1,73 +1,71 @@
 {
     "response": [
-        {
-            "bookingId": "123456",
-            "theaterDetails": "Address1 ",
-            "dateOfShow": "2021-02-20",
-            "dateOfBooking": "2020-11-23 11:46:21",
-            "showTiming": "S11",
-            "screenName": " 1-C ",
-            "movieName": " Dolby ",
-            "amount": 222.0,
-            "bookedSeats": [
-                "GR1C2",
-                "PR1C2"
-            ],
-            "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
-            "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
-            "bookingStatus": "BOOKED"
-        },
-        {
-            "bookingId": "3184de0e-0289-47be-88a2-d08071380d47",
-            "theaterDetails": "Address1 ",
-            "dateOfShow": "2021-02-20",
-            "dateOfBooking": "2020-11-23 10:15:49",
-            "showTiming": "S14",
-            "screenName": " 1-C ",
-            "movieName": " Dolby ",
-            "amount": 222.0,
-            "bookedSeats": [
-                "GR1C2",
-                "PR1C2"
-            ],
-            "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
-            "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
-            "bookingStatus": "CANCELLED"
-        },
-        {
-            "bookingId": "7a7f8b36-aba4-4374-b7b9",
-            "theaterDetails": "Address1",
-            "dateOfShow": "2020-02-20",
-            "dateOfBooking": "2020-11-23 11:46:21",
-            "showTiming": "S20",
-            "screenName": " 1-C ",
-            "movieName": " Dolby3",
-            "amount": 222.0,
-            "bookedSeats": [
-                "GR1C2",
-                "PR1C2"
-            ],
-            "transactionId": "a9a6a87e-b37f-40e4-aa64-e65a3c9fe58b",
-            "seatPlanId": "e5c7b582-03c0-492f-8fe9-1026e5be461c",
-            "bookingStatus": "BOOKED"
-        },
-        {
-            "bookingId": "3184de0e-0289-47be-d08071380d47",
-            "theaterDetails": "Address1 ",
-            "dateOfShow": "2020-02-20",
-            "dateOfBooking": "2020-11-23 10:15:49",
-            "showTiming": "S18",
-            "screenName": " 1-C ",
-            "movieName": " Dolby4",
-            "amount": 222.0,
-            "bookedSeats": [
-                "GR1C2",
-                "PR1C2"
-            ],
-            "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
-            "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
-            "bookingStatus": "CANCELLED"
-        }
+      {
+        "bookingId": "f54d9ec8-587d-4d3d-a9ea-c12da6d4d296",
+        "theaterDetails": "INOX Mumbai",
+        "dateOfShow": "2020-12-20",
+        "dateOfBooking": "2020-12-17 03:41:44",
+        "showTiming": "S12",
+        "screenName": "s1",
+        "movieName": "the shining",
+        "amount": 300,
+        "bookedSeats": [
+          "PR5C8"
+        ],
+        "transactionId": "337a8a95-08e3-459c-8483-c201c55e3000",
+        "seatPlanId": "001f0675-ea25-446a-ae01-4f1bbb7ccb01",
+        "bookingStatus": "BOOKED"
+      },
+      {
+        "bookingId": "77bc4d42-9238-46a7-bacd-2c79e1a5f03e",
+        "theaterDetails": "INOX Mumbai",
+        "dateOfShow": "2020-12-19",
+        "dateOfBooking": "2020-12-17 02:58:26",
+        "showTiming": "S17",
+        "screenName": "s2",
+        "movieName": "gabbar",
+        "amount": 300,
+        "bookedSeats": [
+          "PR5C6"
+        ],
+        "transactionId": "86715634-9489-4679-acbf-5a06731075ad",
+        "seatPlanId": "e2c43e72-78b6-47ff-b319-26c87667b7eb",
+        "bookingStatus": "BOOKED"
+      },
+      {
+        "bookingId": "084c5a1c-6a17-41e1-861d-72a9fd3871c7",
+        "theaterDetails": "INOX Mumbai",
+        "dateOfShow": "2020-12-19",
+        "dateOfBooking": "2020-12-18 05:38:31",
+        "showTiming": "S20",
+        "screenName": "s2",
+        "movieName": "gabbar",
+        "amount": 300,
+        "bookedSeats": [
+          "GR5C8",
+          "GR4C6",
+          "GR4C7"
+        ],
+        "transactionId": "47453b8c-d2e3-46cf-b04f-0ab86140de5a",
+        "seatPlanId": "da8bb908-be4f-4202-b4a1-227aaa017f5e",
+        "bookingStatus": "BOOKED"
+      },
+      {
+        "bookingId": "1a30bef8-0492-47d2-ace9-fad3bae9a522",
+        "theaterDetails": "INOX Mumbai",
+        "dateOfShow": "2020-12-20",
+        "dateOfBooking": "2020-12-17 03:44:43",
+        "showTiming": "S17",
+        "screenName": "s2",
+        "movieName": "gabbar",
+        "amount": 300,
+        "bookedSeats": [
+          "PR4C7"
+        ],
+        "transactionId": "82dce5f5-3130-49c2-8d84-8364b7f077ee",
+        "seatPlanId": "fcda17b3-9b89-4a53-a6ec-3a0ee10b0471",
+        "bookingStatus": "BOOKED"
+      }
     ],
     "exception": null
-}
+  }

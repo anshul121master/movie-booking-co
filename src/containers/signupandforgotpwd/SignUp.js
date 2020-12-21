@@ -13,10 +13,12 @@ import MuiPhoneNumber from "material-ui-phone-number";
 import { signup } from "../../utils/api";
 import Password from "./Password";
 import { Redirect } from "react-router-dom";
-import Loader from "../../shared-components/Loader"
-import Header from "../../shared-components/header/Header"
-import Footer from "../../shared-components/footer/Footer"
+import Loader from "../../shared-components/Loader";
+import Header from "../../shared-components/header/Header";
+import Footer from "../../shared-components/footer/Footer";
 import { header } from "../../theme";
+import { connect } from "react-redux";
+import compose from "recompose/compose";
 
 const styles = (theme) => ({
   paper: {
@@ -37,7 +39,7 @@ const styles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   errorColor: {
-    marginTop:20,
+    marginTop: 20,
     color: "red",
   },
 });
@@ -52,7 +54,7 @@ class SignUp extends Component {
     fnameIsValid: true,
     lnameIsValid: true,
     email: "",
-    phoneIsValid:true,
+    phoneIsValid: true,
     birthday: "",
     password: "",
     passwordIsValid: true,
@@ -98,21 +100,21 @@ class SignUp extends Component {
     }
   };
 
-    validatePhone = (phone) => {
-      console.log(phone)
-      if(phone.substring(1,3) === '91' && phone.length === 15)
-        this.setState({
-          phone,
-          phoneIsValid:true,
-          phoneErrorMsg:false
-        })
-        else
-          this.setState({
-            phone,
-             phoneIsValid:false,
-             phoneErrorMsg:false
-          })
-    };
+  validatePhone = (phone) => {
+    console.log(phone);
+    if (phone.substring(1, 3) === "91" && phone.length === 15)
+      this.setState({
+        phone,
+        phoneIsValid: true,
+        phoneErrorMsg: false,
+      });
+    else
+      this.setState({
+        phone,
+        phoneIsValid: false,
+        phoneErrorMsg: false,
+      });
+  };
 
   setBirthday = (event) => {
     const birthday = event.target.value;
@@ -127,14 +129,6 @@ class SignUp extends Component {
       email,
     });
   };
-
-  // setPhone = (event) => {
-  //   const phone = event.target.value;
-  //   console.log(phone)
-  //   this.setState({
-  //     phone,
-  //   });
-  // };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -187,16 +181,16 @@ class SignUp extends Component {
             responseOnError: res.exception.errorMsg,
           });
       });
-    }else{
-      if(phone === "")
+    } else {
+      if (phone === "")
         this.setState({
-          phoneErrorMsg: true
-        })
+          phoneErrorMsg: true,
+        });
     }
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, authedUser } = this.props;
     const {
       fnameIsValid,
       lnameIsValid,
@@ -205,7 +199,7 @@ class SignUp extends Component {
       redirectToLogin,
       responseOnSuccess,
       responseOnError,
-      phoneErrorMsg
+      phoneErrorMsg,
     } = this.state;
 
     if (redirectToLogin)
@@ -218,138 +212,161 @@ class SignUp extends Component {
         />
       );
 
+    if (authedUser !== null && authedUser.response !== null)
+      return <Redirect to="/" />;
+    
+    let today = new Date();
+    let date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+
     return (
       <div>
-      <Header />
-      <Container style={{backgroundColor:"white", marginTop:30, marginBottom:30}} component="main" maxWidth="xs">
-        <CssBaseline />
-        {loading && <Loader />}
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+        <Header />
+        <Container
+          style={{ backgroundColor: "white", marginTop: 30, marginBottom: 30 }}
+          component="main"
+          maxWidth="xs"
+        >
+          <CssBaseline />
+          {loading && <Loader />}
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
 
-          <form className={classes.form} onSubmit={this.handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  error={fnameIsValid ? false : true}
-                  helperText={
-                    fnameIsValid ? "" : "Should contain only alphabets"
-                  }
-                  onBlur={this.validateName}
-                  autoFocus
-                />
+            <form className={classes.form} onSubmit={this.handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="fname"
+                    name="firstName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    error={fnameIsValid ? false : true}
+                    helperText={
+                      fnameIsValid ? "" : "Should contain only alphabets"
+                    }
+                    onBlur={this.validateName}
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="lname"
+                    error={lnameIsValid ? false : true}
+                    helperText={
+                      lnameIsValid ? "" : "Should contain only alphabets"
+                    }
+                    onBlur={this.validateName}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    onBlur={this.setEmail}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <MuiPhoneNumber
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="phone"
+                    label="Mobile Number"
+                    name="phone"
+                    defaultCountry={"in"}
+                    autoComplete="phone"
+                    // onBlur={this.setPhone}
+                    onlyCountries={["in"]}
+                    error={phoneIsValid ? false : true}
+                    helperText={
+                      phoneIsValid
+                        ? ""
+                        : "Must begin with +91 and should be 10 digits in length."
+                    }
+                    onChange={this.validatePhone}
+                  />
+                </Grid>
+                {phoneErrorMsg && (
+                  <Typography style={{ color: "red", fontSize: "0.8rem" }}>
+                    Please enter a valid Phone number.
+                  </Typography>
+                )}
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="date"
+                    label="Birthday"
+                    name="date"
+                    type="date"
+                    autoComplete="date"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{ max:date}}
+                    onBlur={this.setBirthday}
+                    onKeyPress={(event) => event.preventDefault()}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                  error={lnameIsValid ? false : true}
-                  helperText={
-                    lnameIsValid ? "" : "Should contain only alphabets"
-                  }
-                  onBlur={this.validateName}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  onBlur={this.setEmail}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <MuiPhoneNumber
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="phone"
-                  label="Mobile Number"
-                  name="phone"
-                  defaultCountry={"in"}
-                  autoComplete="phone"
-                 // onBlur={this.setPhone}
-                  onlyCountries={['in']}
-                  error={phoneIsValid ? false : true}
-                  helperText={
-                    phoneIsValid ? "" : "Must begin with +91 and should be 10 digits in length."
-                  }
-                  onChange={this.validatePhone}
+              <Password label="Password" passwordsAreValid={this.passwordsAreValid} />
 
-                />
-              </Grid>
-              {phoneErrorMsg && <Typography style={{color:"red", fontSize:"0.8rem"}}>Please enter a valid Phone number.</Typography>}
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="date"
-                  label="Birthday"
-                  name="date"
-                  type="date"
-                  autoComplete="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onBlur={this.setBirthday}
-                />
-              </Grid>
-            </Grid>
-            <Password passwordsAreValid={this.passwordsAreValid} />
+              {responseOnError !== "" && (
+                <Typography className={classes.errorColor}>
+                  {responseOnError}
+                </Typography>
+              )}
 
-            {responseOnError !== "" && (
-              <Typography className={classes.errorColor}>
-                {responseOnError}
-              </Typography>
-            )}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-
-            <Grid container justify="flex-end" style={{marginBottom:20}}>
-              <Grid item>
-                <Link to="/login" style={{ textDecoration: "none", color: header }}>
-                  Already have an account? Sign in
-                </Link>
+              <Grid container justify="flex-end" style={{ marginBottom: 20 }}>
+                <Grid item>
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", color: header }}
+                  >
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container>
-      <Footer />
+            </form>
+          </div>
+        </Container>
+        <Footer />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(SignUp);
+function mapStateToProps({ authedUser }) {
+  return { authedUser };
+}
+export default compose(withStyles(styles), connect(mapStateToProps))(SignUp);

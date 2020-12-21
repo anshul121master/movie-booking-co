@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = true;
+export const mockEnabled = false;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -76,21 +76,20 @@ export const getProfile = () => {
 export const getUserData = () => {
   const url = endpoints.profile();
   return fetch(url).then(resp => {
-    return resp.json().then(res => {
-      if (res.status !== undefined && res.status === 403) {
-        return {
-          response: null,
-          exception: {
-            errorMsg: res.error,
-            cause: "",
-            code: res.status
+      return resp.json().then(res =>{
+        if(res.status !== undefined && res.status === 403){
+          return {
+            response:null,
+            exception:{
+              errorMsg:"",
+              cause:res.error,
+              code:res.status
+            }
           }
-        }
-      } else return res
+        }else return res
     })
-
   })
-};
+}
 
 //uploadImage
 export const uploadImage = (userInfo) => {

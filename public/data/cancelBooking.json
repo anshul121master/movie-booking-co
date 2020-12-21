@@ -1,20 +1,19 @@
 {
     "response": {
-        "bookingId": "123456",
-        "theaterDetails": "Address1 ",
-        "dateOfShow": "2021-02-20",
-        "dateOfBooking": "2020-11-23 10:15:49",
-        "showTiming": "2:30Pm ",
-        "screenName": " 1-C ",
-        "movieName": " Dolby ",
-        "amount": 222.0,
+        "bookingId": "f54d9ec8-587d-4d3d-a9ea-c12da6d4d296",
+        "theaterDetails": "INOX Mumbai",
+        "dateOfShow": "2020-12-21",
+        "dateOfBooking": "2020-12-17 03:41:44",
+        "showTiming": "S11",
+        "screenName": "s1",
+        "movieName": "the shining",
+        "amount": 300,
         "bookedSeats": [
-            "GR1C2",
-            "PR1C2"
+          "PR5C8"
         ],
-        "transactionId": "a9bf1a22-ee66-4dd7-b115-78a836f320ad",
-        "seatPlanId": "46105f95-c7db-4613-8f5b-707f6b4e4c4b",
+        "transactionId": "337a8a95-08e3-459c-8483-c201c55e3000",
+        "seatPlanId": "001f0675-ea25-446a-ae01-4f1bbb7ccb01",
         "bookingStatus": "CANCELLED"
-    },
+      },
     "exception": null
 }
