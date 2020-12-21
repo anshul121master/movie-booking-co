@@ -111,7 +111,7 @@ class Purchase extends Component {
         if (redirect) {
             return (<Redirect to={{ pathname: '/screen' }} />)
         }
-        if (!seatsAndPrice.response) {
+        if (seatsAndPrice.response !== undefined && seatsAndPrice.response !==null && seatsAndPrice.response === false ) {
             return (
                 <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
                     <div className='screen-header'>
@@ -120,7 +120,7 @@ class Purchase extends Component {
                         </IconButton>
                         <span>{selectedMovie.name}</span>
                         <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                            {this.getDateAndTime(seatPlan, selectedScreen).date + " " + this.getDateAndTime(seatPlan, selectedScreen).time + " " + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+                            {this.getDateAndTime(seatPlan, selectedScreen).date + ", " + this.getDateAndTime(seatPlan, selectedScreen).time.split('S')[1] + ":00, " + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
                         <div className='screen-info'>
                             <div className='info' style={{ fontSize: '1.2em', fontWeight: 500 }}>
                                 Purchase tickets

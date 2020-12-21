@@ -7,6 +7,7 @@ import { Redirect } from "react-router-dom";
 import {getAllBookings, cancelBooking} from '../../utils/api'
 import { header, headerText} from '../../theme'
 import Footer from '../../shared-components/footer/Footer'
+import Loader from '../../shared-components/Loader'
 
 export default class MyBookings extends Component {
     state = {
@@ -17,7 +18,8 @@ export default class MyBookings extends Component {
         cancel: false,
         open: false,
         cancelTicketSeats: [],
-        cancelTicketMovie: ''
+        cancelTicketMovie: '',
+        loading: true
     }
     cancelTicket = (bookingId) => {
         cancelBooking(bookingId).then((response) => {
@@ -60,6 +62,9 @@ export default class MyBookings extends Component {
     componentDidMount() {
         getAllBookings()
         .then(response => {
+            this.setState({
+                loading: false
+            })
             if(response.exception === null) {
                 const previous = response.response.filter(ticket => ticket.dateOfShow.split('T')[0] < new Date().toISOString().split('T')[0]
                 || (ticket.dateOfShow.split('T')[0] === new Date().toISOString().split('T')[0] && new Date().getHours() > ticket.showTiming.split('S')[1]));
@@ -85,8 +90,9 @@ export default class MyBookings extends Component {
     
     
     render() {
-        const {value, exception} = this.state;
+        const {value, exception, loading} = this.state;
         return (
+            (loading ? <Loader /> :
             (exception === null ?
         (<React.Fragment>
             <Header/>
@@ -115,7 +121,7 @@ export default class MyBookings extends Component {
         : <Redirect to={{pathname:'/error',
 								state:{
 									exception:exception
-								}}} /> )
+								}}} /> ))
         );
     }
 }

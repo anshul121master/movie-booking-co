@@ -154,7 +154,10 @@ class Screen extends Component {
                             <span>{selectedMovie.name}</span>
 
                             <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                                {this.getDateAndTime(seatPlan, selectedScreen).date + " " + this.getDateAndTime(seatPlan, selectedScreen).time + " " + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+                                {(Object.keys(seatPlan).length > 0 ?
+                                    (this.getDateAndTime(seatPlan, selectedScreen).date + ", " + this.getDateAndTime(seatPlan, selectedScreen).time.split('S')[1] + ":00, ") : " ")
+                                    + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+
                             <div className='screen-info'>
                                 <div className='info'>
                                     <div className='seat' style={{ fontSize: '0.8em', backgroundColor: 'white', cursor: 'default', fontWeight: 500 }}>Available Seats</div>

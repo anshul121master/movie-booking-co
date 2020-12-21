@@ -190,7 +190,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const { classes, authedUser } = this.props;
+    const { classes, authedUser,location } = this.props;
     const {
       fnameIsValid,
       lnameIsValid,
@@ -207,7 +207,10 @@ class SignUp extends Component {
         <Redirect
           to={{
             pathname: "/login",
-            state: { responseOnSuccess },
+            state: { 
+              responseOnSuccess,
+              from: location.state === undefined ? "/" : location.state.from
+             },
           }}
         />
       );

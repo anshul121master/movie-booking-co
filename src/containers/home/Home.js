@@ -13,13 +13,15 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        const { dispatch } = this.props;
+        const { dispatch, moviesList } = this.props;
         const city = sessionStorage.getItem('city');
         if (city !== undefined && city !== null) {
             this.setState({
                 citySelected: true
             })
-            dispatch(setCityAndMoviesList(JSON.parse(city)));
+            if(Object.keys(moviesList).length === 0){
+                dispatch(setCityAndMoviesList(JSON.parse(city)));
+            }
         }
     }
 
@@ -61,4 +63,11 @@ class Home extends Component {
     }
 }
 
-export default connect()(Home)
+
+function mapStateToProps({ moviesList }) {
+    return {
+        moviesList
+    }
+}
+
+export default connect(mapStateToProps)(Home)
