@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Ticket from '../../../shared-components/ticket/Ticket'
+import { Typography } from '@material-ui/core'
 
 
 export default class BookingHistory extends Component {
@@ -33,13 +34,15 @@ export default class BookingHistory extends Component {
                                     time={time}
                                     bookingStatus ={bookingStatus} 
                                     handleClickOpen ={handleClickOpen}
+                                    cancelTicketMovie ={this.props.cancelTicketMovie}
+                                    cancelTicketSeats = {this.props.cancelTicketSeats}
                                     handleClose= {handleClose}
                                     open={open}
                                     bookingId= {ticket.bookingId}
                                     />
                     })}
         </div>
-        ) : <p>You don't seem to have any bookings</p>
+        ) : <Typography variant="h6" style={{margin:'15px', minHeight: '60vh'}}>You don't seem to have any bookings</Typography>
         )}
         </React.Fragment>
         );

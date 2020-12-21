@@ -165,7 +165,7 @@ class TheaterCard extends Component {
                                     <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
                                     <div>{screenTimesArray.sort().map(time =>
                                         <Button className='timebutton' size='small' style={{ margin: 7 }} onClick={() => this.handleClickOpen(theater, time, selectedDate)}
-                                            disabled={selectedDate > new Date().toISOString().split('T')[0] || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() >= time.split('S')[1])}>
+                                            disabled={selectedDate < new Date().toISOString().split('T')[0] || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() >= time.split('S')[1])}>
                                             {time.split('S')[1]}:00
                                 </Button>
                                     )}</div>

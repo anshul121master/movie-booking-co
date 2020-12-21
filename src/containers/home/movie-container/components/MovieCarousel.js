@@ -17,6 +17,7 @@ export default function MovieCarousel(props) {
 
   return (
         <div className="carousel">
+          {(moviesList.length > 0 && 
             <Carousel style={{flex:1, height:'250px'}} fullHeightHover={false} autoPlay={false} navButtonsAlwaysVisible={true}>
             {moviesList.map((movie, index) => 
                 <img key={movie.movieId} src={mockEnabled ? "moviePoster.jpg" : `${moviePosters}${movie.moviePoster}`} 
@@ -24,6 +25,7 @@ export default function MovieCarousel(props) {
                                       alt={`${movie.name} Poster`}/>
             )}
             </Carousel>
+            )}
         </div>
       )
 }

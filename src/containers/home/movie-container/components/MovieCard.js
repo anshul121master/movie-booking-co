@@ -11,6 +11,7 @@ import { mockEnabled } from '../../../../utils/api'
 import { Button } from '@material-ui/core'
 import GradeIcon from '@material-ui/icons/Grade';
 import {header} from '../../../../theme'
+import { titleCase } from '../../../../utils/helper'
 
 const useStyles = makeStyles({
   root: {
@@ -66,7 +67,7 @@ export default function MovieCard(props) {
         />
         <CardContent>
           <Typography className={classes.movieTitle} gutterBottom variant="h5" component="h2">
-            {movie.name.toUpperCase()}
+            {titleCase(movie.name)}
           </Typography>
           <Typography gutterBottom variant="body1" component="h4">
             {movie.movieDimension.split('_')[1] }

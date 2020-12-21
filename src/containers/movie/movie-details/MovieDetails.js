@@ -2,6 +2,7 @@ import React from 'react'
 import { moviePosters } from '../../../config/apiConfig'
 import { mockEnabled } from '../../../utils/api'
 import { Paper } from '@material-ui/core';
+import { titleCase } from '../../../utils/helper'
 
 
 export default function MovieDetails(props) {
@@ -9,7 +10,7 @@ export default function MovieDetails(props) {
         <Paper className="rootstyle" style={{ backgroundImage: mockEnabled ? "url(moviePoster.jpg)" : `url(${moviePosters}${props.selectedMovie.moviePoster})` }}>
             <div className="content" >
                 <div className='contenttextheader'>
-                    {props.selectedMovie.name.toUpperCase()}
+                    {titleCase(props.selectedMovie.name)}
                 </div>
                 <div className="nestedcontent">
                     <div>
