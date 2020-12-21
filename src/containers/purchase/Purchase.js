@@ -111,7 +111,7 @@ class Purchase extends Component {
         if (redirect) {
             return (<Redirect to={{ pathname: '/screen' }} />)
         }
-        if (!seatsAndPrice.response) {
+        if (seatsAndPrice.response !== undefined && seatsAndPrice.response !==null && seatsAndPrice.response === false ) {
             return (
                 <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
                     <div className='screen-header'>
