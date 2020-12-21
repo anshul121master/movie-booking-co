@@ -172,6 +172,9 @@ class Screen extends Component {
                                             <div className='seat-map'>
                                                 {seatMap[index].map((row, rowindex) => (
                                                     <div className='seat-row' key={row}>
+                                                        <Typography variant="body2" color="textSecondary" style={{marginRight : '10px'}}>
+                                                            {rowindex + 1}  
+                                                        </Typography>
                                                         {seatMap[index][rowindex].map(
                                                             (col, colIndex) => (
                                                                 (seatPlan.response.bookedSeats !== undefined && seatPlan.response.bookedSeats.includes(seatMap[index][rowindex][colIndex]) ?

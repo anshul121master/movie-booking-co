@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { header, headerText } from '../../../theme'
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
@@ -52,14 +53,28 @@ class TheaterCard extends Component {
         screenTimesArray: [],
         time: '',
         redirect: false,
-        error: null
+        error: null,
+        loading: false
+    }
 
+    componentWillReceiveProps() {
+        this.setState({
+            expanded: false,
+            screens: null,
+            screenTimesArray: [],
+        });
     }
 
     //when show timing btn is clicked
     getScreenObject = (theater) => {
         const { selectedMovie } = this.props;
         if (this.state.screens === null && this.state.screenTimesArray.length === 0) {
+            this.setState(currentState => {
+                return {
+                    expanded: !currentState.expanded,
+                    loading: true,
+                }
+            })
             getScreens(selectedMovie.movieId, theater.theaterId)
                 .then((screens) => {
                     if (screens.exception === null) {
@@ -68,16 +83,15 @@ class TheaterCard extends Component {
                             screenTimeArray = screenTimeArray.concat(screen.screenTimes.map(time => time.showTiming))
                         })
 
-                        this.setState(currentState => {
-                            return {
-                                screens: screens.response,
-                                screenTimesArray: screenTimeArray,
-                                expanded: !currentState.expanded,
-                            }
+                        this.setState({
+                            screens: screens.response,
+                            screenTimesArray: screenTimeArray,
+                            loading: false,
                         })
                     } else {
                         this.setState({
-                            error: screens.exception
+                            error: screens.exception,
+                            loading: false,
                         })
                     }
                 })
@@ -86,6 +100,7 @@ class TheaterCard extends Component {
             this.setState(currentState => {
                 return {
                     expanded: !currentState.expanded,
+                    loading: false,
                 }
             })
         }
@@ -162,13 +177,13 @@ class TheaterCard extends Component {
                             </CardActions>
                             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                 <CardContent className='cardcontent'>
-                                    <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>
-                                    <div>{screenTimesArray.sort().map(time =>
+                                    {this.state.loading ? null : <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>}
+                                    {this.state.loading ? <CircularProgress style={{ color: header }} size="2em" /> : (<div>{screenTimesArray.sort().map(time =>
                                         <Button className='timebutton' size='small' style={{ margin: 7 }} onClick={() => this.handleClickOpen(theater, time, selectedDate)}
                                             disabled={selectedDate < new Date().toISOString().split('T')[0] || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() >= time.split('S')[1])}>
                                             {time.split('S')[1]}:00
-                                </Button>
-                                    )}</div>
+                                    </Button>
+                                    )}</div>)}
                                 </CardContent>
                             </Collapse>
                         </Card>
@@ -183,12 +198,11 @@ class TheaterCard extends Component {
 }
 
 function mapStateToProps({ selectedMovie }, ownProps) {
-    const { theater, selectedDate, expanded } = ownProps;
+    const { theater, selectedDate } = ownProps;
     return {
         theater,
         selectedMovie,
         selectedDate,
-        expanded
     }
 }
 

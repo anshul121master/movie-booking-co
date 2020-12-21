@@ -39,7 +39,7 @@ class TheaterContainer extends Component {
             (exception === null || exception === undefined ?
                 (this.props.selectedDate === '' ? <Loader /> :
                     this.props.selectedDate === 'No Theatres' ? (
-                        <div style={{ overflow: 'auto' }}>
+                        <div>
                             <div className='date-container'>
                             </div>
                             <div className='theatre-container' style={{ fontSize: '1.2em', paddingTop: '1.5em', paddingBottom: '1.5em' }}>
@@ -47,7 +47,7 @@ class TheaterContainer extends Component {
                 </div>
                         </div>
                     ) :
-                        (<div style={{ overflow: 'auto' }}>
+                        (<div>
                             {console.log("state: " + selectedDate + " props:  " + this.props.selectedDate)}
                             <div className='date-container'>
                                 {Array.from(Array(7).keys()).map((value) =>
@@ -79,9 +79,9 @@ class TheaterContainer extends Component {
                                 {
                                     this.state.initialCalendar ?
                                         this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).length === 0 ?
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 No theaters available on this day</div> :
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 Available Theatres:
                                             {this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).map(
                                                 theater =>
@@ -90,14 +90,14 @@ class TheaterContainer extends Component {
                                             </div>
                                         :
                                         this.state.filteredtheatersList.length === 0 ?
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 No theaters available on this day for {selectedMovie.name}</div> :
-                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em' }}>
+                                            <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 Available Theatres:
                                                 {
                                                     this.state.filteredtheatersList.map(
                                                         theater =>
-                                                            <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate} expanded={false} />
+                                                            <TheaterCard key={theater.theaterId} theater={theater} selectedDate={selectedDate} />
                                                     )}
                                             </div>
                                 }

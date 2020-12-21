@@ -410,13 +410,6 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
-div.theater-card {
-  width: 600px;
-  height: 10%;
-  margin: 15px;
-  font-size: 0.5em;
-}
-
 .rootstyle {
   margin-top: 20px;
   margin-bottom: 10px;
@@ -784,5 +777,14 @@ button.expandbutton:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+@media (max-width: 450px) {
+  div.theater-card {
+    width: 280px;
+    height: 10%;
+    margin: 10px;
+    font-size: 0.5em;
   }
 }
