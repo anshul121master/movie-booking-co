@@ -196,8 +196,13 @@ class SignIn extends Component {
               <Grid container style={{ marginBottom: 30 }}>
                 <Grid item xs>
                   <Link
-                    to="/forgotPassword"
                     style={{ textDecoration: "none", color: header }}
+                    to={{
+                      pathname: "/forgotPassword",
+                      state: { 
+                        from: location.state === undefined ? "/" : location.state.from
+                      },
+                    }}
                   >
                     Forgot password?
                   </Link>

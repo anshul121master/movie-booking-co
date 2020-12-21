@@ -66,6 +66,9 @@ const styles = (theme) => ({
     size: 20,
     backgroundColor: "#d81b60",
     padding: "9px",
+    "&:hover":{
+      backgroundColor: "white"
+    }
   },
 
   input: {
@@ -106,6 +109,7 @@ class Profile extends Component {
     firstName: "",
     lastName: "",
     phone: "",
+    phoneIsValid: true,
     email: "",
     birthday: "",
     imageUrl: null,
@@ -203,10 +207,6 @@ class Profile extends Component {
 
     return [year, month, day].join("-");
   };
-  //   validatePhone = (event) => {
-  //     const phone = event.target.value;
-  //     console.log(phone.length)  //15 for india
-  //   };
 
   setBirthday = (event) => {
     const birthday = event.target.value;
@@ -215,11 +215,18 @@ class Profile extends Component {
     });
   };
 
-  setPhone = (event) => {
-    const phone = event.target.value;
-    this.setState({
-      phone,
-    });
+  validatePhone = (phone) => {
+    console.log(phone);
+    if (phone.substring(1, 3) === "91" && phone.length === 15)
+      this.setState({
+        phone,
+        phoneIsValid: true,
+      });
+    else
+      this.setState({
+        phone,
+        phoneIsValid: false,
+      });
   };
 
   handleSubmit = (event) => {
@@ -232,10 +239,11 @@ class Profile extends Component {
       lastName,
       email,
       phone,
+      phoneIsValid,
       birthday,
       imageUrl,
     } = this.state;
-    if (fnameIsValid === true && lnameIsValid === true) {
+    if (fnameIsValid === true && lnameIsValid === true && phoneIsValid === true) {
       console.log("all fields contains valid inputs");
       this.setState({
         loading: true,
@@ -277,6 +285,7 @@ class Profile extends Component {
       lastName,
       email,
       phone,
+      phoneIsValid,
       birthday,
       imageUrl,
       infoMessage,
@@ -431,8 +440,15 @@ class Profile extends Component {
                       name="phone"
                       value={phone}
                       defaultCountry={"in"}
+                      onlyCountries={["in"]}
                       autoComplete="phone"
-                      onBlur={this.setPhone}
+                      error={phoneIsValid ? false : true}
+                      helperText={
+                        phoneIsValid
+                          ? ""
+                          : "Must begin with +91 and should be 10 digits in length."
+                      }
+                      onChange={this.validatePhone}
                     />
                   </Grid>
                   <Grid item xs={12}>

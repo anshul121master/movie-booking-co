@@ -120,14 +120,14 @@ class Purchase extends Component {
                         </IconButton>
                         <span>{selectedMovie.name}</span>
                         <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                            {selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
+                            {this.getDateAndTime(seatPlan, selectedScreen).date + ", " + this.getDateAndTime(seatPlan, selectedScreen).time.split('S')[1] + ":00, " + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
                         <div className='screen-info'>
                             <div className='info' style={{ fontSize: '1.2em', fontWeight: 500 }}>
                                 Purchase tickets
                         </div>
                         </div>
                     </div>
-                    <div style={{minHeight: '60vh', minwidth: '100%'}}>
+                    <div style={{ minHeight: '60vh', minwidth: '100%' }}>
                     </div>
                     <Dialog
                         open={true}

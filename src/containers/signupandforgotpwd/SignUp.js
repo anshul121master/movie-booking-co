@@ -190,7 +190,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const { classes, authedUser,location } = this.props;
+    const { classes, authedUser, location } = this.props;
     const {
       fnameIsValid,
       lnameIsValid,
@@ -297,7 +297,6 @@ class SignUp extends Component {
                     name="phone"
                     defaultCountry={"in"}
                     autoComplete="phone"
-                    // onBlur={this.setPhone}
                     onlyCountries={["in"]}
                     error={phoneIsValid ? false : true}
                     helperText={
@@ -353,8 +352,13 @@ class SignUp extends Component {
               <Grid container justify="flex-end" style={{ marginBottom: 20 }}>
                 <Grid item>
                   <Link
-                    to="/login"
                     style={{ textDecoration: "none", color: header }}
+                    to={{
+                      pathname: "/login",
+                      state: { 
+                        from: location.state === undefined ? "/" : location.state.from
+                       },
+                    }}
                   >
                     Already have an account? Sign in
                   </Link>
