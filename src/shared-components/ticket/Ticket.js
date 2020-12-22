@@ -90,7 +90,7 @@ export default function Ticket(props) {
                             && (!(date === new Date().toISOString().split('T')[0] && new Date().getHours() === time.split('S')[1]))
                         ) &&
                             <Button variant="contained" color="secondary" style={{ display: 'inline-block', alignSelf: 'flex-end' }}
-                                onClick={() => props.handleClickOpen(selectedSeats, movie.name)}>
+                                onClick={() => props.handleClickOpen(selectedSeats, movie.name, props.bookingId)}>
                                 Cancel Ticket
                         </Button>}
                     </div>
@@ -107,7 +107,7 @@ export default function Ticket(props) {
             {(props.handleClickOpen &&
                 <Dialog
                     open={props.open}
-                    onClose={props.handleClose}
+                    onClose={props.handleClose(false)}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
                     <DialogTitle id="alert-dialog-title">{"Do you want to cancel the ticket?"}</DialogTitle>
@@ -120,7 +120,7 @@ export default function Ticket(props) {
                         <Button onClick={() => props.handleClose(false)}>
                             No
                         </Button>
-                        <Button onClick={() => props.handleClose(true, props.bookingId)} autoFocus>
+                        <Button onClick={() => props.handleClose(true, props.cancelBookingId)} autoFocus>
                             Yes
                         </Button>
                     </DialogActions>

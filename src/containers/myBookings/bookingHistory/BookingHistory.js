@@ -36,6 +36,7 @@ export default class BookingHistory extends Component {
                                     handleClickOpen ={handleClickOpen}
                                     cancelTicketMovie ={this.props.cancelTicketMovie}
                                     cancelTicketSeats = {this.props.cancelTicketSeats}
+                                    cancelBookingId= {this.props.cancelBookingId}
                                     handleClose= {handleClose}
                                     open={open}
                                     bookingId= {ticket.bookingId}

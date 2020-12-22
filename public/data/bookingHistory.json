@@ -3,7 +3,7 @@
       {
         "bookingId": "f54d9ec8-587d-4d3d-a9ea-c12da6d4d296",
         "theaterDetails": "INOX Mumbai",
-        "dateOfShow": "2020-12-20",
+        "dateOfShow": "2020-12-24",
         "dateOfBooking": "2020-12-17 03:41:44",
         "showTiming": "S12",
         "screenName": "s1",
@@ -53,7 +53,7 @@
       {
         "bookingId": "1a30bef8-0492-47d2-ace9-fad3bae9a522",
         "theaterDetails": "INOX Mumbai",
-        "dateOfShow": "2020-12-20",
+        "dateOfShow": "2020-12-23",
         "dateOfBooking": "2020-12-17 03:44:43",
         "showTiming": "S17",
         "screenName": "s2",
