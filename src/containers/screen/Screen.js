@@ -245,7 +245,7 @@ class Screen extends Component {
                                 <div style={{ paddingLeft: '15px' }} className='priceheader'>Summary</div>
                                 <div style={{ paddingLeft: '15px' }} className='pricewarning'> <FontAwesomeIcon color='red' size="s" icon={faExclamationTriangle} />Once you click on book now button the selected seats will be locked for 10 mins</div>
                                 <div className='priceinfo'>
-                                    <div style={{ paddingLeft: '15px' }}>Selected Seats : {this.state.selectedSeats.map(seat => seat + ', ')}</div>
+                                    <div style={{ paddingLeft: '15px' }}>Selected Seats : {this.state.selectedSeats.map((seat,index) => (index === 0 ? seat + " " : ", " + seat + " "))}</div>
                                     <div style={{ paddingLeft: '15px' }}>Total Price : Rs. {this.state.price}.00</div>
                                     <div style={{ paddingLeft: '15px' }}>Number of seats : {this.state.selectedSeats.length}</div>
                                     <div className='timebuttoncontainer'>
