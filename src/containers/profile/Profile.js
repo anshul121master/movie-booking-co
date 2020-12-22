@@ -189,6 +189,13 @@ class Profile extends Component {
           imageUploadErrorMessage: "",
           imageUrl,
         });
+        let { authedUser } = this.props;
+        let authedUserImage = {
+          ...authedUser,
+          imageUrl
+
+        }
+        this.props.dispatch(setAuthedUser(authedUserImage))
       } else
         this.setState({
           imageUploadErrorMessage: res.exception.errorMsg,
@@ -509,5 +516,10 @@ class Profile extends Component {
   }
 }
 
-export default withStyles(styles)(connect()(Profile));
+function mapStateToProps({ authedUser }){
+  return {
+    authedUser
+  }
+}
+export default withStyles(styles)(connect(mapStateToProps)(Profile));
 

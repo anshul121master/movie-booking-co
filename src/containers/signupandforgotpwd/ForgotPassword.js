@@ -68,6 +68,10 @@ const styles = (theme) => ({
     color: "white",
     marginTop: 20,
     marginLeft: 30,
+    "&:hover":{
+      backgroundColor:"#017a9b",
+      color: "white"
+    }
   },
   checkBoxIcon: {
     minWidth: 40,
