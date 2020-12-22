@@ -493,12 +493,16 @@ div.login-label {
 }
 
 .leftDiv {
-  justify-content: space-around;
+  justify-content: flex-end;
   width: 40%;
   align-items: center;
   margin: 10px;
   display: flex;
   flex-direction: row;
+}
+
+.citySelect {
+  margin: 0 30px;
 }
 
 .carousel {
@@ -540,7 +544,7 @@ button.expandbutton:hover {
   margin: 0 15px !important;
 }
 .menuIcon {
-  margin: 0 30px;
+  margin: 0 0 0 30px !important;
 }
 .pricewarning{
   text-align: center;
@@ -836,4 +840,14 @@ button.expandbutton:hover {
      width: 15px !important;
      font-size: 10px !important;
   }
+  .citySelect {
+    margin: 0;
+  }
+  div.payment-form {
+    margin: 0;
+  }
+  
+.ticket-container {
+  margin: 0;
+}
 }

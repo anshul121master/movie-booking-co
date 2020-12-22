@@ -161,7 +161,7 @@ class Header extends Component {
                             </Link>
                         </div>
                         <div className="leftDiv">
-                            {(listOfCities !== undefined && <Select className={classes.select}
+                            {(listOfCities !== undefined && <Select className={[classes.select,"citySelect"]}
                                 inputProps={{
                                     classes: {
                                         icon: classes.icon,
