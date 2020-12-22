@@ -18,7 +18,8 @@ class TheaterContainer extends Component {
         return {
             day: d.getDate(),
             name: d.toString().split(' ')[0],
-            date: d.toISOString().split('T')[0]
+            date: d.toISOString().split('T')[0],
+            month: d.toLocaleString("default", {month: "short"})
         }
     }
 
@@ -61,6 +62,7 @@ class TheaterContainer extends Component {
                                             })
                                         }>
                                             <span className='span-date'>{this.getDateValue(value).day}</span>
+                                            <span className='span-name'>{this.getDateValue(value).month}</span>
                                             <span className='span-name'>{this.getDateValue(value).name}</span>
                                         </div> :
                                         <div className='date' key={value} onClick={() =>
@@ -71,6 +73,7 @@ class TheaterContainer extends Component {
                                             })
                                         }>
                                             <span className='span-date'>{this.getDateValue(value).day}</span>
+                                            <span className='span-name'>{this.getDateValue(value).month}</span>
                                             <span className='span-name'>{this.getDateValue(value).name}</span>
                                         </div>)}
                             </div>
@@ -119,6 +122,7 @@ function mapStateToProps({ theatersList, selectedMovie }) {
 
     let selectedDate;
     let sortedTheatersList = []
+    let theaterFlag=false;
     if (theatersList.response !== null) {
         if (theatersList.response === undefined) {
             selectedDate = ''
@@ -126,7 +130,14 @@ function mapStateToProps({ theatersList, selectedMovie }) {
         else if (theatersList.response.length === 0) {
             selectedDate = 'No Theatres'
         }
-        else if(theatersList.response[0].movies.filter(movie => movie.id === selectedMovie.movieId) === undefined) {
+        else {
+            for(let i=0;i<theatersList.response.length;i++) {
+                if(theatersList.response[i].movies.filter(movie => movie.id === selectedMovie.movieId) === undefined){
+                    theaterFlag= true;
+                    break;
+                }
+            }
+        if(theaterFlag) {
             selectedDate = ''
         }
         else {
@@ -138,6 +149,7 @@ function mapStateToProps({ theatersList, selectedMovie }) {
 
             selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate.split('T')[0]
         }
+    }
     }
 
     return {
