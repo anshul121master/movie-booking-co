@@ -12,7 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {titleCase} from '../../utils/helper'
+import { titleCase } from '../../utils/helper'
 
 
 const useStyles = makeStyles({
@@ -60,10 +60,16 @@ export default function Ticket(props) {
                     </Typography>
                 </CardContent>
                 <CardContent>
-                    <Typography variant="h6" component="h3">
-                        {selectedSeats.map(seat => seat + ', ')}
-                        <span style={{ fontSize: '12px' }}>({selectedSeats.length} Seats)</span>
-                    </Typography>
+                    {selectedSeats.length <= 6 ? (
+                        <Typography variant="h6" component="h3">
+                            {selectedSeats.map(seat => seat + ', ')}
+                            <span style={{ fontSize: '12px' }}>({selectedSeats.length} Seats)</span>
+                        </Typography>) :
+                        (<Typography className={classes.pos} color="black">
+                            {selectedSeats.map(seat => seat + ', ')}
+                            <span style={{ fontSize: '12px' }}>({selectedSeats.length} Seats)</span>
+                        </Typography>)}
+
                 </CardContent>
                 <CardContent>
                     <Typography className={classes.pos} color="textSecondary">
@@ -75,17 +81,17 @@ export default function Ticket(props) {
                     <Typography className={classes.pos} color="textSecondary">
                         Date : {date}
                     </Typography>
-                    <div style={{display: 'flex',justifyContent:'space-between', alignItems:'center'}}> 
-                    {props.bookingStatus !== '' ?
-                        (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
-                            {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{ color: 'green' }} fontSize='small' />)}</Typography>) :
-                        <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
-                    {(props.handleClose !== undefined  && props.bookingStatus.toUpperCase()==='BOOKED' 
-                    && (!(date === new Date().toISOString().split('T')[0] && new Date().getHours() === time.split('S')[1]))
-                    ) && 
-                        <Button variant="contained" color="secondary" style={{display:'inline-block', alignSelf:'flex-end'}}
-                            onClick={()=>props.handleClickOpen(selectedSeats, movie.name)}>
-                            Cancel Ticket
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        {props.bookingStatus !== '' ?
+                            (<Typography className={classes.pos} color="textSecondary">{props.bookingStatus}
+                                {(props.bookingStatus.toUpperCase() === 'BOOKED' && <DoneRounded style={{ color: 'green' }} fontSize='small' />)}</Typography>) :
+                            <Typography className={classes.pos} color="textSecondary">Pending Payment</Typography>}
+                        {(props.handleClose !== undefined && props.bookingStatus.toUpperCase() === 'BOOKED'
+                            && (!(date === new Date().toISOString().split('T')[0] && new Date().getHours() === time.split('S')[1]))
+                        ) &&
+                            <Button variant="contained" color="secondary" style={{ display: 'inline-block', alignSelf: 'flex-end' }}
+                                onClick={() => props.handleClickOpen(selectedSeats, movie.name)}>
+                                Cancel Ticket
                         </Button>}
                     </div>
                 </CardContent>
@@ -98,27 +104,27 @@ export default function Ticket(props) {
                     </Typography>
                 </CardActions>
             </Card>
-            {(props.handleClickOpen && 
-            <Dialog
-                open={props.open}
-                onClose={props.handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description">
-                <DialogTitle id="alert-dialog-title">{"Do you want to cancel the ticket?"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Do you really want to cancel the ticket for {props.cancelTicketMovie}({props.cancelTicketSeats.map(seat => seat + ' ')})?
+            {(props.handleClickOpen &&
+                <Dialog
+                    open={props.open}
+                    onClose={props.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title">{"Do you want to cancel the ticket?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Do you really want to cancel the ticket for {props.cancelTicketMovie}({props.cancelTicketSeats.map(seat => seat + ' ')})?
                 </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => props.handleClose(false)}>
-                        No
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => props.handleClose(false)}>
+                            No
                         </Button>
-                    <Button onClick={() => props.handleClose(true,props.bookingId)} autoFocus>
-                        Yes
+                        <Button onClick={() => props.handleClose(true, props.bookingId)} autoFocus>
+                            Yes
                         </Button>
-                </DialogActions>
-            </Dialog>)}
+                    </DialogActions>
+                </Dialog>)}
         </div >
     )
 }
