@@ -126,6 +126,9 @@ function mapStateToProps({ theatersList, selectedMovie }) {
         else if (theatersList.response.length === 0) {
             selectedDate = 'No Theatres'
         }
+        else if(theatersList.response[0].movies.filter(movie => movie.id === selectedMovie.movieId) === undefined) {
+            selectedDate = ''
+        }
         else {
             sortedTheatersList = theatersList.response.sort((theaterA, theaterB) => {
                 const theaterAstartDate = theaterA.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate

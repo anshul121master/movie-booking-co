@@ -7,7 +7,7 @@ import { titleCase } from '../../../utils/helper'
 
 export default function MovieDetails(props) {
     return (
-        <Paper className="rootstyle" style={{ backgroundImage: mockEnabled ? "url(moviePoster.jpg)" : `url(${moviePosters}${props.selectedMovie.moviePoster})` }}>
+        <Paper className="rootstyle" style={{ backgroundImage: mockEnabled ? "url(moviePoster.jpg)" : `url("${moviePosters}${props.selectedMovie.moviePoster}")` }}>
             <div className="content" >
                 <div className='contenttextheader'>
                     {titleCase(props.selectedMovie.name)}
