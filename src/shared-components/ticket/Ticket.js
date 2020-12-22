@@ -107,7 +107,7 @@ export default function Ticket(props) {
             {(props.handleClickOpen &&
                 <Dialog
                     open={props.open}
-                    onClose={props.handleClose}
+                    onClose={props.handleClose(false)}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
                     <DialogTitle id="alert-dialog-title">{"Do you want to cancel the ticket?"}</DialogTitle>

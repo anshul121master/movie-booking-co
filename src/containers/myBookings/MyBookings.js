@@ -8,6 +8,7 @@ import {getAllBookings, cancelBooking} from '../../utils/api'
 import { header, headerText} from '../../theme'
 import Footer from '../../shared-components/footer/Footer'
 import Loader from '../../shared-components/Loader'
+import { TRUE } from 'node-sass';
 
 export default class MyBookings extends Component {
     state = {
@@ -42,7 +43,7 @@ export default class MyBookings extends Component {
     }
 
     handleClose = (cancel, bookingId) => {
-        if (cancel) {
+        if (cancel === true) {
             this.cancelTicket(bookingId)
         }
         this.setState({
