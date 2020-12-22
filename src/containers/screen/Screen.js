@@ -13,6 +13,11 @@ import Footer from '../../shared-components/footer/Footer'
 import Snackbar from '@material-ui/core/Snackbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = (theme) => ({
     root: {
@@ -32,6 +37,7 @@ class Screen extends Component {
         open: true,
         vertical: 'top',
         horizontal: 'center',
+        openDialog: false
     }
 
     calculatePrice(theater, selectedSeats) {
@@ -92,7 +98,7 @@ class Screen extends Component {
         /*Redirect to payment page and store state information in redux store*/
         this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price, false))
         this.setState({
-            redirect: true
+            openDialog: true
         })
         // }
         // this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price, true))
@@ -125,6 +131,12 @@ class Screen extends Component {
     handleClose = () => {
         this.setState({ open: false })
     }
+
+    handleCloseDialog = () => {
+        this.setState({
+            openDialog: false
+        })
+    };
 
     render() {
         const { selectedScreen, selectedTheater, selectedMovie, classes, seatPlan } = this.props
@@ -165,7 +177,7 @@ class Screen extends Component {
                                     <Tooltip title="Other users have booked this seat" aria-label="add">
                                         <div className='seat booked' style={{ fontSize: '0.8em', fontWeight: 500 }}>Booked Seats</div>
                                     </Tooltip>
-                                    <Tooltip title="Other users have locked these seats but payment is yet to be made" aria-label="add">
+                                    <Tooltip title="The seats has been locked but payment is yet to be made" aria-label="add">
                                         <div className='seat locked' style={{ fontSize: '0.8em', fontWeight: 500 }}>Locked Seats</div>
                                     </Tooltip>
                                 </div>
@@ -183,7 +195,7 @@ class Screen extends Component {
                                             <div className='seat-map'>
                                                 {seatMap[index].map((row, rowindex) => (
                                                     <div className='seat-row' key={row}>
-                                                        <Typography variant="body2" color="textSecondary" style={{ marginRight: '10px0' }}>
+                                                        <Typography variant="body2" color="textSecondary" className="rowIndicator">
                                                             {rowindex + 1}
                                                         </Typography>
                                                         {seatMap[index][rowindex].map(
@@ -201,7 +213,7 @@ class Screen extends Component {
                                                                             {seatMap[index][rowindex][colIndex].split('C')[1]}
                                                                         </div>
                                                                         : (seatPlan.response.lockedSeats !== undefined && seatPlan.response.lockedSeats.includes(seatMap[index][rowindex][colIndex]) ?
-                                                                            <Tooltip title="Other user has locked this seat but payment is yet to be made" aria-label="add">
+                                                                            <Tooltip title="This seat has been locked but payment is yet to be made" aria-label="add">
                                                                                 <div className='seat locked' key={seatMap[index][rowindex][colIndex]}
                                                                                 >
                                                                                     {seatMap[index][rowindex][colIndex].split('C')[1]}
@@ -248,6 +260,29 @@ class Screen extends Component {
                                 </div>
                             </div>)}
                         </div >
+                        <Dialog
+                        open={this.state.openDialog}
+                        onClose={this.handleCloseDialog}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{`Are you sure that you want to lock these seats?`}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                {`You are seeing this dialog since the seats will be locked for another 10 minutes, so you will not be able change the seats. Want to proceed?`}
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => this.handleCloseDialog()}>
+                                No
+                            </Button>
+                            <Button onClick={() => this.setState({
+                                redirect: true
+                            })} autoFocus>
+                                Yes
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                         <Footer />
 
                     </div>)

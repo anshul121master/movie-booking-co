@@ -109,8 +109,8 @@ div.date-container {
 
 div.date {
   background-color: #ffffff;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   margin: 4px;
   border-radius: 10px;
   display: flex;
@@ -528,10 +528,30 @@ button.expandbutton:hover {
   background-color: #132f3f;
 }
 
+.drawer {
+  width: 240px;
+  flex-shrink: 0,
+}
+
+.drawerPaper {
+  width: 240px;
+}
+.margin15 {
+  margin: 0 15px !important;
+}
+.menuIcon {
+  margin: 0 30px;
+}
 .pricewarning{
   text-align: center;
   background-color: lightyellow;
   margin-bottom: 5px;
+}
+
+.rowIndicator {
+  margin-right: 10px;
+   width: 20px;
+   font-size: 0.7em;
 }
 
 @media (max-width: 900px) {
@@ -556,8 +576,8 @@ button.expandbutton:hover {
     font-size: 0.75em;
   }
   div.date {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
   span.span-name {
     font-size: 0.6em;
@@ -793,10 +813,27 @@ button.expandbutton:hover {
     margin: 10px;
     font-size: 0.5em;
   }
-
+  .drawer {
+    width: 100%;
+    flex-shrink: 0,
+  }
+  .drawerPaper {
+    width: 100%
+  }
+  .menuIcon {
+    margin: 0 !important;
+  }
+  .container {
+    font-size: 0.8em;
+  }
   .pricewarning{
     text-align: center;
     background-color: lightyellow;
     margin-bottom: 2px;
+  }
+  .rowIndicator {
+    margin-right: 10px !important;
+     width: 15px !important;
+     font-size: 10px !important;
   }
 }
