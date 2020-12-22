@@ -13,15 +13,16 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { getProfile } from "../../utils/api";
 import { uploadImage } from "../../utils/api";
 import { updateProfile } from "../../utils/api";
-import { userProfilePhoto } from '../../config/apiConfig'
+import { userProfilePhoto } from "../../config/apiConfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../shared-components/Loader";
-import Footer from "../../shared-components/footer/Footer"
-import Header from "../../shared-components/header/Header"
+import Footer from "../../shared-components/footer/Footer";
+import Header from "../../shared-components/header/Header";
 import { header, footer } from "../../theme";
-import { setAuthedUser } from "../../store/actions/authedUser"
-import { connect } from "react-redux"
+import { setAuthedUser } from "../../store/actions/authedUser";
+import { connect } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = (theme) => ({
   profileInfoDiv: {
@@ -38,8 +39,8 @@ const styles = (theme) => ({
   },
   cardStyle: {
     minWidth: "70vw",
-    margin: '30px 0',
-    backgroundColor: "white"
+    margin: "30px 0",
+    backgroundColor: "white",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -48,7 +49,7 @@ const styles = (theme) => ({
   button: {
     margin: theme.spacing(3, 0, 2),
     height: 45,
-    borderRadius: 0
+    borderRadius: 0,
   },
 
   imageContainer: {
@@ -66,9 +67,9 @@ const styles = (theme) => ({
     size: 20,
     backgroundColor: "#d81b60",
     padding: "9px",
-    "&:hover":{
-      backgroundColor: "white"
-    }
+    "&:hover": {
+      backgroundColor: "white",
+    },
   },
 
   input: {
@@ -86,11 +87,11 @@ const styles = (theme) => ({
   },
   successMessageColor: {
     color: "green",
-    marginTop: 10
+    marginTop: 10,
   },
   failedMessageColor: {
     color: "red",
-    marginTop: 10
+    marginTop: 10,
   },
   loadingPanel: {
     minHeight: "100vh",
@@ -117,12 +118,13 @@ class Profile extends Component {
     loadProfileMessage: "",
     imageUploadErrorMessage: "",
     loading: false,
+    loaderForPic: true,
   };
 
   componentDidMount() {
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
     getProfile().then((res) => {
       if (res.status === 200) {
         let userProfile = res.response;
@@ -181,8 +183,13 @@ class Profile extends Component {
 
     // Update the formData object
     formData.append("profilePhoto", imageObj);
-
+    this.setState({
+      loaderForPic: true,
+    });
     uploadImage(formData).then((res) => {
+      this.setState({
+        loaderForPic: false,
+      });
       if (res.status === 200) {
         const imageUrl = res.response.imageUrl;
         this.setState({
@@ -192,12 +199,12 @@ class Profile extends Component {
         let { authedUser, dispatch } = this.props;
         let authedUserImage = {
           exception: authedUser.exception,
-          response:{
-              ...authedUser.response,
-              imageUrl
-          }
-      }
-        dispatch(setAuthedUser(authedUserImage))
+          response: {
+            ...authedUser.response,
+            imageUrl,
+          },
+        };
+        dispatch(setAuthedUser(authedUserImage));
       } else
         this.setState({
           imageUploadErrorMessage: res.exception.errorMsg,
@@ -252,7 +259,11 @@ class Profile extends Component {
       birthday,
       imageUrl,
     } = this.state;
-    if (fnameIsValid === true && lnameIsValid === true && phoneIsValid === true) {
+    if (
+      fnameIsValid === true &&
+      lnameIsValid === true &&
+      phoneIsValid === true
+    ) {
       console.log("all fields contains valid inputs");
       this.setState({
         loading: true,
@@ -264,19 +275,18 @@ class Profile extends Component {
         dateOfBirth: birthday,
         imageUrl,
       };
-      updateProfile(userInfo).then(res => {
-        if (res.status === 200){
+      updateProfile(userInfo).then((res) => {
+        if (res.status === 200) {
           this.setState({
             infoMessage: "Profile Updated Successfully",
             loading: false,
           });
           let authedUser = {
-            response:userInfo,
-            exception:null
-          }
-          this.props.dispatch(setAuthedUser(authedUser))
-        }
-        else
+            response: userInfo,
+            exception: null,
+          };
+          this.props.dispatch(setAuthedUser(authedUser));
+        } else
           this.setState({
             infoMessage: res.exception.errorMsg,
             loading: false,
@@ -301,15 +311,16 @@ class Profile extends Component {
       imageUploadErrorMessage,
       loadProfileMessage,
       loading,
+      loaderForPic,
     } = this.state;
 
     let today = new Date();
     let date = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-    
+
     return (
       <div>
-      {loading && <Loader />}
-      <Header />
+        {loading && <Loader />}
+        <Header />
         <Container className={classes.imageContainer}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {imageUploadErrorMessage !== "" && (
@@ -332,10 +343,44 @@ class Profile extends Component {
               <div
                 style={{ position: "relative", width: 100, marginBottom: 20 }}
               >
+                {loaderForPic && (
+                  <CircularProgress
+                    style={{ position: "absolute", top: "35%", left: "25%" }}
+                    color="secondary"
+                    size={30}
+                  />
+                )}
+
                 <FontAwesomeIcon
                   icon={faUser}
                   size="7x"
                   className={classes.userIcon}
+                />
+
+                <label htmlFor="icon-button-file">
+                  <IconButton
+                    disabled={ loaderForPic ? true : false }
+                    color="primary"
+                    className={classes.cameraIcon}
+                    component="span"
+                  >
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
+              </div>
+            ) : (
+              <div
+                style={{
+                  position: "relative",
+                  width: 110,
+                  height: 110,
+                  marginBottom: 10,
+                }}
+              >
+                <img
+                  src={userProfilePhoto + imageUrl}
+                  alt="profile image"
+                  className={classes.profileImg}
                 />
 
                 <label htmlFor="icon-button-file">
@@ -348,36 +393,14 @@ class Profile extends Component {
                   </IconButton>
                 </label>
               </div>
-            ) : (
-                <div style={{ position: "relative", width: 110, height: 110, marginBottom: 10 }}>
-                  <img
-                    src={userProfilePhoto + imageUrl}
-                    alt="profile image"
-                    className={classes.profileImg}
-                  />
-
-                  <label htmlFor="icon-button-file">
-                    <IconButton
-                      color="primary"
-                      className={classes.cameraIcon}
-                      component="span"
-                    >
-                      <PhotoCamera />
-                    </IconButton>
-                  </label>
-                </div>
-              )}
+            )}
           </div>
 
           <Typography variant="h5" style={{ color: footer, marginRight: 20 }}>
-           {phone}
+            {phone}
           </Typography>
         </Container>
-        <Container
-          className={classes.cardStyle}
-          component="main"
-          maxWidth="xs"
-        >
+        <Container className={classes.cardStyle} component="main" maxWidth="xs">
           <CssBaseline />
           <Grid container justify="center">
             <div className={classes.paper}>
@@ -474,24 +497,23 @@ class Profile extends Component {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      inputProps={{ max:date}}
+                      inputProps={{ max: date }}
                       onChange={this.setBirthday}
                       onKeyPress={(event) => event.preventDefault()}
                     />
                   </Grid>
                 </Grid>
-                  <Grid item>
-                    <Typography
-                      className={
-                        infoMessage.includes("Successfully")
-                          ? classes.successMessageColor
-                          : classes.failedMessageColor
-                      }
-                    >
-                      {infoMessage}
-                    </Typography>
-                  </Grid>
-            
+                <Grid item>
+                  <Typography
+                    className={
+                      infoMessage.includes("Successfully")
+                        ? classes.successMessageColor
+                        : classes.failedMessageColor
+                    }
+                  >
+                    {infoMessage}
+                  </Typography>
+                </Grid>
 
                 <Button
                   type="submit"
@@ -505,7 +527,12 @@ class Profile extends Component {
 
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <Link to="/" style={{ textDecoration: "none", color: header }}>Proceed to home</Link>
+                    <Link
+                      to="/"
+                      style={{ textDecoration: "none", color: header }}
+                    >
+                      Proceed to home
+                    </Link>
                   </Grid>
                 </Grid>
               </form>
@@ -518,10 +545,9 @@ class Profile extends Component {
   }
 }
 
-function mapStateToProps({ authedUser }){
+function mapStateToProps({ authedUser }) {
   return {
-    authedUser
-  }
+    authedUser,
+  };
 }
 export default withStyles(styles)(connect(mapStateToProps)(Profile));
-
