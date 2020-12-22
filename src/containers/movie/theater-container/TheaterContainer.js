@@ -132,7 +132,7 @@ function mapStateToProps({ theatersList, selectedMovie }) {
         }
         else {
             for(let i=0;i<theatersList.response.length;i++) {
-                if(theatersList.response[i].movies.filter(movie => movie.id === selectedMovie.movieId) === undefined){
+                if(theatersList.response[i].movies.filter(movie => movie.id === selectedMovie.movieId).length ===0){
                     theaterFlag= true;
                     break;
                 }
