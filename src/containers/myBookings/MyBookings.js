@@ -19,7 +19,8 @@ export default class MyBookings extends Component {
         open: false,
         cancelTicketSeats: [],
         cancelTicketMovie: '',
-        loading: true
+        loading: true,
+        cancelBookingId:''
     }
     cancelTicket = (bookingId) => {
         cancelBooking(bookingId).then((response) => {
@@ -51,11 +52,12 @@ export default class MyBookings extends Component {
     };
 
 
-    handleClickOpen = (cancelTicketSeats, cancelTicketMovie) => {
+    handleClickOpen = (cancelTicketSeats, cancelTicketMovie, cancelBookingId) => {
         this.setState({
             open: true,
             cancelTicketSeats,
-            cancelTicketMovie
+            cancelTicketMovie,
+            cancelBookingId
         })
     };
 
@@ -114,7 +116,8 @@ export default class MyBookings extends Component {
                                                 open={this.state.open} handleClose={this.handleClose}
                                                 handleClickOpen={this.handleClickOpen} 
                                                 cancelTicketMovie={this.state.cancelTicketMovie}
-                                                cancelTicketSeats={this.state.cancelTicketSeats}/>}
+                                                cancelTicketSeats={this.state.cancelTicketSeats}
+                                                cancelBookingId={this.state.cancelBookingId}/>}
                     {value===1 && <BookingHistory bookings={this.state.previousBookings}/>}
                 <Footer />
         </React.Fragment>) 
