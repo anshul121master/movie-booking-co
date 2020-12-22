@@ -80,6 +80,7 @@ const styles = (theme) => ({
     height: "100%",
     padding: "2px",
     marginBottom: "5px",
+    borderRadius: "12px"
   },
   userIcon: {
     color: "grey",
@@ -118,7 +119,7 @@ class Profile extends Component {
     loadProfileMessage: "",
     imageUploadErrorMessage: "",
     loading: false,
-    loaderForPic: true,
+    loaderForPic: false,
   };
 
   componentDidMount() {
@@ -377,6 +378,14 @@ class Profile extends Component {
                   marginBottom: 10,
                 }}
               >
+
+              {loaderForPic && (
+                <CircularProgress
+                  style={{ position: "absolute", top: "35%", left: "35%" }}
+                  color="secondary"
+                  size={30}
+                />
+              )}
                 <img
                   src={userProfilePhoto + imageUrl}
                   alt="profile image"
@@ -385,6 +394,7 @@ class Profile extends Component {
 
                 <label htmlFor="icon-button-file">
                   <IconButton
+                    disabled={ loaderForPic ? true : false }
                     color="primary"
                     className={classes.cameraIcon}
                     component="span"
