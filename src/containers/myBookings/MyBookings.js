@@ -42,7 +42,7 @@ export default class MyBookings extends Component {
     }
 
     handleClose = (cancel, bookingId) => {
-        if (cancel) {
+        if (cancel === true) {
             this.cancelTicket(bookingId)
         }
         this.setState({

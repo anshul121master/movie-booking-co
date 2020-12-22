@@ -62,11 +62,11 @@ export default function Ticket(props) {
                 <CardContent>
                     {selectedSeats.length <= 6 ? (
                         <Typography variant="h6" component="h3">
-                            {selectedSeats.map(seat => seat + ', ')}
+                            {selectedSeats.map((seat, index) => (index === 0 ? seat + " " : ", " + seat + " "))}
                             <span style={{ fontSize: '12px' }}>({selectedSeats.length} Seats)</span>
                         </Typography>) :
                         (<Typography className={classes.pos} color="black">
-                            {selectedSeats.map(seat => seat + ', ')}
+                            {selectedSeats.map((seat, index) => (index === 0 ? seat + " " : ", " + seat + " "))}
                             <span style={{ fontSize: '12px' }}>({selectedSeats.length} Seats)</span>
                         </Typography>)}
 
