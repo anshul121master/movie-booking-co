@@ -258,11 +258,11 @@ class Header extends Component {
 }
 
 function mapStateToProps({ authedUser, selectedCity, selectedMovie, loading }, ownProps) {
-    const { listOfCities } = ownProps;
+    const { listOfCities, chosenCity } = ownProps;
 
     return {
         listOfCities,
-        selectedCity,
+        selectedCity: Object.keys(selectedCity).length === 0 ? chosenCity : selectedCity,
         authedUser,
         selectedMovie,
         loading

@@ -49,7 +49,7 @@ class Home extends Component {
                 {(listOfCities.exception === null) ?
                     ((citySelected === true) ? (
                         <React.Fragment>
-                            <Header listOfCities={listOfCities.response} />
+                            <Header listOfCities={listOfCities.response} chosenCity={listOfCities.response[0]}/>
                             <MovieContainer />
                             <Footer />
                         </React.Fragment>
