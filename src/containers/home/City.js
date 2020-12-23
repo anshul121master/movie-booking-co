@@ -36,7 +36,7 @@ class City extends Component {
   render() {
     const {listOfCities, setCityInStorage, classes} = this.props;
     return (
-      <Dialog className = {classes.container}disableBackdropClick={true} disableEscapeKeyDown={true}  aria-labelledby="city-dialog" 
+      <Dialog className = {classes.container} disableBackdropClick={true} disableEscapeKeyDown={true}   aria-labelledby="city-dialog" 
                 open={this.state.open} >
       <DialogTitle className = {classes.title} id="city-select-dialog">Please select a city</DialogTitle>
       <Divider />

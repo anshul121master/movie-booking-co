@@ -13,7 +13,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        const { dispatch, moviesList } = this.props;
+        const { dispatch, moviesList, listOfCities } = this.props;
         const city = sessionStorage.getItem('city');
         if (city !== undefined && city !== null) {
             this.setState({
@@ -21,6 +21,11 @@ class Home extends Component {
             })
             if(Object.keys(moviesList).length === 0){
                 dispatch(setCityAndMoviesList(JSON.parse(city)));
+            }
+        }
+        else {
+            if(listOfCities.response !== null && listOfCities.response !== undefined) {
+                dispatch(setCityAndMoviesList(listOfCities.response[0]));
             }
         }
     }
@@ -44,13 +49,18 @@ class Home extends Component {
                 {(listOfCities.exception === null) ?
                     ((citySelected === true) ? (
                         <React.Fragment>
-                            <Header listOfCities={listOfCities.response} />
+                            <Header listOfCities={listOfCities.response}/>
                             <MovieContainer />
                             <Footer />
                         </React.Fragment>
                     )
                         : (
-                            <City listOfCities={listOfCities.response} setCityInStorage={this.setCityInStorage} />
+                            <React.Fragment>
+                                <Header listOfCities={listOfCities.response} />
+                                <MovieContainer />
+                                <Footer />
+                                <City listOfCities={listOfCities.response} setCityInStorage={this.setCityInStorage} />
+                            </React.Fragment>
                         ))
                     : <Redirect to={{
                         pathname: '/error',

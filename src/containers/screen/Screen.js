@@ -70,7 +70,8 @@ class Screen extends Component {
             }
             return {
                 selectedSeats: selectedSeats,
-                price: price
+                price: price,
+                open: selectedSeats.length > 10 ? true: false
             }
         })
     }
@@ -151,7 +152,7 @@ class Screen extends Component {
                             anchorOrigin={{ vertical, horizontal }}
                             open={open}
                             onClose={this.handleClose}
-                            message="Please click on any seats to choose that seat"
+                            message={this.state.selectedSeats.length > 10 ? "Sorry, you cannot select more than 10 seats" : "Please click on any seats to choose that seat"}
                             key={vertical + horizontal}
                             autoHideDuration={5000}
                             enter='0.5s'
@@ -241,7 +242,7 @@ class Screen extends Component {
                                         exception: seatPlan.exception
                                     }
                                 }} />)}
-                            {(this.state.selectedSeats.length > 0) && (<div className='pricecalculator'>
+                            {(this.state.selectedSeats.length > 0) && (this.state.selectedSeats.length < 11) && (<div className='pricecalculator'>
                                 <div style={{ paddingLeft: '15px' }} className='priceheader'>Summary</div>
                                 <div style={{ paddingLeft: '15px' }} className='pricewarning'> <FontAwesomeIcon color='red' size="s" icon={faExclamationTriangle} />Once you click on book now button the selected seats will be locked for 10 mins</div>
                                 <div className='priceinfo'>
