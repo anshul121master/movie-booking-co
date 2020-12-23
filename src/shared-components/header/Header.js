@@ -110,7 +110,6 @@ const styles = (theme) => ({
 class Header extends Component {
     state = {
         open: false,
-        selectValue: this.props.selectedCity
     }
     handleLogout = () => {
         const { dispatch } = this.props;
@@ -144,17 +143,14 @@ class Header extends Component {
             dispatch(setMovieAndTheaterList(selectedMovie, false))
         }
         sessionStorage.setItem('city', JSON.stringify(selectedCityObject[0]))
-        this.setState({
-            selectValue: selectedCityObject[0]
-        })
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        const {selectedCity} = nextProps;
-        this.setState({
-            selectValue: selectedCity
-        })
-    }
+    // UNSAFE_componentWillReceiveProps(nextProps) {
+    //     const {selectedCity} = nextProps;
+    //     this.setState({
+    //         selectValue: selectedCity
+    //     })
+    // }
 
     render() {
         const { classes, listOfCities, selectedCity, authedUser, loading } = this.props;
@@ -180,7 +176,7 @@ class Header extends Component {
                                 }}
                                 labelId="demo-simple-select-filled-label"
                                 id="demo-simple-select-filled"
-                                value={this.state.selectValue.id}
+                                value={selectedCity.id}
                                 onChange={this.onCityChange}
                             >
                                 {listOfCities.map(city =>
