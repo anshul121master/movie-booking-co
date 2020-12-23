@@ -149,8 +149,8 @@ class Header extends Component {
         })
     }
 
-    componentWillReceiveProps() {
-        const {selectedCity} = this.props;
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        const {selectedCity} = nextProps;
         this.setState({
             selectValue: selectedCity
         })
