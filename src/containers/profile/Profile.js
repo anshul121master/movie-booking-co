@@ -38,6 +38,7 @@ const styles = (theme) => ({
     margin: "50px",
   },
   cardStyle: {
+    marginTop: "100px",
     minWidth: "70vw",
     margin: "30px 0",
     backgroundColor: "white",
@@ -53,22 +54,24 @@ const styles = (theme) => ({
   },
 
   imageContainer: {
+    position:"relative",
     minWidth: "100%",
     backgroundColor: "#0A3D62",
-    minHeight: "30vh",
+    minHeight: "170px",
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+   // justifyContent: "space-between",
+   // alignItems: "center",
   },
   cameraIcon: {
     position: "absolute",
     top: "75%",
-    right: "-20px",
+    right: "-10px",
     size: 20,
     backgroundColor: "#d81b60",
     padding: "9px",
     "&:hover": {
-      backgroundColor: "white",
+      backgroundColor: "orange",
     },
   },
 
@@ -80,7 +83,7 @@ const styles = (theme) => ({
     height: "100%",
     padding: "2px",
     marginBottom: "5px",
-    borderRadius: "12px"
+    borderRadius: "50%"
   },
   userIcon: {
     color: "grey",
@@ -119,7 +122,7 @@ class Profile extends Component {
     loadProfileMessage: "",
     imageUploadErrorMessage: "",
     loading: false,
-    loaderForPic: false,
+    loaderForPic: false
   };
 
   componentDidMount() {
@@ -323,16 +326,7 @@ class Profile extends Component {
         {loading && <Loader />}
         <Header />
         <Container className={classes.imageContainer}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {imageUploadErrorMessage !== "" && (
-              <Typography
-                style={{ marginTop: 5, marginBottom: 5 }}
-                className={classes.failedMessageColor}
-              >
-                {imageUploadErrorMessage}
-              </Typography>
-            )}
-
+          <div style={{ display: "flex", flexDirection: "column", position:"absolute", top:"60%" }}>
             <input
               accept="image/*"
               className={classes.input}
@@ -342,19 +336,19 @@ class Profile extends Component {
             />
             {imageUrl === null ? (
               <div
-                style={{ position: "relative", width: 100, marginBottom: 20 }}
+                style={{ position: "relative", width: 100, marginBottom: 10 }}
               >
                 {loaderForPic && (
                   <CircularProgress
-                    style={{ position: "absolute", top: "35%", left: "25%" }}
+                    style={{ position: "absolute", top: "35%", left: "30%" }}
                     color="secondary"
-                    size={30}
+                    size={40}
                   />
                 )}
 
                 <FontAwesomeIcon
                   icon={faUser}
-                  size="7x"
+                  size="8x"
                   className={classes.userIcon}
                 />
 
@@ -373,8 +367,8 @@ class Profile extends Component {
               <div
                 style={{
                   position: "relative",
-                  width: 110,
-                  height: 110,
+                  width: 140,
+                  height: 140,
                   marginBottom: 10,
                 }}
               >
@@ -383,7 +377,7 @@ class Profile extends Component {
                 <CircularProgress
                   style={{ position: "absolute", top: "35%", left: "35%" }}
                   color="secondary"
-                  size={30}
+                  size={40}
                 />
               )}
                 <img
@@ -406,10 +400,18 @@ class Profile extends Component {
             )}
           </div>
 
-          <Typography variant="h5" style={{ color: footer, marginRight: 20 }}>
+          <Typography variant="h5" style={{ color: footer, marginLeft: 15, position:"absolute",top:"20%" }}>
             {phone}
           </Typography>
         </Container>
+        {imageUploadErrorMessage !== "" && (
+          <Typography
+            style={{ marginTop: 5, marginLeft:180, fontWeight:"bold"}}
+            className={classes.failedMessageColor}
+          >
+            {imageUploadErrorMessage}
+          </Typography>
+        )}
         <Container className={classes.cardStyle} component="main" maxWidth="xs">
           <CssBaseline />
           <Grid container justify="center">
