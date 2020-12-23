@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   button: {
     background: header,
     color: 'white',
-    padding: '0.8em',
+    padding: '0.5em 0.8em',
     border: '2px solid '+header,
     borderRadius: '5px',
     '&:hover': {
