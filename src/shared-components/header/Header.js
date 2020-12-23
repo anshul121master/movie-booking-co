@@ -145,13 +145,6 @@ class Header extends Component {
         sessionStorage.setItem('city', JSON.stringify(selectedCityObject[0]))
     }
 
-    // UNSAFE_componentWillReceiveProps(nextProps) {
-    //     const {selectedCity} = nextProps;
-    //     this.setState({
-    //         selectValue: selectedCity
-    //     })
-    // }
-
     render() {
         const { classes, listOfCities, selectedCity, authedUser, loading } = this.props;
         const { open } = this.state;
@@ -176,7 +169,6 @@ class Header extends Component {
                                 }}
                                 labelId="demo-simple-select-filled-label"
                                 id="demo-simple-select-filled"
-                                defaultValue={selectedCity.id}
                                 value={selectedCity.id}
                                 onChange={this.onCityChange}
                             >
@@ -258,11 +250,11 @@ class Header extends Component {
 }
 
 function mapStateToProps({ authedUser, selectedCity, selectedMovie, loading }, ownProps) {
-    const { listOfCities, chosenCity } = ownProps;
+    const { listOfCities } = ownProps;
 
     return {
         listOfCities,
-        selectedCity: Object.keys(selectedCity).length === 0 ? chosenCity : selectedCity,
+        selectedCity,
         authedUser,
         selectedMovie,
         loading
