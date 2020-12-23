@@ -152,7 +152,7 @@ class Screen extends Component {
                             anchorOrigin={{ vertical, horizontal }}
                             open={open}
                             onClose={this.handleClose}
-                            message={this.state.selectedSeats.length > 10 ? "You cannot select more than 10 seats" : "Please click on any seats to choose that seat"}
+                            message={this.state.selectedSeats.length > 10 ? "Sorry, you cannot select more than 10 seats" : "Please click on any seats to choose that seat"}
                             key={vertical + horizontal}
                             autoHideDuration={5000}
                             enter='0.5s'
