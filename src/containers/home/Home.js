@@ -24,7 +24,9 @@ class Home extends Component {
             }
         }
         else {
-            dispatch(setCityAndMoviesList(listOfCities.response[0]));
+            if(listOfCities.response !== null && listOfCities.response !== undefined) {
+                dispatch(setCityAndMoviesList(listOfCities.response[0]));
+            }
         }
     }
 
