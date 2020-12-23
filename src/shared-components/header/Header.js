@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom'
 import '../../../src/index.css'
 import { handleLogoutUser } from "../../store/actions/authedUser"
 import Loader from "../Loader"
+import FormControl from '@material-ui/core/FormControl';
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -110,6 +111,7 @@ const styles = (theme) => ({
 class Header extends Component {
     state = {
         open: false,
+        selectValueInState: ''
     }
     handleLogout = () => {
         const { dispatch } = this.props;
@@ -143,11 +145,14 @@ class Header extends Component {
             dispatch(setMovieAndTheaterList(selectedMovie, false))
         }
         sessionStorage.setItem('city', JSON.stringify(selectedCityObject[0]))
+        this.setState({
+            selectValueInState: cityId
+        })
     }
 
     render() {
         const { classes, listOfCities, selectedCity, authedUser, loading } = this.props;
-        const { open } = this.state;
+        const { open, selectValueInState } = this.state;
         if (loading) return <Loader />
         return (
             <header>
@@ -161,7 +166,8 @@ class Header extends Component {
                             </Link>
                         </div>
                         <div className="leftDiv">
-                            {(listOfCities !== undefined && <Select className={[classes.select,"citySelect"]}
+                            {(listOfCities !== undefined && <FormControl>
+                                <Select className={[classes.select,"citySelect"]}
                                 inputProps={{
                                     classes: {
                                         icon: classes.icon,
@@ -169,13 +175,14 @@ class Header extends Component {
                                 }}
                                 labelId="demo-simple-select-filled-label"
                                 id="demo-simple-select-filled"
-                                value={selectedCity.id}
+                                value={selectValueInState || selectedCity.id}
                                 onChange={this.onCityChange}
                             >
                                 {listOfCities.map(city =>
                                     <MenuItem key={city.id} value={city.id}><em>{city.cityName}</em></MenuItem>
                                 )}
-                            </Select>)}
+                            </Select>
+                            </FormControl>)}
                             {(authedUser === null || authedUser.response === null) && (
                                 <Link to='/login' style={{ textDecoration: 'none' }}>
                                     <ButtonGroup>
