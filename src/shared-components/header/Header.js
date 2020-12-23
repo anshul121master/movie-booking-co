@@ -176,6 +176,7 @@ class Header extends Component {
                                 }}
                                 labelId="demo-simple-select-filled-label"
                                 id="demo-simple-select-filled"
+                                defaultValue={listOfCities[0].id}
                                 value={selectedCity.id}
                                 onChange={this.onCityChange}
                             >
