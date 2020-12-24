@@ -7,8 +7,6 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import { setCityAndMoviesList, setMovieAndTheaterList } from '../../store/actions/shared'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import clsx from 'clsx';
@@ -25,7 +23,6 @@ import { Link } from 'react-router-dom'
 import '../../../src/index.css'
 import { handleLogoutUser } from "../../store/actions/authedUser"
 import Loader from "../Loader"
-import FormControl from '@material-ui/core/FormControl';
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -90,12 +87,7 @@ const styles = (theme) => ({
     },
     select: {
         color: headerText,
-        '&:before': {
-            borderColor: headerText,
-        },
-        '&:after': {
-            borderColor: headerText,
-        }
+        backgroundColor: header,
     },
     icon: {
         fill: headerText,
@@ -110,8 +102,7 @@ const styles = (theme) => ({
 
 class Header extends Component {
     state = {
-        open: false,
-        selectValueInState: ''
+        open: false
     }
     handleLogout = () => {
         const { dispatch } = this.props;
@@ -145,14 +136,11 @@ class Header extends Component {
             dispatch(setMovieAndTheaterList(selectedMovie, false))
         }
         sessionStorage.setItem('city', JSON.stringify(selectedCityObject[0]))
-        this.setState({
-            selectValueInState: cityId
-        })
     }
 
     render() {
         const { classes, listOfCities, selectedCity, authedUser, loading } = this.props;
-        const { open, selectValueInState } = this.state;
+        const { open } = this.state;
         if (loading) return <Loader />
         return (
             <header>
@@ -166,23 +154,16 @@ class Header extends Component {
                             </Link>
                         </div>
                         <div className="leftDiv">
-                            {(listOfCities !== undefined && <FormControl>
-                                <Select className={[classes.select,"citySelect"]}
-                                inputProps={{
-                                    classes: {
-                                        icon: classes.icon,
-                                    },
-                                }}
-                                labelId="demo-simple-select-filled-label"
-                                id="demo-simple-select-filled"
-                                value={selectValueInState || selectedCity.id}
+                            {(listOfCities !== undefined && 
+                                <select className="citySelect"
+                                id="select-city-dropdown"
+                                value={selectedCity.id}
                                 onChange={this.onCityChange}
                             >
                                 {listOfCities.map(city =>
-                                    <MenuItem key={city.id} value={city.id}><em>{city.cityName}</em></MenuItem>
+                                    <option key={city.id} value={city.id}>{city.cityName}</option>
                                 )}
-                            </Select>
-                            </FormControl>)}
+                            </select>)}
                             {(authedUser === null || authedUser.response === null) && (
                                 <Link to='/login' style={{ textDecoration: 'none' }}>
                                     <ButtonGroup>
