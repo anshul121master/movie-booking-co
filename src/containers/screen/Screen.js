@@ -65,13 +65,15 @@ class Screen extends Component {
                 price = this.calculatePrice(this.props.selectedScreen, selectedSeats)
             }
             else {
-                selectedSeats = currentState.selectedSeats.concat(seat)
-                price = this.calculatePrice(this.props.selectedScreen, selectedSeats)
+                if (currentState.selectedSeats.length < 11) {
+                    selectedSeats = currentState.selectedSeats.concat(seat)
+                    price = this.calculatePrice(this.props.selectedScreen, selectedSeats)
+                }
             }
             return {
                 selectedSeats: selectedSeats,
                 price: price,
-                open: selectedSeats.length > 10 ? true: false
+                open: selectedSeats.length > 10 ? true : false
             }
         })
     }
@@ -167,7 +169,7 @@ class Screen extends Component {
                             <span>{selectedMovie.name}</span>
 
                             <span style={{ color: 'darkgrey', marginLeft: '10px', fontSize: '0.75em' }}>
-                                {(Object.keys(seatPlan).length > 0 && this.getDateAndTime(seatPlan, selectedScreen).date !== undefined && this.getDateAndTime(seatPlan, selectedScreen).time !== undefined?
+                                {(Object.keys(seatPlan).length > 0 && this.getDateAndTime(seatPlan, selectedScreen).date !== undefined && this.getDateAndTime(seatPlan, selectedScreen).time !== undefined ?
                                     (this.getDateAndTime(seatPlan, selectedScreen).date + ", " + this.getDateAndTime(seatPlan, selectedScreen).time.split('S')[1] + ":00, ") : " ")
                                     + selectedTheater.theaterName + " " + selectedTheater.address.city}</span>
 
@@ -246,7 +248,7 @@ class Screen extends Component {
                                 <div style={{ paddingLeft: '15px' }} className='priceheader'>Summary</div>
                                 <div style={{ paddingLeft: '15px' }} className='pricewarning'> <FontAwesomeIcon color='red' size="s" icon={faExclamationTriangle} />Once you click on book now button the selected seats will be locked for 10 mins</div>
                                 <div className='priceinfo'>
-                                    <div style={{ paddingLeft: '15px' }}>Selected Seats : {this.state.selectedSeats.map((seat,index) => (index === 0 ? seat + " " : ", " + seat + " "))}</div>
+                                    <div style={{ paddingLeft: '15px' }}>Selected Seats : {this.state.selectedSeats.map((seat, index) => (index === 0 ? seat + " " : ", " + seat + " "))}</div>
                                     <div style={{ paddingLeft: '15px' }}>Total Price : Rs. {this.state.price}.00</div>
                                     <div style={{ paddingLeft: '15px' }}>Number of seats : {this.state.selectedSeats.length}</div>
                                     <div className='timebuttoncontainer'>
@@ -262,28 +264,28 @@ class Screen extends Component {
                             </div>)}
                         </div >
                         <Dialog
-                        open={this.state.openDialog}
-                        onClose={this.handleCloseDialog}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">{`Are you sure that you want to lock these seats?`}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                {`You are seeing this dialog since the seats will be locked for another 10 minutes, so you will not be able change the seats. Want to proceed?`}
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => this.handleCloseDialog()}>
-                                No
+                            open={this.state.openDialog}
+                            onClose={this.handleCloseDialog}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{`Are you sure that you want to lock these seats?`}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {`You are seeing this dialog since the seats will be locked for another 10 minutes, so you will not be able change the seats. Want to proceed?`}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => this.handleCloseDialog()}>
+                                    No
                             </Button>
-                            <Button onClick={() => this.setState({
-                                redirect: true
-                            })} autoFocus>
-                                Yes
+                                <Button onClick={() => this.setState({
+                                    redirect: true
+                                })} autoFocus>
+                                    Yes
                             </Button>
-                        </DialogActions>
-                    </Dialog>
+                            </DialogActions>
+                        </Dialog>
                         <Footer />
 
                     </div>)
