@@ -83,7 +83,7 @@ class TheaterContainer extends Component {
                                     this.state.initialCalendar ?
                                         this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).length === 0 ?
                                             <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
-                                                No theaters available on this day</div> :
+                                                No theaters available on this day for {selectedMovie.name}</div> :
                                             <div style={{ fontSize: '1.2em', paddingTop: '2em', paddingBottom: '2em', paddingLeft: '2em' }}>
                                                 Available Theatres:
                                             {this.filterTheatres(this.props.selectedDate, sortedTheatersList, selectedMovie).map(
@@ -148,6 +148,8 @@ function mapStateToProps({ theatersList, selectedMovie }) {
             })
 
             selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate.split('T')[0]
+            const todaysDate = new Date().toISOString().split('T')[0]
+            selectedDate = selectedDate < todaysDate ? todaysDate : selectedDate
         }
     }
     }

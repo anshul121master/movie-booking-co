@@ -38,39 +38,43 @@ class PaymentForm extends Component {
 
     handleCardNumberChange(e) {
         const value = e.target.value;
-        if (!((/^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/g).test(value) || value === ""))
-            this.setState({
-                cardNumberValue: (value.length === 5 && ((/^[\d]{1}$/g).test(value.charAt(4)))) ?
-                    value.substring(0, 4) + "-" + value.substring(4) :
-                    (value.length === 10 && ((/^[\d]{1}$/g).test(value.charAt(9)))) ?
-                        value.substring(0, 9) + "-" + value.substring(9) :
-                        (value.length === 15 && ((/^[\d]{1}$/g).test(value.charAt(14)))) ?
-                            value.substring(0, 14) + "-" + value.substring(14) : value,
-                isValidCardNumber: false,
-                cardNumberErrorMsg: 'Please enter valid 16 digit card number'
-            });
-        else
-            this.setState({
-                cardNumberValue: value,
-                isValidCardNumber: true,
-                cardNumberErrorMsg: ''
-            });
+        if (value.length < 20) {
+            if (!((/^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/g).test(value) || value === ""))
+                this.setState({
+                    cardNumberValue: (value.length === 5 && ((/^[\d]{1}$/g).test(value.charAt(4)))) ?
+                        value.substring(0, 4) + "-" + value.substring(4) :
+                        (value.length === 10 && ((/^[\d]{1}$/g).test(value.charAt(9)))) ?
+                            value.substring(0, 9) + "-" + value.substring(9) :
+                            (value.length === 15 && ((/^[\d]{1}$/g).test(value.charAt(14)))) ?
+                                value.substring(0, 14) + "-" + value.substring(14) : value,
+                    isValidCardNumber: false,
+                    cardNumberErrorMsg: 'Please enter valid 16 digit card number'
+                });
+            else
+                this.setState({
+                    cardNumberValue: value,
+                    isValidCardNumber: true,
+                    cardNumberErrorMsg: ''
+                });
+        }
     }
 
     handleCVVChange(e) {
         const value = e.target.value;
-        if (!(value.match(/^[0-9]{3}$/) || value === ""))
-            this.setState({
-                cvvValue: value,
-                isValidCVV: false,
-                cvvErrorMsg: 'Please enter valid 3 digit CVV number'
-            });
-        else
-            this.setState({
-                cvvValue: value,
-                isValidCVV: true,
-                cvvErrorMsg: ''
-            });
+        if (value.length < 4) {
+            if (!(value.match(/^[0-9]{3}$/) || value === ""))
+                this.setState({
+                    cvvValue: value,
+                    isValidCVV: false,
+                    cvvErrorMsg: 'Please enter valid 3 digit CVV number'
+                });
+            else
+                this.setState({
+                    cvvValue: value,
+                    isValidCVV: true,
+                    cvvErrorMsg: ''
+                });
+        }
     }
 
     handleSubmit(event) {
@@ -128,7 +132,7 @@ class PaymentForm extends Component {
                                 <Link style={{ textDecoration: 'none' }} to={{
                                     pathname: "/",
                                 }}
-                                onClick={() => this.props.setSeatPlanUndefined()}
+                                    onClick={() => this.props.setSeatPlanUndefined()}
                                 >Click to go to Home Page</Link>
                             </div>
                             )
