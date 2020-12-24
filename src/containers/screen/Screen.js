@@ -65,15 +65,19 @@ class Screen extends Component {
                 price = this.calculatePrice(this.props.selectedScreen, selectedSeats)
             }
             else {
-                if (currentState.selectedSeats.length < 11) {
+                if (currentState.selectedSeats.length < 10) {
                     selectedSeats = currentState.selectedSeats.concat(seat)
                     price = this.calculatePrice(this.props.selectedScreen, selectedSeats)
+                }
+                else{
+                    selectedSeats = currentState.selectedSeats;
+                    price= currentState.price;
                 }
             }
             return {
                 selectedSeats: selectedSeats,
                 price: price,
-                open: selectedSeats.length > 10 ? true : false
+                open: selectedSeats.length > 9 ? true : false
             }
         })
     }
@@ -95,19 +99,11 @@ class Screen extends Component {
     }
 
     purchaseSeats = () => {
-        // const {authedUser} = this.props
-        // if(authedUser === null || authedUser.response === null)
-        // {
         /*Redirect to payment page and store state information in redux store*/
         this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price, false))
         this.setState({
             openDialog: true
         })
-        // }
-        // this.props.dispatch(setSeatsAndPrice(this.state.selectedSeats, this.props.seatPlan.response.seatPlanId, this.state.price, true))
-        // this.setState({
-        //     redirect: true
-        // })
     }
 
     createSeatMap = (selectedScreen) => {
@@ -154,7 +150,7 @@ class Screen extends Component {
                             anchorOrigin={{ vertical, horizontal }}
                             open={open}
                             onClose={this.handleClose}
-                            message={this.state.selectedSeats.length > 10 ? "Sorry, you cannot select more than 10 seats" : "Please click on any seats to choose that seat"}
+                            message={this.state.selectedSeats.length > 9 ? "You can select only upto 10 seats per ticket" : "Please click on any seats to choose that seat"}
                             key={vertical + horizontal}
                             autoHideDuration={5000}
                             enter='0.5s'
@@ -244,7 +240,7 @@ class Screen extends Component {
                                         exception: seatPlan.exception
                                     }
                                 }} />)}
-                            {(this.state.selectedSeats.length > 0) && (this.state.selectedSeats.length < 11) && (<div className='pricecalculator'>
+                            {(this.state.selectedSeats.length > 0) && (<div className='pricecalculator'>
                                 <div style={{ paddingLeft: '15px' }} className='priceheader'>Summary</div>
                                 <div style={{ paddingLeft: '15px' }} className='pricewarning'> <FontAwesomeIcon color='red' size="s" icon={faExclamationTriangle} />Once you click on book now button the selected seats will be locked for 10 mins</div>
                                 <div className='priceinfo'>
