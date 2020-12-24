@@ -15,11 +15,16 @@ class TheaterContainer extends Component {
     getDateValue = (value) => {
         const d = new Date(this.props.selectedDate)
         d.setDate(d.getDate() + value)
+        const todaysDate = new Date();
+        const tommorowsDate = new Date();
+        tommorowsDate.setDate(todaysDate.getDate() + 1)
+        console.log(todaysDate, tommorowsDate, d)
         return {
             day: d.getDate(),
-            name: d.toString().split(' ')[0],
+            name: d.getDate() === todaysDate.getDate() ? 'Today' :
+                d.getDate() === tommorowsDate.getDate() ? 'Tom' : d.toString().split(' ')[0],
             date: d.toISOString().split('T')[0],
-            month: d.toLocaleString("default", {month: "short"})
+            month: d.toLocaleString("default", { month: "short" })
         }
     }
 
@@ -122,7 +127,7 @@ function mapStateToProps({ theatersList, selectedMovie }) {
 
     let selectedDate;
     let sortedTheatersList = []
-    let theaterFlag=false;
+    let theaterFlag = false;
     if (theatersList.response !== null) {
         if (theatersList.response === undefined) {
             selectedDate = ''
@@ -131,27 +136,27 @@ function mapStateToProps({ theatersList, selectedMovie }) {
             selectedDate = 'No Theatres'
         }
         else {
-            for(let i=0;i<theatersList.response.length;i++) {
-                if(theatersList.response[i].movies.filter(movie => movie.id === selectedMovie.movieId).length ===0){
-                    theaterFlag= true;
+            for (let i = 0; i < theatersList.response.length; i++) {
+                if (theatersList.response[i].movies.filter(movie => movie.id === selectedMovie.movieId).length === 0) {
+                    theaterFlag = true;
                     break;
                 }
             }
-        if(theaterFlag) {
-            selectedDate = ''
-        }
-        else {
-            sortedTheatersList = theatersList.response.sort((theaterA, theaterB) => {
-                const theaterAstartDate = theaterA.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
-                const theaterBstartDate = theaterB.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
-                return (theaterBstartDate - theaterAstartDate)
-            })
+            if (theaterFlag) {
+                selectedDate = ''
+            }
+            else {
+                sortedTheatersList = theatersList.response.sort((theaterA, theaterB) => {
+                    const theaterAstartDate = theaterA.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+                    const theaterBstartDate = theaterB.movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate
+                    return (theaterBstartDate - theaterAstartDate)
+                })
 
-            selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate.split('T')[0]
-            const todaysDate = new Date().toISOString().split('T')[0]
-            selectedDate = selectedDate < todaysDate ? todaysDate : selectedDate
+                selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate.split('T')[0]
+                const todaysDate = new Date().toISOString().split('T')[0]
+                selectedDate = selectedDate < todaysDate ? todaysDate : selectedDate
+            }
         }
-    }
     }
 
     return {
