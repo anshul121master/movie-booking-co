@@ -503,7 +503,24 @@ div.login-label {
 
 .citySelect {
   margin: 0 30px;
+  background-color: #0F222D;
+  color: #FFF5D0;
+  border: none;
+  font-size: 1em;
+  outline: none;
+  border-bottom:  1px solid #FFF5D0;
 }
+
+option {
+  background-color: white;
+  color: #0f222d;
+} 
+
+select::after {
+  border-radius: 5px;
+  transform: 0.5s ease;
+}
+
 
 .carousel {
   width: 60%;
