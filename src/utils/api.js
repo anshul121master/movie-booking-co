@@ -1,6 +1,6 @@
 import { api, mockApi } from "../config/apiConfig";
 
-export const mockEnabled = false;
+export const mockEnabled = true;
 const endpoints = mockEnabled ? mockApi : api;
 
 //api's for user journey
@@ -16,7 +16,7 @@ export const login = (userCredentials) => {
     body: JSON.stringify(userCredentials),
   };
   const url = endpoints.login();
-  return fetch(url, reqObj).then(resp => resp.json());
+  return fetch(url).then(resp => resp.json());
 };
 
 export const logout = () => {
@@ -25,7 +25,7 @@ export const logout = () => {
     credentials: "same-origin",
   };
   const url = endpoints.logout();
-  return fetch(url, reqObj).then(resp => resp.json());
+  return fetch(url).then(resp => resp.json());
 };
 
 
@@ -40,7 +40,7 @@ export const signup = (userInfo) => {
     body: JSON.stringify(userInfo),
   };
   const url = endpoints.signup();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
@@ -99,7 +99,7 @@ export const uploadImage = (userInfo) => {
     body: userInfo,
   };
   const url = endpoints.imageUpload();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
@@ -126,7 +126,7 @@ export const updateProfile = (userInfo) => {
     body: JSON.stringify(userInfo),
   };
   const url = endpoints.profileUpdate();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
@@ -153,7 +153,7 @@ export const sendOtp = (emailObj) => {
     body: JSON.stringify(emailObj),
   };
   const url = endpoints.getOtp();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
@@ -180,7 +180,7 @@ export const resetPassword = (pwdDetails) => {
     body: JSON.stringify(pwdDetails),
   };
   const url = endpoints.reset();
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     if (resp.ok) {
       return resp.json().then(({ response }) => ({
         status: resp.status,
@@ -235,7 +235,7 @@ export const lockSeats = (seatPlanId, selectedSeats) => {
     body: JSON.stringify(selectedSeats),
   }
   const url = endpoints.lockSeats(seatPlanId);
-  return fetch(url, reqObj).then((resp) => {
+  return fetch(url).then((resp) => {
     return resp.json().then(({ response }) => (
       response
     ))
@@ -261,7 +261,7 @@ export const purchaseTickets = ({ theaterDetails, screenName, selectedSeats, pri
     }),
   }
   const url = endpoints.booking();
-  return fetch(url, reqObj).then((response) => {
+  return fetch(url).then((response) => {
     if (response.ok) return response.json()
     else
       return console.error("Error")
@@ -281,7 +281,7 @@ export const cancelBooking = (bookingId) => {
     credentials: "same-origin"
   };
   const url = endpoints.cancelBooking(bookingId);
-  return fetch(url, reqObj).then((response) => {
+  return fetch(url).then((response) => {
     if (response.ok) return response.json()
   })
 }
