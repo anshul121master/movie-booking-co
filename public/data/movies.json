@@ -2,7 +2,7 @@
   "response": [
     {
       "movieId": "688e7562-2eeb-47fb-8fe3-df66a62e122c",
-      "name": "the prestige",
+      "name": "The Prestige",
       "genre": "Suspense Thriller",
       "duration": "2 hrs",
       "movieDimension": "_2D",
@@ -17,23 +17,6 @@
       "languages": [
         "Hindi",
         "English"
-      ]
-    },
-    {
-      "movieId": "42696626-0126-45ee-87c6-a501ab71374c",
-      "name": "Zero",
-      "genre": "Comedy/ Drama",
-      "duration": "2.8 hrs",
-      "movieDimension": "_2D",
-      "rating": 9.1,
-      "moviePoster": "1708887362549_zero.jpeg",
-      "dateReleased": 1151193600000,
-      "casts": [
-        "Shahrukh Khan",
-        "Anushka Sharma"
-      ],
-      "languages": [
-        "Hindi"
       ]
     }
   ],
