@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import TheaterCard from './TheaterCard'
 import { Redirect } from 'react-router-dom'
 import Loader from "../../../shared-components/Loader";
+import { mockEnabled } from '../../../utils/api'
 
 class TheaterContainer extends Component {
 
@@ -154,7 +155,7 @@ function mapStateToProps({ theatersList, selectedMovie }) {
 
                 selectedDate = sortedTheatersList[0].movies.filter(movie => movie.id === selectedMovie.movieId)[0].startDate.split('T')[0]
                 const todaysDate = new Date().toISOString().split('T')[0]
-                selectedDate = selectedDate < todaysDate ? todaysDate : selectedDate
+                selectedDate = selectedDate < todaysDate ? mockEnabled ? selectedDate : todaysDate : selectedDate
             }
         }
     }

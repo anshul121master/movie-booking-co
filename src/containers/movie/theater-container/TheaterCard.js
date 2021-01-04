@@ -21,6 +21,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { mockEnabled } from '../../../utils/api'
 
 const styles = (theme) => ({
     expand: {
@@ -180,7 +181,7 @@ class TheaterCard extends Component {
                                     {this.state.loading ? null : <Typography variant="body2" color="textSecondary" component="p">Show Timings :</Typography>}
                                     {this.state.loading ? <CircularProgress style={{ color: header }} size="2em" /> : (<div>{screenTimesArray.sort().map(time =>
                                         <Button className='timebutton' size='small' style={{ margin: 7 }} onClick={() => this.handleClickOpen(theater, time, selectedDate)}
-                                            disabled={selectedDate < new Date().toISOString().split('T')[0] || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() >= time.split('S')[1])}>
+                                            disabled={(mockEnabled ? selectedDate > new Date().toISOString().split('T')[0] : selectedDate < new Date().toISOString().split('T')[0]) || (selectedDate === new Date().toISOString().split('T')[0] && new Date().getHours() >= time.split('S')[1])}>
                                             {time.split('S')[1]}:00
                                     </Button>
                                     )}</div>)}
